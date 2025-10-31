@@ -1,0 +1,2416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Lavado de Autos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+            background: linear-gradient(180deg, #f5f7fa 0%, #e4e9f2 100%);
+            min-height: 100vh;
+            padding-bottom: 120px;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 20px 20px 15px;
+            z-index: 100;
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .header-title {
+            font-size: 34px;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: -0.5px;
+        }
+
+        .header-subtitle {
+            font-size: 17px;
+            color: #8e8e93;
+            margin-top: 2px;
+        }
+
+        .container {
+            padding: 100px 16px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .service-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 16px;
+            padding: 24px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-btn:active {
+            transform: scale(0.95);
+        }
+
+        .service-btn.selected {
+            transform: scale(0.95);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .service-btn.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .service-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .service-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .service-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .service-time {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .day-btn {
+            background: #f2f2f7;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .day-btn:active {
+            transform: scale(0.95);
+        }
+
+        .day-btn.selected {
+            background: #007aff;
+            transform: scale(1.05);
+        }
+
+        .day-btn.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .day-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: #8e8e93;
+            margin-bottom: 4px;
+        }
+
+        .day-btn.selected .day-label {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .day-number {
+            font-size: 20px;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .day-btn.selected .day-number {
+            color: #fff;
+        }
+
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .time-btn {
+            background: #f2f2f7;
+            border: none;
+            border-radius: 14px;
+            padding: 20px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .time-btn:active {
+            transform: scale(0.95);
+        }
+
+        .time-btn.selected {
+            background: #34c759;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .time-btn.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .input-group {
+            margin-bottom: 12px;
+        }
+
+        .input-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #8e8e93;
+            margin-bottom: 6px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-field {
+            width: 100%;
+            background: #f2f2f7;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 17px;
+            color: #000;
+            transition: all 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            background: #e5e5ea;
+        }
+
+        .input-field.error {
+            background: #ffe5e5;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .error-message {
+            color: #ff3b30;
+            font-size: 13px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .primary-btn {
+            width: 100%;
+            background: #007aff;
+            border: none;
+            border-radius: 14px;
+            padding: 18px;
+            font-size: 19px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 16px;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .primary-btn:active {
+            transform: scale(0.98);
+        }
+
+        .primary-btn:disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .floating-summary {
+            position: fixed;
+            bottom: 20px;
+            left: 16px;
+            right: 16px;
+            background: #000;
+            color: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            display: none;
+            max-width: 468px;
+            margin: 0 auto;
+            z-index: 99;
+        }
+
+        .floating-summary.show {
+            display: block;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .summary-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 4px;
+        }
+
+        .summary-value {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .success-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .success-screen.show {
+            display: flex;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: #34c759;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .success-icon svg {
+            width: 50px;
+            height: 50px;
+            stroke: #fff;
+            stroke-width: 3;
+        }
+
+        .success-title {
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .success-subtitle {
+            font-size: 17px;
+            color: #8e8e93;
+            margin-bottom: 32px;
+        }
+
+        .success-details {
+            background: #f2f2f7;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: left;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-size: 15px;
+            color: #8e8e93;
+        }
+
+        .detail-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #000;
+            text-align: right;
+        }
+
+        .admin-link {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 15px;
+            color: #007aff;
+            text-decoration: none;
+            z-index: 101;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading.show {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f2f2f7;
+            border-top: 4px solid #007aff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ADMIN PANEL */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #f5f7fa;
+            z-index: 1000;
+            overflow-y: auto;
+            padding-bottom: 40px;
+        }
+
+        .admin-panel.show {
+            display: block;
+        }
+
+        .admin-header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .admin-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: #ff3b30;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .admin-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .admin-section h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            border-radius: 14px;
+            color: #fff;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .service-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .service-item {
+            background: #f2f2f7;
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-edit {
+            background: #007aff;
+            color: #fff;
+        }
+
+        .btn-delete {
+            background: #ff3b30;
+            color: #fff;
+        }
+
+        .schedule-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .schedule-item {
+            background: #f2f2f7;
+            padding: 16px;
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .schedule-day {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .schedule-times {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .schedule-times input {
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            background: #fff;
+            font-size: 14px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 51px;
+            height: 31px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 31px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 23px;
+            width: 23px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #34c759;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .bookings-table th,
+        .bookings-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5ea;
+        }
+
+        .bookings-table th {
+            font-weight: 600;
+            color: #8e8e93;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .bookings-table td {
+            font-size: 15px;
+        }
+
+        .booking-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-confirmed {
+            background: #d1f4e0;
+            color: #34c759;
+        }
+
+        .status-cancelled {
+            background: #ffe5e5;
+            color: #ff3b30;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #8e8e93;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .btn-save {
+            background: #34c759;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 16px;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-export {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            background: #007aff;
+            color: #fff;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            color: #fff;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            z-index: 3000;
+            display: none;
+            animation: toastIn 0.3s ease-out;
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        @keyframes toastIn {
+            from {
+                transform: translateX(-50%) translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #007aff;
+            background: #fff;
+            color: #007aff;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: #007aff;
+            color: #fff;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 16px;
+            border: 2px solid #e5e5ea;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .booking-edit-form {
+            display: grid;
+            gap: 12px;
+        }
+
+        .password-input-group {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #8e8e93;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .bookings-table {
+                font-size: 13px;
+            }
+
+            .bookings-table th,
+            .bookings-table td {
+                padding: 8px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .schedule-item {
+                grid-template-columns: 1fr;
+            }
+
+            .schedule-times {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#" class="admin-link" id="adminLink" onclick="showAdminLogin(event)">Admin</a>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-title">Lavado de Autos</div>
+        <div class="header-subtitle">Rápido y fácil</div>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="container" id="mainContent">
+        <div class="card">
+            <div class="section-title">
+                <span>🚗</span>
+                <span>Elige tu servicio</span>
+            </div>
+            <div class="service-grid" id="servicesGrid"></div>
+        </div>
+
+        <div class="card hidden" id="dateCard">
+            <div class="section-title">
+                <span>📅</span>
+                <span>¿Qué día?</span>
+            </div>
+            <div class="days-grid" id="daysGrid"></div>
+        </div>
+
+        <div class="card hidden" id="timeCard">
+            <div class="section-title">
+                <span>🕐</span>
+                <span>¿A qué hora?</span>
+            </div>
+            <div class="time-grid" id="timeGrid"></div>
+        </div>
+
+        <div class="card hidden" id="formCard">
+            <div class="section-title">
+                <span>✏️</span>
+                <span>Tus datos</span>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Tu nombre</label>
+                <input type="text" class="input-field" id="inputName" placeholder="Juan Pérez" autocomplete="name">
+                <div class="error-message" id="errorName">Nombre requerido</div>
+            </div>
+            <div class="input-group">
+                <label class="input-label">WhatsApp (10 dígitos)</label>
+                <input type="tel" class="input-field" id="inputPhone" placeholder="4611234567" maxlength="10" autocomplete="tel">
+                <div class="error-message" id="errorPhone">Teléfono debe tener 10 dígitos</div>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Calle y número</label>
+                <input type="text" class="input-field" id="inputAddress" placeholder="Av. Juárez #123" autocomplete="street-address">
+                <div class="error-message" id="errorAddress">Dirección requerida</div>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Tu auto</label>
+                <input type="text" class="input-field" id="inputCar" placeholder="Toyota Corolla 2020">
+                <div class="error-message" id="errorCar">Datos del auto requeridos</div>
+            </div>
+            <button class="primary-btn" onclick="confirmBooking()">Confirmar Reservación</button>
+        </div>
+    </div>
+
+    <!-- Resumen Flotante -->
+    <div class="floating-summary" id="floatingSummary">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <div class="summary-label">Total</div>
+                <div class="summary-value" id="summaryTotal">$0</div>
+            </div>
+            <div style="text-align: right;">
+                <div class="summary-label">Duración</div>
+                <div class="summary-value" style="font-size: 20px;" id="summaryTime">0 min</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de Éxito -->
+    <div class="success-screen" id="successScreen">
+        <div class="success-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+        <div class="success-title">¡Listo!</div>
+        <div class="success-subtitle">Te enviamos los detalles por WhatsApp</div>
+        <div class="success-details" id="successDetails"></div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ADMIN PANEL -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h1>📊 Panel de Administración</h1>
+            <button class="close-btn" onclick="closeAdmin()">Cerrar</button>
+        </div>
+        
+        <div class="admin-content">
+            <!-- Estadísticas -->
+            <div class="admin-section">
+                <h2>📈 Estadísticas</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Reservaciones Totales</div>
+                        <div class="stat-value" id="statTotal">0</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="stat-label">Este Mes</div>
+                        <div class="stat-value" id="statMonth">0</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="stat-label">Hoy</div>
+                        <div class="stat-value" id="statToday">0</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <div class="stat-label">Ingresos Totales</div>
+                        <div class="stat-value" id="statRevenue">$0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Servicios -->
+            <div class="admin-section">
+                <h2>🚗 Servicios</h2>
+                <button class="primary-btn" onclick="showServiceModal()">+ Agregar Servicio</button>
+                <div class="service-list" id="serviceList"></div>
+            </div>
+
+            <!-- Horarios -->
+            <div class="admin-section">
+                <h2>⏰ Horarios de Operación</h2>
+                <div class="schedule-grid" id="scheduleGrid"></div>
+                <button class="btn-save" onclick="saveSchedules()">Guardar Horarios</button>
+            </div>
+
+            <!-- Reservaciones -->
+            <div class="admin-section">
+                <h2>📋 Reservaciones</h2>
+                <div class="filter-controls">
+                    <input type="text" class="search-box" id="searchBookings" placeholder="Buscar por nombre, teléfono o auto..." oninput="filterBookings()">
+                    <button class="filter-btn active" data-filter="all" onclick="setBookingFilter('all')">Todas</button>
+                    <button class="filter-btn" data-filter="confirmed" onclick="setBookingFilter('confirmed')">Confirmadas</button>
+                    <button class="filter-btn" data-filter="cancelled" onclick="setBookingFilter('cancelled')">Canceladas</button>
+                    <button class="filter-btn" data-filter="today" onclick="setBookingFilter('today')">Hoy</button>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="bookings-table" id="bookingsTable">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Cliente</th>
+                                <th>Servicio</th>
+                                <th>Auto</th>
+                                <th>Precio</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Configuración -->
+            <div class="admin-section">
+                <h2>⚙️ Configuración</h2>
+                <div class="input-group">
+                    <label class="input-label">Contraseña de Administrador</label>
+                    <div class="password-input-group">
+                        <input type="password" class="input-field" id="adminPassword" placeholder="Nueva contraseña">
+                        <button class="password-toggle" onclick="togglePasswordVisibility()">👁️</button>
+                    </div>
+                </div>
+                <button class="btn-save" onclick="changeAdminPassword()">Cambiar Contraseña</button>
+                
+                <div style="margin-top: 20px;">
+                    <button class="btn-export" onclick="cleanOldBookings()">🧹 Limpiar Reservaciones Antiguas</button>
+                </div>
+            </div>
+
+            <!-- Exportar Datos -->
+            <div class="admin-section">
+                <h2>💾 Exportar / Importar</h2>
+                <div class="export-buttons">
+                    <button class="btn-export" onclick="exportData()">📥 Descargar Backup</button>
+                    <button class="btn-export" onclick="document.getElementById('importFile').click()">📤 Importar Backup</button>
+                    <button class="btn-export" onclick="exportCSV()">📊 Exportar CSV</button>
+                    <button class="btn-export" onclick="clearAllData()" style="background: #ff3b30;">🗑️ Borrar Todo</button>
+                </div>
+                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Servicio -->
+    <div class="modal" id="serviceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="serviceModalTitle">Nuevo Servicio</h3>
+                <button class="modal-close" onclick="closeServiceModal()">&times;</button>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Nombre del Servicio</label>
+                <input type="text" class="input-field" id="serviceName" placeholder="Ej: Básico">
+            </div>
+            <div class="form-row">
+                <div class="input-group">
+                    <label class="input-label">Precio ($)</label>
+                    <input type="number" class="input-field" id="servicePrice" placeholder="80" min="0">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Duración (min)</label>
+                    <input type="number" class="input-field" id="serviceTime" placeholder="30" step="15" min="15">
+                </div>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Icono (emoji)</label>
+                <input type="text" class="input-field" id="serviceIcon" placeholder="⚡" maxlength="2">
+            </div>
+            <button class="btn-save" onclick="saveService()">Guardar Servicio</button>
+        </div>
+    </div>
+
+    <!-- Modal de Edición de Reservación -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Reservación</h3>
+                <button class="modal-close" onclick="closeBookingModal()">&times;</button>
+            </div>
+            <div class="booking-edit-form">
+                <div class="input-group">
+                    <label class="input-label">Cliente</label>
+                    <input type="text" class="input-field" id="editBookingName">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Teléfono</label>
+                    <input type="tel" class="input-field" id="editBookingPhone" maxlength="10">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Dirección</label>
+                    <input type="text" class="input-field" id="editBookingAddress">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Auto</label>
+                    <input type="text" class="input-field" id="editBookingCar">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Fecha</label>
+                    <input type="date" class="input-field" id="editBookingDate">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Hora</label>
+                    <input type="time" class="input-field" id="editBookingTime">
+                </div>
+            </div>
+            <button class="btn-save" onclick="saveBookingEdit()">Guardar Cambios</button>
+        </div>
+    </div>
+
+    <script>
+        // Estado Global
+        const state = {
+            selectedService: null,
+            selectedDate: null,
+            selectedTime: null,
+            bookings: [],
+            services: [],
+            schedules: {},
+            editingServiceId: null,
+            editingBookingId: null,
+            adminPassword: '2024',
+            bookingFilter: 'all',
+            searchQuery: ''
+        };
+
+        // Configuración por defecto
+        const defaultServices = [
+            { id: 1, name: 'Básico', price: 80, time: 30, icon: '⚡', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+            { id: 2, name: 'Completo', price: 150, time: 45, icon: '✨', gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' },
+            { id: 3, name: 'Premium', price: 250, time: 60, icon: '💎', gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' },
+            { id: 4, name: 'Deluxe', price: 350, time: 90, icon: '👑', gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' }
+        ];
+
+        const defaultSchedules = {
+            0: { active: false, start: '09:00', end: '15:00' },
+            1: { active: true, start: '08:00', end: '18:00' },
+            2: { active: true, start: '08:00', end: '18:00' },
+            3: { active: true, start: '08:00', end: '18:00' },
+            4: { active: true, start: '08:00', end: '18:00' },
+            5: { active: true, start: '08:00', end: '18:00' },
+            6: { active: true, start: '09:00', end: '15:00' }
+        };
+
+        const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
+        // Funciones de Storage con manejo de errores mejorado
+        function loadData() {
+            try {
+                const savedBookings = localStorage.getItem('carwash_bookings');
+                const savedServices = localStorage.getItem('carwash_services');
+                const savedSchedules = localStorage.getItem('carwash_schedules');
+                const savedPassword = localStorage.getItem('carwash_admin_password');
+                
+                state.bookings = savedBookings ? JSON.parse(savedBookings) : [];
+                state.services = savedServices ? JSON.parse(savedServices) : [...defaultServices];
+                state.schedules = savedSchedules ? JSON.parse(savedSchedules) : {...defaultSchedules};
+                state.adminPassword = savedPassword || '2024';
+                
+                // Validar integridad
+                if (!Array.isArray(state.bookings)) state.bookings = [];
+                if (!Array.isArray(state.services) || state.services.length === 0) {
+                    state.services = [...defaultServices];
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showToast('Error al cargar datos. Usando valores por defecto.');
+                state.services = [...defaultServices];
+                state.schedules = {...defaultSchedules};
+                state.bookings = [];
+                state.adminPassword = '2024';
+                return false;
+            }
+        }
+
+        function saveData() {
+            try {
+                localStorage.setItem('carwash_bookings', JSON.stringify(state.bookings));
+                localStorage.setItem('carwash_services', JSON.stringify(state.services));
+                localStorage.setItem('carwash_schedules', JSON.stringify(state.schedules));
+                localStorage.setItem('carwash_admin_password', state.adminPassword);
+                return true;
+            } catch (error) {
+                console.error('Error saving data:', error);
+                if (error.name === 'QuotaExceededError') {
+                    showToast('Espacio de almacenamiento lleno. Limpia datos antiguos.');
+                } else {
+                    showToast('Error al guardar datos.');
+                }
+                return false;
+            }
+        }
+
+        // Funciones de UI Principal
+        function renderServices() {
+            const grid = document.getElementById('servicesGrid');
+            if (!state.services || state.services.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #8e8e93;">No hay servicios disponibles</p>';
+                return;
+            }
+            
+            grid.innerHTML = state.services.map(s => `
+                <button class="service-btn" style="background: ${s.gradient}" onclick="selectService(${s.id})">
+                    <div class="service-icon">${s.icon}</div>
+                    <div class="service-name">${escapeHtml(s.name)}</div>
+                    <div class="service-price">${s.price}</div>
+                    <div class="service-time">${s.time} min</div>
+                </button>
+            `).join('');
+        }
+
+        function selectService(id) {
+            state.selectedService = state.services.find(s => s.id === id);
+            if (!state.selectedService) {
+                showToast('Servicio no encontrado');
+                return;
+            }
+            
+            document.querySelectorAll('.service-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.closest('.service-btn').classList.add('selected');
+            
+            updateSummary();
+            showSection('dateCard');
+            renderDays();
+        }
+
+        function renderDays() {
+            const grid = document.getElementById('daysGrid');
+            const days = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+            const dates = [];
+            
+            for (let i = 0; i < 7; i++) {
+                const date = new Date();
+                date.setDate(date.getDate() + i);
+                dates.push(date);
+            }
+
+            grid.innerHTML = dates.map(date => {
+                const dayOfWeek = date.getDay();
+                const schedule = state.schedules[dayOfWeek];
+                const dateStr = date.toISOString().split('T')[0];
+                const disabled = !schedule || !schedule.active;
+                
+                return `
+                    <button class="day-btn ${disabled ? 'disabled' : ''}" 
+                            onclick="selectDate('${dateStr}')"
+                            ${disabled ? 'disabled' : ''}>
+                        <div class="day-label">${days[dayOfWeek]}</div>
+                        <div class="day-number">${date.getDate()}</div>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectDate(dateStr) {
+            state.selectedDate = dateStr;
+            document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.closest('.day-btn').classList.add('selected');
+            
+            showSection('timeCard');
+            renderTimes();
+        }
+
+        function renderTimes() {
+            const grid = document.getElementById('timeGrid');
+            const date = new Date(state.selectedDate + 'T00:00:00');
+            const dayOfWeek = date.getDay();
+            const schedule = state.schedules[dayOfWeek];
+            
+            if (!schedule || !schedule.active) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No hay horarios disponibles</p>';
+                return;
+            }
+            
+            const times = generateTimeSlots(schedule.start, schedule.end);
+            
+            grid.innerHTML = times.map(time => {
+                const available = isTimeAvailable(state.selectedDate, time);
+                return `
+                    <button class="time-btn ${!available ? 'disabled' : ''}" 
+                            onclick="selectTime('${time}')"
+                            ${!available ? 'disabled' : ''}>
+                        ${time}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function generateTimeSlots(start, end) {
+            const times = [];
+            let [h, m] = start.split(':').map(Number);
+            const [endH, endM] = end.split(':').map(Number);
+            
+            while (h < endH || (h === endH && m < endM)) {
+                times.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
+                m += 30;
+                if (m >= 60) { 
+                    m = 0; 
+                    h++; 
+                }
+            }
+            return times;
+        }
+
+        function isTimeAvailable(date, time) {
+            if (!state.selectedService) return false;
+            
+            const start = new Date(`${date}T${time}`);
+            const end = new Date(start.getTime() + state.selectedService.time * 60000);
+            
+            // Verificar que no esté en el pasado
+            if (start < new Date()) return false;
+            
+            // Verificar conflictos con otras reservaciones confirmadas
+            return !state.bookings.some(b => {
+                if (b.date !== date || b.status === 'cancelled') return false;
+                const bStart = new Date(`${b.date}T${b.time}`);
+                const bEnd = new Date(bStart.getTime() + b.duration * 60000);
+                return (start < bEnd && end > bStart);
+            });
+        }
+
+        function selectTime(time) {
+            state.selectedTime = time;
+            document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.closest('.time-btn').classList.add('selected');
+            
+            showSection('formCard');
+            document.getElementById('inputName').focus();
+        }
+
+        function validateForm() {
+            let isValid = true;
+            
+            const name = document.getElementById('inputName');
+            const phone = document.getElementById('inputPhone');
+            const address = document.getElementById('inputAddress');
+            const car = document.getElementById('inputCar');
+            
+            // Validar nombre (al menos 2 caracteres)
+            if (!name.value.trim() || name.value.trim().length < 2) {
+                showError(name, 'errorName');
+                isValid = false;
+            } else {
+                hideError(name, 'errorName');
+            }
+            
+            // Validar teléfono (exactamente 10 dígitos)
+            const phoneRegex = /^[0-9]{10}$/;
+            if (!phoneRegex.test(phone.value.trim())) {
+                showError(phone, 'errorPhone');
+                isValid = false;
+            } else {
+                hideError(phone, 'errorPhone');
+            }
+            
+            // Validar dirección
+            if (!address.value.trim() || address.value.trim().length < 5) {
+                showError(address, 'errorAddress');
+                isValid = false;
+            } else {
+                hideError(address, 'errorAddress');
+            }
+            
+            // Validar auto
+            if (!car.value.trim() || car.value.trim().length < 3) {
+                showError(car, 'errorCar');
+                isValid = false;
+            } else {
+                hideError(car, 'errorCar');
+            }
+            
+            return isValid;
+        }
+
+        function showError(input, errorId) {
+            input.classList.add('error');
+            document.getElementById(errorId).classList.add('show');
+        }
+
+        function hideError(input, errorId) {
+            input.classList.remove('error');
+            document.getElementById(errorId).classList.remove('show');
+        }
+
+        function confirmBooking() {
+            if (!state.selectedService || !state.selectedDate || !state.selectedTime) {
+                showToast('Por favor completa todos los pasos');
+                return;
+            }
+
+            if (!validateForm()) return;
+            
+            const name = document.getElementById('inputName').value.trim();
+            const phone = document.getElementById('inputPhone').value.trim();
+            const address = document.getElementById('inputAddress').value.trim();
+            const car = document.getElementById('inputCar').value.trim();
+
+            // Verificar disponibilidad nuevamente
+            if (!isTimeAvailable(state.selectedDate, state.selectedTime)) {
+                showToast('Este horario ya no está disponible');
+                renderTimes();
+                return;
+            }
+
+            const booking = {
+                id: Date.now(),
+                service: state.selectedService.name,
+                price: state.selectedService.price,
+                duration: state.selectedService.time,
+                date: state.selectedDate,
+                time: state.selectedTime,
+                name, 
+                phone, 
+                address, 
+                car,
+                status: 'confirmed',
+                createdAt: new Date().toISOString()
+            };
+
+            state.bookings.push(booking);
+            if (!saveData()) {
+                state.bookings.pop();
+                showToast('Error al guardar la reservación');
+                return;
+            }
+
+            sendWhatsApp(booking);
+            showSuccess();
+        }
+
+        function sendWhatsApp(booking) {
+            const date = new Date(booking.date + 'T00:00:00');
+            const dateStr = date.toLocaleDateString('es-MX', { 
+                weekday: 'long', 
+                day: 'numeric', 
+                month: 'long' 
+            });
+            
+            const service = state.services.find(s => s.name === booking.service);
+            const icon = service ? service.icon : '🚗';
+            
+            const msg = `¡Reservación confirmada! 🚗\n\n${icon} ${booking.service} - ${booking.price}\n📅 ${dateStr}\n🕐 ${booking.time}\n👤 ${booking.name}\n🚗 ${booking.car}\n📍 ${booking.address}`;
+            
+            window.open(`https://wa.me/52${booking.phone}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function showSuccess() {
+            const date = new Date(state.selectedDate + 'T00:00:00');
+            const dateStr = date.toLocaleDateString('es-MX', { 
+                day: 'numeric', 
+                month: 'short' 
+            });
+            
+            document.getElementById('successDetails').innerHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">Servicio</span>
+                    <span class="detail-value">${escapeHtml(state.selectedService.name)}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Precio</span>
+                    <span class="detail-value">${state.selectedService.price}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Fecha</span>
+                    <span class="detail-value">${dateStr}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Hora</span>
+                    <span class="detail-value">${state.selectedTime}</span>
+                </div>
+            `;
+            
+            document.getElementById('successScreen').classList.add('show');
+            
+            setTimeout(() => {
+                document.getElementById('successScreen').classList.remove('show');
+                resetForm();
+            }, 4000);
+        }
+
+        function resetForm() {
+            state.selectedService = null;
+            state.selectedDate = null;
+            state.selectedTime = null;
+            
+            ['inputName', 'inputPhone', 'inputAddress', 'inputCar'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.value = '';
+                    el.classList.remove('error');
+                }
+            });
+            
+            ['errorName', 'errorPhone', 'errorAddress', 'errorCar'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('show');
+            });
+            
+            document.getElementById('floatingSummary').classList.remove('show');
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+            document.querySelector('.card').classList.remove('hidden');
+            
+            document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+            
+            renderServices();
+        }
+
+        function showSection(id) {
+            const element = document.getElementById(id);
+            if (!element) return;
+            
+            element.classList.remove('hidden');
+            setTimeout(() => {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        function updateSummary() {
+            if (state.selectedService) {
+                document.getElementById('summaryTotal').textContent = `${state.selectedService.price}`;
+                document.getElementById('summaryTime').textContent = `${state.selectedService.time} min`;
+                document.getElementById('floatingSummary').classList.add('show');
+            }
+        }
+
+        // Funciones de Admin
+        function showAdminLogin(e) {
+            if (e) e.preventDefault();
+            const pass = prompt('Contraseña de administrador:');
+            if (pass === state.adminPassword) {
+                showAdmin();
+            } else if (pass !== null) {
+                showToast('Contraseña incorrecta');
+            }
+        }
+
+        function showAdmin() {
+            document.getElementById('adminPanel').classList.add('show');
+            document.getElementById('mainContent').style.display = 'none';
+            document.querySelector('.header').style.display = 'none';
+            document.getElementById('adminLink').style.display = 'none';
+            document.getElementById('floatingSummary').classList.remove('show');
+            
+            renderAdminStats();
+            renderAdminServices();
+            renderAdminSchedules();
+            renderAdminBookings();
+        }
+
+        function closeAdmin() {
+            document.getElementById('adminPanel').classList.remove('show');
+            document.getElementById('mainContent').style.display = 'block';
+            document.querySelector('.header').style.display = 'block';
+            document.getElementById('adminLink').style.display = 'block';
+        }
+
+        function renderAdminStats() {
+            const total = state.bookings.filter(b => b.status === 'confirmed').length;
+            
+            const today = new Date().toISOString().split('T')[0];
+            const todayBookings = state.bookings.filter(b => 
+                b.date === today && b.status === 'confirmed'
+            ).length;
+            
+            const now = new Date();
+            const monthBookings = state.bookings.filter(b => {
+                const bookingDate = new Date(b.date);
+                return bookingDate.getMonth() === now.getMonth() && 
+                       bookingDate.getFullYear() === now.getFullYear() &&
+                       b.status === 'confirmed';
+            }).length;
+            
+            const revenue = state.bookings
+                .filter(b => b.status === 'confirmed')
+                .reduce((sum, b) => sum + (b.price || 0), 0);
+            
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statMonth').textContent = monthBookings;
+            document.getElementById('statToday').textContent = todayBookings;
+            document.getElementById('statRevenue').textContent = `${revenue.toLocaleString()}`;
+        }
+
+        function renderAdminServices() {
+            const list = document.getElementById('serviceList');
+            if (!state.services || state.services.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: #8e8e93;">No hay servicios configurados</p>';
+                return;
+            }
+
+            list.innerHTML = state.services.map(s => `
+                <div class="service-item">
+                    <div class="service-info">
+                        <div style="font-size: 20px; margin-bottom: 4px;">${s.icon} ${escapeHtml(s.name)}</div>
+                        <div style="color: #8e8e93; font-size: 14px;">${s.price} • ${s.time} min</div>
+                    </div>
+                    <div class="service-actions">
+                        <button class="btn-edit" onclick="editService(${s.id})">Editar</button>
+                        <button class="btn-delete" onclick="deleteService(${s.id})">Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderAdminSchedules() {
+            const grid = document.getElementById('scheduleGrid');
+            grid.innerHTML = Object.keys(state.schedules).map(day => {
+                const schedule = state.schedules[day];
+                return `
+                    <div class="schedule-item">
+                        <div class="schedule-day">${dayNames[day]}</div>
+                        <div class="schedule-times">
+                            <input type="time" value="${schedule.start}" 
+                                   onchange="updateSchedule(${day}, 'start', this.value)"
+                                   ${!schedule.active ? 'disabled' : ''}>
+                            <span>a</span>
+                            <input type="time" value="${schedule.end}" 
+                                   onchange="updateSchedule(${day}, 'end', this.value)"
+                                   ${!schedule.active ? 'disabled' : ''}>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" ${schedule.active ? 'checked' : ''}
+                                   onchange="updateSchedule(${day}, 'active', this.checked)">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateSchedule(day, field, value) {
+            if (!state.schedules[day]) {
+                state.schedules[day] = { active: false, start: '09:00', end: '18:00' };
+            }
+            state.schedules[day][field] = value;
+        }
+
+        function saveSchedules() {
+            // Validar horarios
+            let valid = true;
+            for (let day in state.schedules) {
+                const sch = state.schedules[day];
+                if (sch.active && sch.start >= sch.end) {
+                    valid = false;
+                    showToast('Los horarios deben ser válidos (inicio < fin)');
+                    break;
+                }
+            }
+            
+            if (valid && saveData()) {
+                showToast('Horarios guardados correctamente');
+                renderDays(); // Actualizar días disponibles
+            }
+        }
+
+        function setBookingFilter(filter) {
+            state.bookingFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === filter);
+            });
+            renderAdminBookings();
+        }
+
+        function filterBookings() {
+            state.searchQuery = document.getElementById('searchBookings').value.toLowerCase();
+            renderAdminBookings();
+        }
+
+        function getFilteredBookings() {
+            let filtered = [...state.bookings];
+            
+            // Filtrar por estado
+            if (state.bookingFilter === 'confirmed') {
+                filtered = filtered.filter(b => b.status === 'confirmed');
+            } else if (state.bookingFilter === 'cancelled') {
+                filtered = filtered.filter(b => b.status === 'cancelled');
+            } else if (state.bookingFilter === 'today') {
+                const today = new Date().toISOString().split('T')[0];
+                filtered = filtered.filter(b => b.date === today);
+            }
+            
+            // Filtrar por búsqueda
+            if (state.searchQuery) {
+                filtered = filtered.filter(b => 
+                    b.name.toLowerCase().includes(state.searchQuery) ||
+                    b.phone.includes(state.searchQuery) ||
+                    b.car.toLowerCase().includes(state.searchQuery) ||
+                    b.service.toLowerCase().includes(state.searchQuery)
+                );
+            }
+            
+            return filtered;
+        }
+
+        function renderAdminBookings() {
+            const tbody = document.getElementById('bookingsTableBody');
+            const filtered = getFilteredBookings();
+            const sorted = filtered.sort((a, b) => {
+                const dateA = new Date(`${a.date}T${a.time}`);
+                const dateB = new Date(`${b.date}T${b.time}`);
+                return dateB - dateA;
+            });
+            
+            if (sorted.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #8e8e93; padding: 20px;">No hay reservaciones</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = sorted.map(b => {
+                const date = new Date(b.date + 'T00:00:00');
+                const dateStr = date.toLocaleDateString('es-MX', { 
+                    day: '2-digit', 
+                    month: 'short' 
+                });
+                
+                return `
+                    <tr>
+                        <td>${dateStr}</td>
+                        <td>${b.time}</td>
+                        <td>${escapeHtml(b.name)}<br><small style="color: #8e8e93;">${b.phone}</small></td>
+                        <td>${escapeHtml(b.service)}</td>
+                        <td>${escapeHtml(b.car)}</td>
+                        <td>${b.price}</td>
+                        <td><span class="booking-status status-${b.status}">${b.status === 'confirmed' ? 'Confirmada' : 'Cancelada'}</span></td>
+                        <td>
+                            ${b.status === 'confirmed' ? 
+                                `<button class="btn-edit" onclick="editBooking(${b.id})" style="margin-right: 4px;">Editar</button>
+                                 <button class="btn-delete" onclick="cancelBooking(${b.id})">Cancelar</button>` :
+                                `<button class="btn-delete" onclick="deleteBookingPermanent(${b.id})">Eliminar</button>`
+                            }
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function editBooking(id) {
+            const booking = state.bookings.find(b => b.id === id);
+            if (!booking) return;
+            
+            state.editingBookingId = id;
+            
+            document.getElementById('editBookingName').value = booking.name;
+            document.getElementById('editBookingPhone').value = booking.phone;
+            document.getElementById('editBookingAddress').value = booking.address;
+            document.getElementById('editBookingCar').value = booking.car;
+            document.getElementById('editBookingDate').value = booking.date;
+            document.getElementById('editBookingTime').value = booking.time;
+            
+            document.getElementById('bookingModal').classList.add('show');
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.remove('show');
+            state.editingBookingId = null;
+        }
+
+        function saveBookingEdit() {
+            const booking = state.bookings.find(b => b.id === state.editingBookingId);
+            if (!booking) return;
+            
+            const name = document.getElementById('editBookingName').value.trim();
+            const phone = document.getElementById('editBookingPhone').value.trim();
+            const address = document.getElementById('editBookingAddress').value.trim();
+            const car = document.getElementById('editBookingCar').value.trim();
+            const date = document.getElementById('editBookingDate').value;
+            const time = document.getElementById('editBookingTime').value;
+            
+            // Validaciones básicas
+            if (!name || name.length < 2) {
+                showToast('Nombre inválido');
+                return;
+            }
+            if (!/^[0-9]{10}$/.test(phone)) {
+                showToast('Teléfono debe tener 10 dígitos');
+                return;
+            }
+            if (!address || address.length < 5) {
+                showToast('Dirección inválida');
+                return;
+            }
+            if (!car || car.length < 3) {
+                showToast('Datos del auto inválidos');
+                return;
+            }
+            if (!date || !time) {
+                showToast('Fecha y hora requeridas');
+                return;
+            }
+            
+            // Actualizar booking
+            booking.name = name;
+            booking.phone = phone;
+            booking.address = address;
+            booking.car = car;
+            booking.date = date;
+            booking.time = time;
+            
+            if (saveData()) {
+                closeBookingModal();
+                renderAdminBookings();
+                showToast('Reservación actualizada');
+            }
+        }
+
+        function cancelBooking(id) {
+            if (confirm('¿Cancelar esta reservación?')) {
+                const booking = state.bookings.find(b => b.id === id);
+                if (booking) {
+                    booking.status = 'cancelled';
+                    if (saveData()) {
+                        renderAdminBookings();
+                        renderAdminStats();
+                        showToast('Reservación cancelada');
+                    }
+                }
+            }
+        }
+
+        function deleteBookingPermanent(id) {
+            if (confirm('¿Eliminar permanentemente esta reservación?')) {
+                state.bookings = state.bookings.filter(b => b.id !== id);
+                if (saveData()) {
+                    renderAdminBookings();
+                    renderAdminStats();
+                    showToast('Reservación eliminada');
+                }
+            }
+        }
+
+        // Modal de Servicios
+        function showServiceModal(id = null) {
+            state.editingServiceId = id;
+            const modal = document.getElementById('serviceModal');
+            
+            if (id) {
+                const service = state.services.find(s => s.id === id);
+                if (service) {
+                    document.getElementById('serviceModalTitle').textContent = 'Editar Servicio';
+                    document.getElementById('serviceName').value = service.name;
+                    document.getElementById('servicePrice').value = service.price;
+                    document.getElementById('serviceTime').value = service.time;
+                    document.getElementById('serviceIcon').value = service.icon;
+                }
+            } else {
+                document.getElementById('serviceModalTitle').textContent = 'Nuevo Servicio';
+                document.getElementById('serviceName').value = '';
+                document.getElementById('servicePrice').value = '';
+                document.getElementById('serviceTime').value = '30';
+                document.getElementById('serviceIcon').value = '🚗';
+            }
+            
+            modal.classList.add('show');
+        }
+
+        function closeServiceModal() {
+            document.getElementById('serviceModal').classList.remove('show');
+            state.editingServiceId = null;
+        }
+
+        function saveService() {
+            const name = document.getElementById('serviceName').value.trim();
+            const price = parseInt(document.getElementById('servicePrice').value);
+            const time = parseInt(document.getElementById('serviceTime').value);
+            const icon = document.getElementById('serviceIcon').value.trim() || '🚗';
+            
+            if (!name || name.length < 2) {
+                showToast('El nombre debe tener al menos 2 caracteres');
+                return;
+            }
+            if (!price || price < 0) {
+                showToast('El precio debe ser mayor a 0');
+                return;
+            }
+            if (!time || time < 15) {
+                showToast('La duración debe ser al menos 15 minutos');
+                return;
+            }
+            
+            const gradients = [
+                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+                'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)'
+            ];
+            
+            if (state.editingServiceId) {
+                const service = state.services.find(s => s.id === state.editingServiceId);
+                if (service) {
+                    service.name = name;
+                    service.price = price;
+                    service.time = time;
+                    service.icon = icon;
+                }
+            } else {
+                const newService = {
+                    id: Date.now(),
+                    name,
+                    price,
+                    time,
+                    icon,
+                    gradient: gradients[state.services.length % gradients.length]
+                };
+                state.services.push(newService);
+            }
+            
+            if (saveData()) {
+                closeServiceModal();
+                renderAdminServices();
+                renderServices();
+                showToast('Servicio guardado');
+            }
+        }
+
+        function editService(id) {
+            showServiceModal(id);
+        }
+
+        function deleteService(id) {
+            if (state.services.length === 1) {
+                showToast('Debe haber al menos un servicio');
+                return;
+            }
+            
+            if (confirm('¿Eliminar este servicio? Esta acción no se puede deshacer.')) {
+                state.services = state.services.filter(s => s.id !== id);
+                if (saveData()) {
+                    renderAdminServices();
+                    renderServices();
+                    showToast('Servicio eliminado');
+                }
+            }
+        }
+
+        // Cambiar contraseña
+        function togglePasswordVisibility() {
+            const input = document.getElementById('adminPassword');
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        function changeAdminPassword() {
+            const newPassword = document.getElementById('adminPassword').value.trim();
+            
+            if (!newPassword || newPassword.length < 4) {
+                showToast('La contraseña debe tener al menos 4 caracteres');
+                return;
+            }
+            
+            if (confirm('¿Cambiar la contraseña de administrador?')) {
+                state.adminPassword = newPassword;
+                if (saveData()) {
+                    document.getElementById('adminPassword').value = '';
+                    showToast('Contraseña actualizada correctamente');
+                }
+            }
+        }
+
+        // Limpiar reservaciones antiguas
+        function cleanOldBookings() {
+            const sixMonthsAgo = new Date();
+            sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+            
+            const before = state.bookings.length;
+            state.bookings = state.bookings.filter(b => {
+                const bookingDate = new Date(b.date);
+                return bookingDate >= sixMonthsAgo || b.status === 'confirmed';
+            });
+            
+            const deleted = before - state.bookings.length;
+            
+            if (deleted > 0) {
+                if (saveData()) {
+                    showToast(`${deleted} reservación${deleted > 1 ? 'es' : ''} antigua${deleted > 1 ? 's' : ''} eliminada${deleted > 1 ? 's' : ''}`);
+                    renderAdminBookings();
+                    renderAdminStats();
+                }
+            } else {
+                showToast('No hay reservaciones antiguas para limpiar');
+            }
+        }
+
+        // Exportar / Importar
+        function exportData() {
+            try {
+                const data = {
+                    version: '1.1',
+                    exportDate: new Date().toISOString(),
+                    bookings: state.bookings,
+                    services: state.services,
+                    schedules: state.schedules,
+                    stats: {
+                        totalBookings: state.bookings.length,
+                        confirmedBookings: state.bookings.filter(b => b.status === 'confirmed').length
+                    }
+                };
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `carwash-backup-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast('Backup descargado correctamente');
+            } catch (error) {
+                console.error('Export error:', error);
+                showToast('Error al exportar datos');
+            }
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    if (!data.version || !data.bookings || !data.services || !data.schedules) {
+                        throw new Error('Formato de archivo inválido');
+                    }
+                    
+                    // Validar estructura de datos
+                    if (!Array.isArray(data.bookings) || !Array.isArray(data.services)) {
+                        throw new Error('Datos corruptos en el archivo');
+                    }
+                    
+                    if (confirm(`¿Importar estos datos?\n\nReservaciones: ${data.bookings.length}\nServicios: ${data.services.length}\n\nEsto reemplazará todos los datos actuales.`)) {
+                        state.bookings = data.bookings;
+                        state.services = data.services.length > 0 ? data.services : [...defaultServices];
+                        state.schedules = data.schedules;
+                        
+                        if (saveData()) {
+                            showToast('Datos importados correctamente');
+                            renderAdminStats();
+                            renderAdminServices();
+                            renderAdminSchedules();
+                            renderAdminBookings();
+                            renderServices();
+                        }
+                    }
+                } catch (error) {
+                    console.error('Import error:', error);
+                    showToast('Error: archivo inválido o corrupto');
+                }
+            };
+            reader.onerror = () => {
+                showToast('Error al leer el archivo');
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function exportCSV() {
+            if (state.bookings.length === 0) {
+                showToast('No hay reservaciones para exportar');
+                return;
+            }
+            
+            try {
+                const headers = ['Fecha', 'Hora', 'Cliente', 'Teléfono', 'Servicio', 'Auto', 'Dirección', 'Precio', 'Duración', 'Estado'];
+                const rows = state.bookings.map(b => [
+                    b.date,
+                    b.time,
+                    b.name,
+                    b.phone,
+                    b.service,
+                    b.car,
+                    b.address,
+                    b.price,
+                    b.duration,
+                    b.status === 'confirmed' ? 'Confirmada' : 'Cancelada'
+                ]);
+                
+                const csv = [headers, ...rows].map(row => 
+                    row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')
+                ).join('\n');
+                
+                const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `reservaciones-${new Date().toISOString().split('T')[0]}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast('CSV exportado correctamente');
+            } catch (error) {
+                console.error('CSV export error:', error);
+                showToast('Error al exportar CSV');
+            }
+        }
+
+        function clearAllData() {
+            const confirm1 = prompt('⚠️ ADVERTENCIA: Esta acción eliminará TODOS los datos.\n\nEscribe "ELIMINAR" para confirmar:');
+            if (confirm1 !== 'ELIMINAR') {
+                showToast('Operación cancelada');
+                return;
+            }
+            
+            const confirm2 = confirm('¿Estás completamente seguro? Esta acción NO se puede deshacer.');
+            if (!confirm2) {
+                showToast('Operación cancelada');
+                return;
+            }
+            
+            try {
+                localStorage.removeItem('carwash_bookings');
+                localStorage.removeItem('carwash_services');
+                localStorage.removeItem('carwash_schedules');
+                localStorage.removeItem('carwash_admin_password');
+                
+                state.bookings = [];
+                state.services = [...defaultServices];
+                state.schedules = {...defaultSchedules};
+                state.adminPassword = '2024';
+                
+                saveData();
+                
+                showToast('Todos los datos han sido eliminados');
+                renderAdminStats();
+                renderAdminServices();
+                renderAdminSchedules();
+                renderAdminBookings();
+                renderServices();
+            } catch (error) {
+                console.error('Clear data error:', error);
+                showToast('Error al eliminar datos');
+            }
+        }
+
+        // Utilidades
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Validación de integridad de datos
+        function validateDataIntegrity() {
+            let fixed = false;
+            
+            // Eliminar reservaciones duplicadas
+            const seen = new Set();
+            const uniqueBookings = [];
+            state.bookings.forEach(b => {
+                const key = `${b.date}-${b.time}-${b.phone}`;
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    uniqueBookings.push(b);
+                } else {
+                    fixed = true;
+                }
+            });
+            state.bookings = uniqueBookings;
+            
+            // Verificar que todos los servicios tengan los campos necesarios
+            state.services = state.services.filter(s => {
+                return s.id && s.name && s.price >= 0 && s.time > 0;
+            });
+            
+            // Asegurar que haya al menos un servicio
+            if (state.services.length === 0) {
+                state.services = [...defaultServices];
+                fixed = true;
+            }
+            
+            // Verificar que todos los horarios existan
+            for (let i = 0; i < 7; i++) {
+                if (!state.schedules[i]) {
+                    state.schedules[i] = {...defaultSchedules[i]};
+                    fixed = true;
+                }
+            }
+            
+            // Limpiar reservaciones con datos incompletos
+            state.bookings = state.bookings.filter(b => {
+                return b.id && b.name && b.phone && b.date && b.time && b.service;
+            });
+            
+            if (fixed) {
+                saveData();
+                console.log('Data integrity check: fixed issues');
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            validateDataIntegrity();
+            renderServices();
+        });
+
+        // Cerrar modales al hacer clic fuera
+        document.getElementById('serviceModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeServiceModal();
+            }
+        });
+
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBookingModal();
+            }
+        });
+
+        // Formatear teléfono automáticamente
+        document.getElementById('inputPhone').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        document.getElementById('editBookingPhone').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // Validación en tiempo real
+        document.getElementById('inputName').addEventListener('blur', function() {
+            if (this.value.trim().length >= 2) {
+                hideError(this, 'errorName');
+            }
+        });
+
+        document.getElementById('inputPhone').addEventListener('blur', function() {
+            if (/^[0-9]{10}$/.test(this.value.trim())) {
+                hideError(this, 'errorPhone');
+            }
+        });
+
+        document.getElementById('inputAddress').addEventListener('blur', function() {
+            if (this.value.trim().length >= 5) {
+                hideError(this, 'errorAddress');
+            }
+        });
+
+        document.getElementById('inputCar').addEventListener('blur', function() {
+            if (this.value.trim().length >= 3) {
+                hideError(this, 'errorCar');
+            }
+        });
+
+        // Prevenir pérdida de datos al cerrar
+        window.addEventListener('beforeunload', function(e) {
+            if (state.selectedService || state.selectedDate || state.selectedTime) {
+                const inputs = ['inputName', 'inputPhone', 'inputAddress', 'inputCar'];
+                const hasData = inputs.some(id => {
+                    const el = document.getElementById(id);
+                    return el && el.value.trim();
+                });
+                
+                if (hasData) {
+                    e.preventDefault();
+                    e.returnValue = '¿Seguro que quieres salir? Perderás los datos del formulario.';
+                }
+            }
+        });
+
+        // Manejo de errores globales
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', e.error);
+            showToast('Ocurrió un error inesperado');
+        });
+
+        // Auto-guardar periódicamente
+        setInterval(() => {
+            if (state.bookings.length > 0) {
+                try {
+                    const backup = {
+                        timestamp: new Date().toISOString(),
+                        bookings: state.bookings.length,
+                        lastBooking: state.bookings[state.bookings.length - 1]
+                    };
+                    sessionStorage.setItem('carwash_session_backup', JSON.stringify(backup));
+                } catch (e) {
+                    // Silent fail
+                }
+            }
+        }, 60000);
+
+        // Inicializar
+        loadData();
+        validateDataIntegrity();
+        renderServices();
+    </script>
+</body>
+</html>
