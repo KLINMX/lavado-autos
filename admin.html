@@ -2,788 +2,137 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Panel de administración de AutoWash Pro">
-<meta name="robots" content="noindex, nofollow">
-<title>Admin - AutoWash Pro</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Panel de administración seguro - AutoWash Pro. Gestión de reservaciones y estadísticas en tiempo real.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1e40af">
+<title>Admin Panel - AutoWash Pro</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --primary: #1e40af;
-  --primary-dark: #1e3a8a;
-  --success: #059669;
-  --success-light: #d1fae5;
-  --danger: #dc2626;
-  --danger-light: #fee2e2;
-  --warning: #d97706;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-900: #111827;
-  --white: #ffffff;
-  --radius: 12px;
-  --shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-  --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --transition: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-}
-
-body {
-  font-family: 'Inter', -apple-system, sans-serif;
-  background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 50%);
-  color: var(--gray-900);
-  line-height: 1.6;
-  min-height: 100vh;
-}
-
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: clamp(16px, 4vw, 32px);
-}
-
-/* Login Screen */
-.login-wrapper {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.login-card {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius);
-  padding: 40px;
-  max-width: 440px;
-  width: 100%;
-  box-shadow: var(--shadow-md);
-  animation: fadeIn 0.5s var(--transition);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.login-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 28px;
-}
-
-.logo {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 20px;
-  color: var(--white);
-  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
-}
-
-.login-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--gray-900);
-  margin-bottom: 4px;
-}
-
-.login-subtitle {
-  font-size: 0.9rem;
-  color: var(--gray-500);
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--gray-700);
-  font-size: 0.95rem;
-}
-
-.form-control {
-  width: 100%;
-  padding: 12px 16px;
-  background: var(--white);
-  border: 2px solid var(--gray-300);
-  border-radius: var(--radius);
-  color: var(--gray-900);
-  font-size: 1rem;
-  font-family: inherit;
-  transition: all 0.3s var(--transition);
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
-}
-
-.form-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 24px;
-}
-
-.btn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: var(--radius);
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.3s var(--transition);
-  font-family: inherit;
-  flex: 1;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: var(--white);
-  box-shadow: 0 4px 6px rgba(30, 64, 175, 0.2);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 12px rgba(30, 64, 175, 0.3);
-}
-
-.btn-secondary {
-  background: var(--white);
-  border: 2px solid var(--gray-300);
-  color: var(--gray-700);
-}
-
-.btn-secondary:hover {
-  background: var(--gray-50);
-}
-
-.btn-danger {
-  background: var(--danger);
-  color: var(--white);
-  box-shadow: 0 4px 6px rgba(220, 38, 38, 0.2);
-  padding: 8px 16px;
-  font-size: 0.85rem;
-}
-
-.btn-link {
-  background: transparent;
-  color: var(--primary);
-  border: none;
-  padding: 8px 16px;
-  font-size: 0.85rem;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.message {
-  margin-top: 16px;
-  padding: 12px;
-  border-radius: var(--radius);
-  font-size: 0.9rem;
-  text-align: center;
-}
-
-.message.error {
-  background: var(--danger-light);
-  color: var(--danger);
-  border: 1px solid var(--danger);
-}
-
-.message.info {
-  background: var(--gray-100);
-  color: var(--gray-700);
-}
-
-/* App Screen */
-.header {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius);
-  padding: 20px;
-  box-shadow: var(--shadow);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.header-brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.header-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--gray-900);
-}
-
-.header-subtitle {
-  font-size: 0.85rem;
-  color: var(--gray-500);
-}
-
-/* Stats Grid */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.stat-card {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius);
-  padding: 20px;
-  box-shadow: var(--shadow);
-  transition: transform 0.3s var(--transition);
-}
-
-.stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.stat-label {
-  font-size: 0.85rem;
-  color: var(--gray-500);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
-}
-
-.stat-value {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--gray-900);
-}
-
-.stat-card.primary .stat-value {
-  color: var(--primary);
-}
-
-.stat-card.success .stat-value {
-  color: var(--success);
-}
-
-/* Table Card */
-.table-card {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius);
-  padding: 24px;
-  box-shadow: var(--shadow);
-}
-
-.table-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.table-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--gray-900);
-}
-
-.search-input {
-  width: 100%;
-  max-width: 300px;
-  padding: 10px 14px;
-  border: 2px solid var(--gray-300);
-  border-radius: var(--radius);
-  font-size: 0.9rem;
-  font-family: inherit;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--primary);
-}
-
-.table-wrapper {
-  overflow-x: auto;
-  border-radius: var(--radius);
-  border: 1px solid var(--gray-200);
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-
-.table thead {
-  background: var(--gray-50);
-}
-
-.table th {
-  padding: 14px 12px;
-  text-align: left;
-  font-weight: 600;
-  color: var(--gray-700);
-  border-bottom: 2px solid var(--gray-200);
-  white-space: nowrap;
-}
-
-.table td {
-  padding: 14px 12px;
-  border-bottom: 1px solid var(--gray-200);
-  color: var(--gray-900);
-}
-
-.table tbody tr:hover {
-  background: var(--gray-50);
-}
-
-.table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.status-badge {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.status-confirmed {
-  background: var(--success-light);
-  color: var(--success);
-}
-
-.status-cancelled {
-  background: var(--danger-light);
-  color: var(--danger);
-}
-
-.table-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--gray-500);
-}
-
-.empty-icon {
-  font-size: 3rem;
-  margin-bottom: 16px;
-  opacity: 0.5;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .login-card {
-    padding: 28px 20px;
-  }
-  
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .table-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .search-input {
-    max-width: 100%;
-  }
-  
-  .table {
-    font-size: 0.85rem;
-  }
-  
-  .table th,
-  .table td {
-    padding: 10px 8px;
-  }
-  
-  .table-actions {
-    flex-direction: column;
-  }
-  
-  .btn {
-    font-size: 0.85rem;
-    padding: 8px 14px;
-  }
-}
+:root{--primary:#1e40af;--primary-dark:#1e3a8a;--success:#059669;--success-light:#d1fae5;--danger:#dc2626;--danger-light:#fee2e2;--warning:#d97706;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;--gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;--gray-900:#111827;--white:#fff;--radius:12px;--shadow:0 4px 6px rgba(0,0,0,.07);--shadow-md:0 10px 15px rgba(0,0,0,.1);--transition:cubic-bezier(.4,0,.2,1)}*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:Inter,-apple-system,sans-serif;background:linear-gradient(135deg,var(--gray-50) 0%,var(--white) 50%);color:var(--gray-900);line-height:1.6;min-height:100vh}.container{max-width:1400px;margin:0 auto;padding:clamp(16px,4vw,32px)}.login-wrapper{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}.login-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:40px;max-width:440px;width:100%;box-shadow:var(--shadow-md);animation:fadeIn .5s var(--transition)}@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.login-header{display:flex;align-items:center;gap:14px;margin-bottom:28px}.logo{width:56px;height:56px;border-radius:var(--radius);background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:var(--white);box-shadow:0 4px 12px rgba(30,64,175,.3)}.login-title{font-size:1.3rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}.login-subtitle{font-size:.9rem;color:var(--gray-500)}.form-group{margin-bottom:20px}.form-label{display:block;font-weight:600;margin-bottom:8px;color:var(--gray-700);font-size:.95rem}.form-control{width:100%;padding:12px 16px;background:var(--white);border:2px solid var(--gray-300);border-radius:var(--radius);color:var(--gray-900);font-size:1rem;font-family:inherit;transition:all .3s var(--transition)}.form-control:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 4px rgba(30,64,175,.1)}.form-actions{display:flex;gap:10px;margin-top:24px}.btn{padding:12px 24px;border:none;border-radius:var(--radius);font-weight:600;font-size:.95rem;cursor:pointer;transition:all .3s var(--transition);font-family:inherit;flex:1}.btn-primary{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:var(--white);box-shadow:0 4px 6px rgba(30,64,175,.2)}.btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 12px rgba(30,64,175,.3)}.btn-secondary{background:var(--white);border:2px solid var(--gray-300);color:var(--gray-700)}.btn-secondary:hover{background:var(--gray-50)}.btn-danger{background:var(--danger);color:var(--white);box-shadow:0 4px 6px rgba(220,38,38,.2);padding:8px 16px;font-size:.85rem}.btn-danger:hover:not(:disabled){background:#b91c1c;transform:translateY(-1px)}.btn-link{background:0 0;color:var(--primary);border:none;padding:8px 16px;font-size:.85rem;text-decoration:none;display:inline-block}.btn:disabled{opacity:.5;cursor:not-allowed}.message{margin-top:16px;padding:12px;border-radius:var(--radius);font-size:.9rem;text-align:center;animation:slideIn .3s var(--transition)}@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.message.error{background:var(--danger-light);color:var(--danger);border:1px solid var(--danger)}.message.info{background:var(--gray-100);color:var(--gray-700)}.header{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:16px;flex-wrap:wrap}.header-brand{display:flex;align-items:center;gap:14px}.header-title{font-size:1.2rem;font-weight:700;color:var(--gray-900)}.header-subtitle{font-size:.85rem;color:var(--gray-500)}.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}.stat-card{background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);transition:transform .3s var(--transition)}.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}.stat-label{font-size:.85rem;color:var(--gray-500);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}.stat-value{font-size:2rem;font-weight:800;color:var(--gray-900)}.stat-card.primary .stat-value{color:var(--primary)}.stat-card.success .stat-value{color:var(--success)}.table-card{background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border:1px solid var(--gray-200);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}.table-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:16px;flex-wrap:wrap}.table-title{font-size:1.2rem;font-weight:700;color:var(--gray-900)}.search-input{width:100%;max-width:300px;padding:10px 14px;border:2px solid var(--gray-300);border-radius:var(--radius);font-size:.9rem;font-family:inherit;transition:all .3s var(--transition)}.search-input:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 3px rgba(30,64,175,.1)}.table-wrapper{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--gray-200)}.table{width:100%;border-collapse:collapse;font-size:.9rem}.table thead{background:var(--gray-50)}.table th{padding:14px 12px;text-align:left;font-weight:600;color:var(--gray-700);border-bottom:2px solid var(--gray-200);white-space:nowrap}.table td{padding:14px 12px;border-bottom:1px solid var(--gray-200);color:var(--gray-900)}.table tbody tr{transition:background .2s var(--transition)}.table tbody tr:hover{background:var(--gray-50)}.table tbody tr:last-child td{border-bottom:none}.status-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.8rem;font-weight:600}.status-confirmed{background:var(--success-light);color:var(--success)}.status-cancelled{background:var(--danger-light);color:var(--danger)}.table-actions{display:flex;gap:8px;flex-wrap:wrap}.empty-state{text-align:center;padding:60px 20px;color:var(--gray-500)}.empty-icon{font-size:3rem;margin-bottom:16px;opacity:.5}@media(max-width:768px){.login-card{padding:28px 20px}.header{flex-direction:column;align-items:flex-start}.table-header{flex-direction:column;align-items:stretch}.search-input{max-width:100%}.table{font-size:.85rem}.table th,.table td{padding:10px 8px}.table-actions{flex-direction:column}.btn{font-size:.85rem;padding:8px 14px}}
 </style>
 </head>
 
 <body>
-  <!-- Login Screen -->
-  <div id="loginScreen" class="login-wrapper">
-    <div class="login-card">
-      <div class="login-header">
-        <div class="logo">AW</div>
-        <div>
-          <div class="login-title">Panel de Administración</div>
-          <div class="login-subtitle">AutoWash Pro</div>
-        </div>
-      </div>
+<div id="loginScreen" class="login-wrapper">
+<div class="login-card">
+<div class="login-header">
+<div class="logo">AW</div>
+<div>
+<div class="login-title">Panel de Administración</div>
+<div class="login-subtitle">AutoWash Pro</div>
+</div>
+</div>
 
-      <form id="loginForm">
-        <div class="form-group">
-          <label for="email" class="form-label">Correo Electrónico</label>
-          <input 
-            type="email" 
-            id="email" 
-            class="form-control" 
-            placeholder="admin@autowash.com"
-            autocomplete="email"
-            required
-          >
-        </div>
+<form id="loginForm">
+<div class="form-group">
+<label for="email" class="form-label">Correo Electrónico</label>
+<input type="email" id="email" class="form-control" placeholder="admin@autowash.com" autocomplete="email" required>
+</div>
 
-        <div class="form-group">
-          <label for="password" class="form-label">Contraseña</label>
-          <input 
-            type="password" 
-            id="password" 
-            class="form-control" 
-            placeholder="••••••••"
-            autocomplete="current-password"
-            required
-          >
-        </div>
+<div class="form-group">
+<label for="password" class="form-label">Contraseña</label>
+<input type="password" id="password" class="form-control" placeholder="••••••••" autocomplete="current-password" required>
+</div>
 
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary" id="loginBtn">
-            Iniciar Sesión
-          </button>
-          <button type="button" class="btn btn-secondary" id="backBtn">
-            Volver
-          </button>
-        </div>
+<div class="form-actions">
+<button type="submit" class="btn btn-primary" id="loginBtn">Iniciar Sesión</button>
+<button type="button" class="btn btn-secondary" id="backBtn">Volver</button>
+</div>
 
-        <div id="loginMessage" style="display: none;"></div>
-      </form>
-    </div>
-  </div>
+<div id="loginMessage" style="display:none"></div>
+</form>
+</div>
+</div>
 
-  <!-- App Screen -->
-  <div id="appScreen" style="display: none;">
-    <div class="container">
-      <!-- Header -->
-      <header class="header">
-        <div class="header-brand">
-          <div class="logo">AW</div>
-          <div>
-            <div class="header-title">Panel de Administración</div>
-            <div class="header-subtitle">AutoWash Pro</div>
-          </div>
-        </div>
-        <button class="btn btn-secondary" id="logoutBtn">
-          Cerrar Sesión
-        </button>
-      </header>
+<div id="appScreen" style="display:none">
+<div class="container">
+<header class="header">
+<div class="header-brand">
+<div class="logo">AW</div>
+<div>
+<div class="header-title">Panel de Administración</div>
+<div class="header-subtitle">AutoWash Pro</div>
+</div>
+</div>
+<button class="btn btn-secondary" id="logoutBtn">Cerrar Sesión</button>
+</header>
 
-      <!-- Stats -->
-      <div class="stats-grid">
-        <div class="stat-card primary">
-          <div class="stat-label">Total Reservaciones</div>
-          <div class="stat-value" id="statTotal">0</div>
-        </div>
-        <div class="stat-card success">
-          <div class="stat-label">Reservas Hoy</div>
-          <div class="stat-value" id="statToday">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Ingresos Totales</div>
-          <div class="stat-value" id="statRevenue">$0</div>
-        </div>
-      </div>
+<div class="stats-grid">
+<div class="stat-card primary">
+<div class="stat-label">Total Reservaciones</div>
+<div class="stat-value" id="statTotal">0</div>
+</div>
+<div class="stat-card success">
+<div class="stat-label">Reservas Hoy</div>
+<div class="stat-value" id="statToday">0</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">Ingresos Totales</div>
+<div class="stat-value" id="statRevenue">$0</div>
+</div>
+</div>
 
-      <!-- Table -->
-      <div class="table-card">
-        <div class="table-header">
-          <h2 class="table-title">Reservaciones Recientes</h2>
-          <input 
-            type="search" 
-            id="searchInput" 
-            class="search-input" 
-            placeholder="Buscar por cliente, teléfono o servicio..."
-            aria-label="Buscar reservaciones"
-          >
-        </div>
+<div class="table-card">
+<div class="table-header">
+<h2 class="table-title">Reservaciones Recientes</h2>
+<input type="search" id="searchInput" class="search-input" placeholder="Buscar por cliente, teléfono o servicio..." aria-label="Buscar reservaciones">
+</div>
 
-        <div class="table-wrapper">
-          <table class="table" role="table">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Cliente</th>
-                <th>Servicio</th>
-                <th>Precio</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="tableBody">
-              <tr>
-                <td colspan="7">
-                  <div class="empty-state">
-                    <div class="empty-icon">⏳</div>
-                    <div>Cargando reservaciones...</div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="table-wrapper">
+<table class="table" role="table">
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Hora</th>
+<th>Cliente</th>
+<th>Servicio</th>
+<th>Precio</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody id="tableBody">
+<tr>
+<td colspan="7">
+<div class="empty-state">
+<div class="empty-icon">⏳</div>
+<div>Cargando reservaciones...</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
-  <script>
-    'use strict';
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyClriIvCnIc9ZgJrw08YNsfxtnECrQ6OFE",
-      authDomain: "kl-n-12f7b.firebaseapp.com",
-      databaseURL: "https://kl-n-12f7b-default-rtdb.firebaseio.com",
-      projectId: "kl-n-12f7b",
-      storageBucket: "kl-n-12f7b.firebasestorage.app",
-      messagingSenderId: "941333228893",
-      appId: "1:941333228893:web:3bbdb9ad91475ed3a2ccb4"
-    };
-
-    let app, auth, database;
-    const state = { bookings: [] };
-
-    const $ = id => document.getElementById(id);
-    const escapeHtml = str => {
-      const div = document.createElement('div');
-      div.textContent = str;
-      return div.innerHTML;
-    };
-
-    function init() {
-      app = firebase.initializeApp(firebaseConfig);
-      auth = firebase.auth();
-      database = firebase.database();
-
-      auth.onAuthStateChanged(user => {
-        if (user) {
-          $('loginScreen').style.display = 'none';
-          $('appScreen').style.display = '';
-          loadBookings();
-        } else {
-          $('loginScreen').style.display = '';
-          $('appScreen').style.display = 'none';
-        }
-      });
-
-      $('loginForm').addEventListener('submit', handleLogin);
-      $('backBtn').addEventListener('click', () => window.location.href = 'index.html');
-      $('logoutBtn').addEventListener('click', () => auth.signOut());
-      $('searchInput').addEventListener('input', renderBookings);
-    }
-
-    async function handleLogin(e) {
-      e.preventDefault();
-      
-      const email = $('email').value.trim();
-      const password = $('password').value;
-      const messageEl = $('loginMessage');
-
-      if (!email || !password) {
-        showMessage('Por favor completa todos los campos', 'error');
-        return;
-      }
-
-      messageEl.textContent = 'Iniciando sesión...';
-      messageEl.className = 'message info';
-      messageEl.style.display = 'block';
-
-      try {
-        await auth.signInWithEmailAndPassword(email, password);
-        messageEl.style.display = 'none';
-      } catch (error) {
-        console.error(error);
-        showMessage('Error: ' + (error.message || 'No se pudo iniciar sesión'), 'error');
-      }
-    }
-
-    function showMessage(text, type) {
-      const messageEl = $('loginMessage');
-      messageEl.textContent = text;
-      messageEl.className = `message ${type}`;
-      messageEl.style.display = 'block';
-    }
-
-    function loadBookings() {
-      database.ref('bookings').on('value', snap => {
-        state.bookings = snap.val() ? Object.values(snap.val()) : [];
-        renderBookings();
-        renderStats();
-      });
-    }
-
-    function renderBookings() {
-      const tbody = $('tableBody');
-      const query = $('searchInput').value.trim().toLowerCase();
-      
-      let filtered = state.bookings;
-      if (query) {
-        filtered = state.bookings.filter(b => 
-          (b.name || '').toLowerCase().includes(query) ||
-          (b.phone || '').includes(query) ||
-          (b.service || '').toLowerCase().includes(query)
-        );
-      }
-
-      if (!filtered.length) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="7">
-              <div class="empty-state">
-                <div class="empty-icon">📭</div>
-                <div>${query ? 'No se encontraron resultados' : 'No hay reservaciones'}</div>
-              </div>
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      const sorted = filtered.sort((a, b) => 
-        new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
-      );
-
-      tbody.innerHTML = sorted.map(booking => {
-        const date = new Date(booking.date + 'T' + (booking.time || '00:00'));
-        const dateStr = date.toLocaleDateString('es-MX', { 
-          day: '2-digit', 
-          month: 'short' 
-        });
-
-        return `
-          <tr>
-            <td>${dateStr}</td>
-            <td>${booking.time || '—'}</td>
-            <td>
-              <div style="font-weight: 600;">${escapeHtml(booking.name || '—')}</div>
-              <div style="font-size: 0.85rem; color: var(--gray-500);">${escapeHtml(booking.phone || '')}</div>
-            </td>
-            <td>${escapeHtml(booking.service || '—')}</td>
-            <td style="font-weight: 600;">$${booking.price || 0}</td>
-            <td>
-              <span class="status-badge ${booking.status === 'confirmed' ? 'status-confirmed' : 'status-cancelled'}">
-                ${booking.status === 'confirmed' ? 'Confirmada' : 'Cancelada'}
-              </span>
-            </td>
-            <td>
-              <div class="table-actions">
-                ${booking.status === 'confirmed' ? 
-                  `<button class="btn btn-danger" data-id="${booking.id}" data-action="cancel">Cancelar</button>` :
-                  `<button class="btn btn-danger" data-id="${booking.id}" data-action="delete">Eliminar</button>`
-                }
-                <a class="btn btn-link" href="recibo.html?id=${encodeURIComponent(booking.id)}" target="_blank">Recibo</a>
-              </div>
-            </td>
-          </tr>
-        `;
-      }).join('');
-
-      tbody.querySelectorAll('[data-action]').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          const id = btn.dataset.id;
-          const action = btn.dataset.action;
-
-          if (action === 'cancel') {
-            if (!confirm('¿Cancelar esta reservación?')) return;
-            await updateBooking(id, { status: 'cancelled' });
-          }
-
-          if (action === 'delete') {
-            if (!confirm('¿Eliminar permanentemente esta reservación?')) return;
-            await deleteBooking(id);
-          }
-        });
-      });
-    }
-
-    async function updateBooking(id, data) {
-      try {
-        await database.ref('bookings/' + id).update(data);
-        alert('Reservación actualizada');
-      } catch (error) {
-        console.error(error);
-        alert('Error al actualizar');
-      }
-    }
-
-    async function deleteBooking(id) {
-      try {
-        await database.ref('bookings/' + id).remove();
-        alert('Reservación eliminada');
-      } catch (error) {
-        console.error(error);
-        alert('Error al eliminar');
-      }
-    }
-
-    function renderStats() {
-      const confirmed = state.bookings.filter(b => b.status === 'confirmed');
-      const today = new Date().toISOString().split('T')[0];
-      const todayBookings = confirmed.filter(b => b.date === today);
-      const revenue = confirmed.reduce((sum, b) => sum + (Number(b.price) || 0), 0);
-
-      $('statTotal').textContent = confirmed.length;
-      $('statToday').textContent = todayBookings.length;
-      $('statRevenue').textContent = '$' + revenue.toLocaleString();
-    }
-
-    document.addEventListener('DOMContentLoaded', init);
-  </script>
+<script>
+'use strict';
+const firebaseConfig={apiKey:"AIzaSyClriIvCnIc9ZgJrw08YNsfxtnECrQ6OFE",authDomain:"kl-n-12f7b.firebaseapp.com",databaseURL:"https://kl-n-12f7b-default-rtdb.firebaseio.com",projectId:"kl-n-12f7b",storageBucket:"kl-n-12f7b.firebasestorage.app",messagingSenderId:"941333228893",appId:"1:941333228893:web:3bbdb9ad91475ed3a2ccb4"};
+let app,auth,database;
+const state={bookings:[]};
+const $=id=>document.getElementById(id);
+const escapeHtml=str=>{const div=document.createElement('div');div.textContent=str;return div.innerHTML};
+function init(){app=firebase.initializeApp(firebaseConfig);auth=firebase.auth();database=firebase.database();auth.onAuthStateChanged(user=>{if(user){$('loginScreen').style.display='none';$('appScreen').style.display='';loadBookings()}else{$('loginScreen').style.display='';$('appScreen').style.display='none'}});$('loginForm').addEventListener('submit',handleLogin);$('backBtn').addEventListener('click',()=>window.location.href='index.html');$('logoutBtn').addEventListener('click',()=>auth.signOut());$('searchInput').addEventListener('input',renderBookings)}
+async function handleLogin(e){e.preventDefault();const email=$('email').value.trim();const password=$('password').value;const messageEl=$('loginMessage');if(!email||!password){showMessage('Por favor completa todos los campos','error');return}messageEl.textContent='Iniciando sesión...';messageEl.className='message info';messageEl.style.display='block';try{await auth.signInWithEmailAndPassword(email,password);messageEl.style.display='none'}catch(error){console.error(error);showMessage('Error: '+(error.message||'No se pudo iniciar sesión'),'error')}}
+function showMessage(text,type){const messageEl=$('loginMessage');messageEl.textContent=text;messageEl.className=`message ${type}`;messageEl.style.display='block'}
+function loadBookings(){database.ref('bookings').on('value',snap=>{state.bookings=snap.val()?Object.values(snap.val()):[];renderBookings();renderStats()})}
+function renderBookings(){const tbody=$('tableBody');const query=$('searchInput').value.trim().toLowerCase();let filtered=state.bookings;if(query){filtered=state.bookings.filter(b=>(b.name||'').toLowerCase().includes(query)||(b.phone||'').includes(query)||(b.service||'').toLowerCase().includes(query))}if(!filtered.length){tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🔭</div><div>${query?'No se encontraron resultados':'No hay reservaciones'}</div></div></td></tr>`;return}const sorted=filtered.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));tbody.innerHTML=sorted.map(booking=>{const date=new Date(booking.date+'T'+(booking.time||'00:00'));const dateStr=date.toLocaleDateString('es-MX',{day:'2-digit',month:'short'});return`<tr><td>${dateStr}</td><td>${booking.time||'—'}</td><td><div style="font-weight:600">${escapeHtml(booking.name||'—')}</div><div style="font-size:.85rem;color:var(--gray-500)">${escapeHtml(booking.phone||'')}</div></td><td>${escapeHtml(booking.service||'—')}</td><td style="font-weight:600">$${booking.price||0}</td><td><span class="status-badge ${booking.status==='confirmed'?'status-confirmed':'status-cancelled'}">${booking.status==='confirmed'?'Confirmada':'Cancelada'}</span></td><td><div class="table-actions">${booking.status==='confirmed'?`<button class="btn btn-danger" data-id="${booking.id}" data-action="cancel">Cancelar</button>`:`<button class="btn btn-danger" data-id="${booking.id}" data-action="delete">Eliminar</button>`}<a class="btn btn-link" href="recibo.html?id=${encodeURIComponent(booking.id)}" target="_blank">Recibo</a></div></td></tr>`}).join('');tbody.querySelectorAll('[data-action]').forEach(btn=>{btn.addEventListener('click',async()=>{const id=btn.dataset.id;const action=btn.dataset.action;if(action==='cancel'){if(!confirm('¿Cancelar esta reservación?'))return;await updateBooking(id,{status:'cancelled'})}if(action==='delete'){if(!confirm('¿Eliminar permanentemente esta reservación?'))return;await deleteBooking(id)}})})}
+async function updateBooking(id,data){try{await database.ref('bookings/'+id).update(data);showToast('Reservación actualizada')}catch(error){console.error(error);showToast('Error al actualizar')}}
+async function deleteBooking(id){try{await database.ref('bookings/'+id).remove();showToast('Reservación eliminada')}catch(error){console.error(error);showToast('Error al eliminar')}}
+function renderStats(){const confirmed=state.bookings.filter(b=>b.status==='confirmed');const today=new Date().toISOString().split('T')[0];const todayBookings=confirmed.filter(b=>b.date===today);const revenue=confirmed.reduce((sum,b)=>sum+(Number(b.price)||0),0);$('statTotal').textContent=confirmed.length;$('statToday').textContent=todayBookings.length;$('statRevenue').textContent='$'+revenue.toLocaleString()}
+function showToast(message){const toast=document.createElement('div');toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:12px 24px;border-radius:12px;box-shadow:0 25px 50px rgba(0,0,0,.15);z-index:300;font-weight:600;animation:slideUp .3s cubic-bezier(.4,0,.2,1)';toast.textContent=message;document.body.appendChild(toast);setTimeout(()=>toast.remove(),3000)}
+document.addEventListener('DOMContentLoaded',init);
+</script>
 </body>
 </html>
