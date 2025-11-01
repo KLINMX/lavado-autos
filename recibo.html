@@ -2,745 +2,139 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Recibo digital de reservación - AutoWash Pro">
-<meta name="robots" content="noindex, nofollow">
-<title>Recibo - AutoWash Pro</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Recibo digital de reservación - AutoWash Pro. Comprobante oficial de tu cita.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1e40af">
+<title>Recibo Digital - AutoWash Pro</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --primary: #1e40af;
-  --primary-dark: #1e3a8a;
-  --success: #059669;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-900: #111827;
-  --white: #ffffff;
-  --radius: 12px;
-  --shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-  --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.1);
-  --transition: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-  -webkit-font-smoothing: antialiased;
-}
-
-body {
-  font-family: 'Inter', -apple-system, sans-serif;
-  background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 50%);
-  color: var(--gray-900);
-  line-height: 1.6;
-  min-height: 100vh;
-  padding: clamp(16px, 4vw, 32px);
-}
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.receipt-card {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius);
-  padding: clamp(24px, 4vw, 40px);
-  box-shadow: var(--shadow-lg);
-  animation: fadeInUp 0.6s var(--transition);
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.receipt-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 32px;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.brand-section {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.logo {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 24px;
-  color: var(--white);
-  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
-  flex-shrink: 0;
-}
-
-.brand-info h1 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--gray-900);
-  margin-bottom: 4px;
-}
-
-.receipt-id {
-  font-size: 0.9rem;
-  color: var(--gray-500);
-  font-weight: 500;
-}
-
-.date-section {
-  text-align: right;
-}
-
-.date-label {
-  font-size: 0.85rem;
-  color: var(--gray-500);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 500;
-}
-
-.date-value {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--gray-900);
-  margin-top: 4px;
-}
-
-.divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gray-300), transparent);
-  margin: 24px 0;
-}
-
-.info-section {
-  margin-bottom: 24px;
-}
-
-.section-title {
-  font-size: 0.85rem;
-  color: var(--gray-500);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-
-.info-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  gap: 16px;
-}
-
-.info-label {
-  color: var(--gray-600);
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-.info-value {
-  font-weight: 600;
-  color: var(--gray-900);
-  font-size: 1rem;
-  text-align: right;
-}
-
-.total-row {
-  background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
-  border: 2px solid var(--primary);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin: 24px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.total-label {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--gray-700);
-}
-
-.total-value {
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--primary);
-}
-
-.qr-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-  margin: 32px 0;
-  flex-wrap: wrap;
-}
-
-.code-info {
-  flex: 1;
-}
-
-.code-label {
-  font-size: 0.85rem;
-  color: var(--gray-500);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.code-value {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--gray-900);
-  font-family: 'Courier New', monospace;
-  letter-spacing: 2px;
-}
-
-.qr-container {
-  width: 180px;
-  height: 180px;
-  background: var(--white);
-  border: 2px solid var(--gray-200);
-  border-radius: var(--radius);
-  padding: 12px;
-  box-shadow: var(--shadow);
-  flex-shrink: 0;
-}
-
-.qr-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-.actions-section {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 28px 0;
-}
-
-.btn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: var(--radius);
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.3s var(--transition);
-  font-family: inherit;
-  flex: 1;
-  min-width: 140px;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: var(--white);
-  box-shadow: 0 4px 6px rgba(30, 64, 175, 0.2);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 12px rgba(30, 64, 175, 0.3);
-}
-
-.btn-secondary {
-  background: var(--white);
-  border: 2px solid var(--gray-300);
-  color: var(--gray-700);
-}
-
-.btn-secondary:hover {
-  background: var(--gray-50);
-  border-color: var(--gray-400);
-}
-
-.footer-note {
-  text-align: center;
-  color: var(--gray-500);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  padding: 20px;
-  background: var(--gray-50);
-  border-radius: var(--radius);
-  border: 1px solid var(--gray-200);
-}
-
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  background: #d1fae5;
-  color: var(--success);
-  margin-top: 8px;
-}
-
-.status-badge::before {
-  content: '✓';
-  font-size: 1rem;
-}
-
-.error-state {
-  text-align: center;
-  padding: 60px 20px;
-}
-
-.error-icon {
-  font-size: 4rem;
-  margin-bottom: 20px;
-  opacity: 0.5;
-}
-
-.error-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--gray-900);
-  margin-bottom: 12px;
-}
-
-.error-text {
-  color: var(--gray-600);
-  font-size: 1rem;
-}
-
-/* Loading State */
-.loading {
-  text-align: center;
-  padding: 80px 20px;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid var(--gray-200);
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin: 0 auto 20px;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .receipt-header {
-    flex-direction: column;
-  }
-  
-  .date-section {
-    text-align: left;
-    width: 100%;
-  }
-  
-  .qr-section {
-    flex-direction: column-reverse;
-    align-items: center;
-  }
-  
-  .code-info {
-    text-align: center;
-  }
-  
-  .actions-section {
-    flex-direction: column;
-  }
-  
-  .btn {
-    width: 100%;
-  }
-}
-
-/* Print Styles */
-@media print {
-  body {
-    background: white;
-    padding: 0;
-  }
-  
-  .actions-section {
-    display: none;
-  }
-  
-  .receipt-card {
-    box-shadow: none;
-    border: 1px solid #000;
-  }
-}
+:root{--primary:#1e40af;--primary-dark:#1e3a8a;--success:#059669;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;--gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;--gray-900:#111827;--white:#fff;--radius:12px;--shadow:0 4px 6px rgba(0,0,0,.07);--shadow-md:0 10px 15px rgba(0,0,0,.1);--shadow-lg:0 20px 25px rgba(0,0,0,.1);--transition:cubic-bezier(.4,0,.2,1)}*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}body{font-family:Inter,-apple-system,sans-serif;background:linear-gradient(135deg,var(--gray-50) 0%,var(--white) 50%);color:var(--gray-900);line-height:1.6;min-height:100vh;padding:clamp(16px,4vw,32px)}.container{max-width:800px;margin:0 auto}.receipt-card{background:rgba(255,255,255,.98);backdrop-filter:blur(12px);border:1px solid var(--gray-200);border-radius:var(--radius);padding:clamp(24px,4vw,40px);box-shadow:var(--shadow-lg);animation:fadeInUp .6s var(--transition)}@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}.receipt-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;gap:20px;flex-wrap:wrap}.brand-section{display:flex;align-items:center;gap:14px}.logo{width:64px;height:64px;border-radius:var(--radius);background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px;color:var(--white);box-shadow:0 4px 12px rgba(30,64,175,.3);flex-shrink:0}.brand-info h1{font-size:1.4rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}.receipt-id{font-size:.9rem;color:var(--gray-500);font-weight:500}.date-section{text-align:right}.date-label{font-size:.85rem;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;font-weight:500}.date-value{font-size:1rem;font-weight:600;color:var(--gray-900);margin-top:4px}.divider{height:1px;background:linear-gradient(90deg,transparent,var(--gray-300),transparent);margin:24px 0}.info-section{margin-bottom:24px}.section-title{font-size:.85rem;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:16px}.info-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;gap:16px}.info-label{color:var(--gray-600);font-size:.95rem;font-weight:500}.info-value{font-weight:600;color:var(--gray-900);font-size:1rem;text-align:right}.total-row{background:linear-gradient(135deg,var(--gray-50) 0%,var(--white) 100%);border:2px solid var(--primary);border-radius:var(--radius);padding:20px;margin:24px 0;display:flex;justify-content:space-between;align-items:center}.total-label{font-size:1.1rem;font-weight:600;color:var(--gray-700)}.total-value{font-size:2rem;font-weight:900;color:var(--primary)}.qr-section{display:flex;justify-content:space-between;align-items:center;gap:24px;margin:32px 0;flex-wrap:wrap}.code-info{flex:1}.code-label{font-size:.85rem;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:8px}.code-value{font-size:1.8rem;font-weight:800;color:var(--gray-900);font-family:'Courier New',monospace;letter-spacing:2px}.qr-container{width:180px;height:180px;background:var(--white);border:2px solid var(--gray-200);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow);flex-shrink:0}.qr-container img{width:100%;height:100%;object-fit:contain;border-radius:8px;loading:lazy}.actions-section{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0}.btn{padding:12px 24px;border:none;border-radius:var(--radius);font-weight:600;font-size:.95rem;cursor:pointer;transition:all .3s var(--transition);font-family:inherit;flex:1;min-width:140px}.btn-primary{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:var(--white);box-shadow:0 4px 6px rgba(30,64,175,.2)}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 12px rgba(30,64,175,.3)}.btn-secondary{background:var(--white);border:2px solid var(--gray-300);color:var(--gray-700)}.btn-secondary:hover{background:var(--gray-50);border-color:var(--gray-400)}.footer-note{text-align:center;color:var(--gray-500);font-size:.9rem;line-height:1.6;padding:20px;background:var(--gray-50);border-radius:var(--radius);border:1px solid var(--gray-200)}.status-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:.85rem;font-weight:600;background:#d1fae5;color:var(--success);margin-top:8px}.status-badge::before{content:'✓';font-size:1rem}.error-state{text-align:center;padding:60px 20px}.error-icon{font-size:4rem;margin-bottom:20px;opacity:.5}.error-title{font-size:1.5rem;font-weight:700;color:var(--gray-900);margin-bottom:12px}.error-text{color:var(--gray-600);font-size:1rem}.loading{text-align:center;padding:80px 20px}.spinner{width:50px;height:50px;border:4px solid var(--gray-200);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:768px){.receipt-header{flex-direction:column}.date-section{text-align:left;width:100%}.qr-section{flex-direction:column-reverse;align-items:center}.code-info{text-align:center}.actions-section{flex-direction:column}.btn{width:100%}}@media print{body{background:#fff;padding:0}.actions-section{display:none}.receipt-card{box-shadow:none;border:1px solid #000}}
 </style>
 </head>
 
 <body>
-  <div class="container">
-    <div id="loadingState" class="receipt-card loading">
-      <div class="spinner"></div>
-      <div style="color: var(--gray-600); font-weight: 500;">Cargando recibo...</div>
-    </div>
+<div class="container">
+<div id="loadingState" class="receipt-card loading">
+<div class="spinner"></div>
+<div style="color:var(--gray-600);font-weight:500">Cargando recibo...</div>
+</div>
 
-    <div id="errorState" class="receipt-card error-state" style="display: none;">
-      <div class="error-icon">📭</div>
-      <h2 class="error-title">Recibo No Encontrado</h2>
-      <p class="error-text">No pudimos encontrar la información de esta reservación.</p>
-      <div style="margin-top: 24px;">
-        <button class="btn btn-primary" onclick="window.location.href='index.html'">
-          Ir a Inicio
-        </button>
-      </div>
-    </div>
+<div id="errorState" class="receipt-card error-state" style="display:none">
+<div class="error-icon">🔭</div>
+<h2 class="error-title">Recibo No Encontrado</h2>
+<p class="error-text">No pudimos encontrar la información de esta reservación.</p>
+<div style="margin-top:24px">
+<button class="btn btn-primary" onclick="window.location.href='index.html'">Ir a Inicio</button>
+</div>
+</div>
 
-    <div id="receiptContent" class="receipt-card" style="display: none;">
-      <!-- Header -->
-      <div class="receipt-header">
-        <div class="brand-section">
-          <div class="logo" aria-label="AutoWash Pro">AW</div>
-          <div class="brand-info">
-            <h1>AutoWash Pro</h1>
-            <div class="receipt-id" id="receiptId">Recibo #—</div>
-          </div>
-        </div>
-        <div class="date-section">
-          <div class="date-label">Fecha de Reserva</div>
-          <div class="date-value" id="receiptDate">—</div>
-          <div class="date-value" id="receiptTime">—</div>
-          <div class="status-badge" id="statusBadge">Confirmada</div>
-        </div>
-      </div>
+<div id="receiptContent" class="receipt-card" style="display:none">
+<div class="receipt-header">
+<div class="brand-section">
+<div class="logo" aria-label="AutoWash Pro">AW</div>
+<div class="brand-info">
+<h1>AutoWash Pro</h1>
+<div class="receipt-id" id="receiptId">Recibo #—</div>
+</div>
+</div>
+<div class="date-section">
+<div class="date-label">Fecha de Reserva</div>
+<div class="date-value" id="receiptDate">—</div>
+<div class="date-value" id="receiptTime">—</div>
+<div class="status-badge" id="statusBadge">Confirmada</div>
+</div>
+</div>
 
-      <div class="divider"></div>
+<div class="divider"></div>
 
-      <!-- Customer Info -->
-      <div class="info-section">
-        <h2 class="section-title">Información del Cliente</h2>
-        <div class="info-row">
-          <span class="info-label">Nombre Completo</span>
-          <span class="info-value" id="customerName">—</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Teléfono</span>
-          <span class="info-value" id="customerPhone">—</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Dirección</span>
-          <span class="info-value" id="customerAddress">—</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Vehículo</span>
-          <span class="info-value" id="customerCar">—</span>
-        </div>
-      </div>
+<div class="info-section">
+<h2 class="section-title">Información del Cliente</h2>
+<div class="info-row">
+<span class="info-label">Nombre Completo</span>
+<span class="info-value" id="customerName">—</span>
+</div>
+<div class="info-row">
+<span class="info-label">Teléfono</span>
+<span class="info-value" id="customerPhone">—</span>
+</div>
+<div class="info-row">
+<span class="info-label">Dirección</span>
+<span class="info-value" id="customerAddress">—</span>
+</div>
+<div class="info-row">
+<span class="info-label">Vehículo</span>
+<span class="info-value" id="customerCar">—</span>
+</div>
+</div>
 
-      <div class="divider"></div>
+<div class="divider"></div>
 
-      <!-- Service Info -->
-      <div class="info-section">
-        <h2 class="section-title">Detalles del Servicio</h2>
-        <div class="info-row">
-          <span class="info-label">Servicio</span>
-          <span class="info-value" id="serviceName">—</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Duración Estimada</span>
-          <span class="info-value" id="serviceDuration">— min</span>
-        </div>
-      </div>
+<div class="info-section">
+<h2 class="section-title">Detalles del Servicio</h2>
+<div class="info-row">
+<span class="info-label">Servicio</span>
+<span class="info-value" id="serviceName">—</span>
+</div>
+<div class="info-row">
+<span class="info-label">Duración Estimada</span>
+<span class="info-value" id="serviceDuration">— min</span>
+</div>
+</div>
 
-      <!-- Total -->
-      <div class="total-row">
-        <span class="total-label">Total a Pagar</span>
-        <span class="total-value" id="totalPrice">$0</span>
-      </div>
+<div class="total-row">
+<span class="total-label">Total a Pagar</span>
+<span class="total-value" id="totalPrice">$0</span>
+</div>
 
-      <!-- QR Code -->
-      <div class="qr-section">
-        <div class="code-info">
-          <div class="code-label">Código de Verificación</div>
-          <div class="code-value" id="verificationCode">—</div>
-        </div>
-        <div class="qr-container">
-          <img id="qrImage" src="" alt="Código QR del recibo">
-        </div>
-      </div>
+<div class="qr-section">
+<div class="code-info">
+<div class="code-label">Código de Verificación</div>
+<div class="code-value" id="verificationCode">—</div>
+</div>
+<div class="qr-container">
+<img id="qrImage" src="" alt="Código QR del recibo" loading="lazy">
+</div>
+</div>
 
-      <!-- Actions -->
-      <div class="actions-section">
-        <button class="btn btn-primary" id="downloadBtn">
-          📥 Descargar PDF
-        </button>
-        <button class="btn btn-secondary" id="shareBtn">
-          🔗 Copiar Enlace
-        </button>
-        <button class="btn btn-secondary" id="calendarBtn">
-          📅 Agregar a Calendario
-        </button>
-      </div>
+<div class="actions-section">
+<button class="btn btn-primary" id="downloadBtn">📥 Descargar PDF</button>
+<button class="btn btn-secondary" id="shareBtn">🔗 Copiar Enlace</button>
+<button class="btn btn-secondary" id="calendarBtn">📅 Agregar a Calendario</button>
+</div>
 
-      <!-- Footer Note -->
-      <div class="footer-note">
-        <strong>¡Gracias por tu preferencia!</strong><br>
-        Conserva este recibo como comprobante de tu reservación.<br>
-        Para cualquier consulta o cambio, contáctanos con tu código de verificación.
-      </div>
-    </div>
-  </div>
+<div class="footer-note">
+<strong>¡Gracias por tu preferencia!</strong><br>
+Conserva este recibo como comprobante de tu reservación.<br>
+Para cualquier consulta o cambio, contáctanos con tu código de verificación.
+</div>
+</div>
+</div>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-  <script>
-    'use strict';
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyClriIvCnIc9ZgJrw08YNsfxtnECrQ6OFE",
-      authDomain: "kl-n-12f7b.firebaseapp.com",
-      databaseURL: "https://kl-n-12f7b-default-rtdb.firebaseio.com",
-      projectId: "kl-n-12f7b",
-      storageBucket: "kl-n-12f7b.firebasestorage.app",
-      messagingSenderId: "941333228893",
-      appId: "1:941333228893:web:3bbdb9ad91475ed3a2ccb4"
-    };
-
-    let app, database;
-
-    const $ = id => document.getElementById(id);
-    const getParam = name => new URL(location.href).searchParams.get(name);
-
-    function formatDate(dateStr) {
-      const date = new Date(dateStr + 'T00:00:00');
-      return date.toLocaleDateString('es-MX', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      });
-    }
-
-    function formatDateForCalendar(date, time) {
-      const dt = new Date(`${date}T${time}:00`);
-      const pad = n => String(n).padStart(2, '0');
-      const year = dt.getFullYear();
-      const month = pad(dt.getMonth() + 1);
-      const day = pad(dt.getDate());
-      const hour = pad(dt.getHours());
-      const minute = pad(dt.getMinutes());
-      return `${year}${month}${day}T${hour}${minute}00`;
-    }
-
-    async function init() {
-      try {
-        app = firebase.initializeApp(firebaseConfig);
-        database = firebase.database();
-
-        const bookingId = getParam('id');
-        if (!bookingId) {
-          showError();
-          return;
-        }
-
-        const snapshot = await database.ref('bookings/' + bookingId).once('value');
-        
-        if (!snapshot.exists()) {
-          showError();
-          return;
-        }
-
-        const booking = snapshot.val();
-        renderReceipt(booking);
-
-      } catch (error) {
-        console.error('Error loading receipt:', error);
-        showError();
-      }
-    }
-
-    function showError() {
-      $('loadingState').style.display = 'none';
-      $('errorState').style.display = '';
-    }
-
-    function renderReceipt(booking) {
-      // Hide loading, show content
-      $('loadingState').style.display = 'none';
-      $('receiptContent').style.display = '';
-
-      // Header
-      $('receiptId').textContent = `Recibo #${(booking.id || '').slice(-8).toUpperCase()}`;
-      $('receiptDate').textContent = formatDate(booking.date);
-      $('receiptTime').textContent = booking.time || '—';
-
-      // Status
-      const statusBadge = $('statusBadge');
-      statusBadge.textContent = booking.status === 'confirmed' ? 'Confirmada' : 'Cancelada';
-      if (booking.status === 'cancelled') {
-        statusBadge.style.background = '#fee2e2';
-        statusBadge.style.color = '#dc2626';
-      }
-
-      // Customer Info
-      $('customerName').textContent = booking.name || '—';
-      $('customerPhone').textContent = booking.phone || '—';
-      $('customerAddress').textContent = booking.address || '—';
-      $('customerCar').textContent = booking.car || '—';
-
-      // Service Info
-      $('serviceName').textContent = booking.service || '—';
-      $('serviceDuration').textContent = (booking.duration || '—') + ' min';
-      $('totalPrice').textContent = '$' + (booking.price || 0);
-
-      // Verification Code
-      const code = 'AWP-' + (booking.id || '').slice(-6).toUpperCase();
-      $('verificationCode').textContent = code;
-
-      // QR Code
-      const receiptUrl = location.href;
-      const qrUrl = `https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl=${encodeURIComponent(receiptUrl)}`;
-      $('qrImage').src = qrUrl;
-
-      // Event Listeners
-      $('downloadBtn').addEventListener('click', () => downloadPDF(booking));
-      $('shareBtn').addEventListener('click', () => copyLink());
-      $('calendarBtn').addEventListener('click', () => addToCalendar(booking));
-    }
-
-    function copyLink() {
-      navigator.clipboard.writeText(location.href)
-        .then(() => alert('✓ Enlace copiado al portapapeles'))
-        .catch(() => alert('No se pudo copiar el enlace'));
-    }
-
-    function addToCalendar(booking) {
-      const title = `AutoWash Pro - ${booking.service}`;
-      const details = `Cliente: ${booking.name}\\nDirección: ${booking.address}\\nVehículo: ${booking.car}\\nTeléfono: ${booking.phone}`;
-      const startDate = formatDateForCalendar(booking.date, booking.time);
-      
-      const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${startDate}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(booking.address)}`;
-      
-      window.open(calendarUrl, '_blank');
-    }
-
-    async function downloadPDF(booking) {
-      try {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-        
-        let y = 60;
-        
-        // Title
-        doc.setFontSize(22);
-        doc.setFont('helvetica', 'bold');
-        doc.text('AutoWash Pro', 40, y);
-        
-        y += 30;
-        doc.setFontSize(11);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`Recibo #${(booking.id || '').slice(-8).toUpperCase()}`, 40, y);
-        
-        y += 20;
-        doc.text(`Fecha: ${formatDate(booking.date)} - ${booking.time}`, 40, y);
-        
-        y += 40;
-        
-        // Customer Info
-        doc.setFont('helvetica', 'bold');
-        doc.text('INFORMACIÓN DEL CLIENTE', 40, y);
-        y += 20;
-        doc.setFont('helvetica', 'normal');
-        
-        doc.text('Cliente:', 40, y);
-        doc.text(booking.name || '—', 200, y);
-        y += 18;
-        
-        doc.text('Teléfono:', 40, y);
-        doc.text(booking.phone || '—', 200, y);
-        y += 18;
-        
-        doc.text('Dirección:', 40, y);
-        doc.text(booking.address || '—', 200, y);
-        y += 18;
-        
-        doc.text('Vehículo:', 40, y);
-        doc.text(booking.car || '—', 200, y);
-        y += 30;
-        
-        // Service Info
-        doc.setFont('helvetica', 'bold');
-        doc.text('DETALLES DEL SERVICIO', 40, y);
-        y += 20;
-        doc.setFont('helvetica', 'normal');
-        
-        doc.text('Servicio:', 40, y);
-        doc.text(booking.service || '—', 200, y);
-        y += 18;
-        
-        doc.text('Duración:', 40, y);
-        doc.text((booking.duration || '—') + ' min', 200, y);
-        y += 18;
-        
-        doc.text('Total:', 40, y);
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(16);
-        doc.text('$' + (booking.price || 0), 200, y);
-        
-        y += 40;
-        
-        // QR Code
-        const qrUrl = `https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=${encodeURIComponent(location.href)}`;
-        const imgData = await fetch(qrUrl)
-          .then(r => r.blob())
-          .then(blob => new Promise(resolve => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.readAsDataURL(blob);
-          }));
-        
-        doc.addImage(imgData, 'PNG', 400, 60, 150, 150);
-        
-        // Footer
-        doc.setFontSize(9);
-        doc.setFont('helvetica', 'normal');
-        doc.text('Gracias por tu preferencia - AutoWash Pro', 40, 780);
-        
-        doc.save(`recibo-autowash-${booking.id}.pdf`);
-        
-      } catch (error) {
-        console.error('Error generating PDF:', error);
-        alert('No se pudo generar el PDF. Intenta nuevamente.');
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', init);
-  </script>
+<script>
+'use strict';
+const firebaseConfig={apiKey:"AIzaSyClriIvCnIc9ZgJrw08YNsfxtnECrQ6OFE",authDomain:"kl-n-12f7b.firebaseapp.com",databaseURL:"https://kl-n-12f7b-default-rtdb.firebaseio.com",projectId:"kl-n-12f7b",storageBucket:"kl-n-12f7b.firebasestorage.app",messagingSenderId:"941333228893",appId:"1:941333228893:web:3bbdb9ad91475ed3a2ccb4"};
+let app,database;
+const $=id=>document.getElementById(id);
+const getParam=name=>new URL(location.href).searchParams.get(name);
+function formatDate(dateStr){const date=new Date(dateStr+'T00:00:00');return date.toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+function formatDateForCalendar(date,time){const dt=new Date(`${date}T${time}:00`);const pad=n=>String(n).padStart(2,'0');const year=dt.getFullYear();const month=pad(dt.getMonth()+1);const day=pad(dt.getDate());const hour=pad(dt.getHours());const minute=pad(dt.getMinutes());return`${year}${month}${day}T${hour}${minute}00`}
+async function init(){try{app=firebase.initializeApp(firebaseConfig);database=firebase.database();const bookingId=getParam('id');if(!bookingId){showError();return}const snapshot=await database.ref('bookings/'+bookingId).once('value');if(!snapshot.exists()){showError();return}const booking=snapshot.val();renderReceipt(booking)}catch(error){console.error('Error loading receipt:',error);showError()}}
+function showError(){$('loadingState').style.display='none';$('errorState').style.display=''}
+function renderReceipt(booking){$('loadingState').style.display='none';$('receiptContent').style.display='';$('receiptId').textContent=`Recibo #${(booking.id||'').slice(-8).toUpperCase()}`;$('receiptDate').textContent=formatDate(booking.date);$('receiptTime').textContent=booking.time||'—';const statusBadge=$('statusBadge');statusBadge.textContent=booking.status==='confirmed'?'Confirmada':'Cancelada';if(booking.status==='cancelled'){statusBadge.style.background='#fee2e2';statusBadge.style.color='#dc2626'}$('customerName').textContent=booking.name||'—';$('customerPhone').textContent=booking.phone||'—';$('customerAddress').textContent=booking.address||'—';$('customerCar').textContent=booking.car||'—';$('serviceName').textContent=booking.service||'—';$('serviceDuration').textContent=(booking.duration||'—')+' min';$('totalPrice').textContent='$'+(booking.price||0);const code='AWP-'+(booking.id||'').slice(-6).toUpperCase();$('verificationCode').textContent=code;const receiptUrl=location.href;const qrUrl=`https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl=${encodeURIComponent(receiptUrl)}`;$('qrImage').src=qrUrl;$('downloadBtn').addEventListener('click',()=>downloadPDF(booking));$('shareBtn').addEventListener('click',()=>copyLink());$('calendarBtn').addEventListener('click',()=>addToCalendar(booking))}
+function copyLink(){navigator.clipboard.writeText(location.href).then(()=>showToast('✓ Enlace copiado al portapapeles')).catch(()=>showToast('No se pudo copiar el enlace'))}
+function addToCalendar(booking){const title=`AutoWash Pro - ${booking.service}`;const details=`Cliente: ${booking.name}\\nDirección: ${booking.address}\\nVehículo: ${booking.car}\\nTeléfono: ${booking.phone}`;const startDate=formatDateForCalendar(booking.date,booking.time);const calendarUrl=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${startDate}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(booking.address)}`;window.open(calendarUrl,'_blank')}
+async function downloadPDF(booking){try{const{jsPDF}=window.jspdf;const doc=new jsPDF({unit:'pt',format:'a4'});let y=60;doc.setFontSize(22);doc.setFont('helvetica','bold');doc.text('AutoWash Pro',40,y);y+=30;doc.setFontSize(11);doc.setFont('helvetica','normal');doc.text(`Recibo #${(booking.id||'').slice(-8).toUpperCase()}`,40,y);y+=20;doc.text(`Fecha: ${formatDate(booking.date)} - ${booking.time}`,40,y);y+=40;doc.setFont('helvetica','bold');doc.text('INFORMACIÓN DEL CLIENTE',40,y);y+=20;doc.setFont('helvetica','normal');doc.text('Cliente:',40,y);doc.text(booking.name||'—',200,y);y+=18;doc.text('Teléfono:',40,y);doc.text(booking.phone||'—',200,y);y+=18;doc.text('Dirección:',40,y);doc.text(booking.address||'—',200,y);y+=18;doc.text('Vehículo:',40,y);doc.text(booking.car||'—',200,y);y+=30;doc.setFont('helvetica','bold');doc.text('DETALLES DEL SERVICIO',40,y);y+=20;doc.setFont('helvetica','normal');doc.text('Servicio:',40,y);doc.text(booking.service||'—',200,y);y+=18;doc.text('Duración:',40,y);doc.text((booking.duration||'—')+' min',200,y);y+=18;doc.text('Total:',40,y);doc.setFont('helvetica','bold');doc.setFontSize(16);doc.text('$'+(booking.price||0),200,y);y+=40;const qrUrl=`https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=${encodeURIComponent(location.href)}`;const imgData=await fetch(qrUrl).then(r=>r.blob()).then(blob=>new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.readAsDataURL(blob)}));doc.addImage(imgData,'PNG',400,60,150,150);doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text('Gracias por tu preferencia - AutoWash Pro',40,780);doc.save(`recibo-autowash-${booking.id}.pdf`)}catch(error){console.error('Error generating PDF:',error);showToast('No se pudo generar el PDF. Intenta nuevamente.')}}
+function showToast(message){const toast=document.createElement('div');toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:12px 24px;border-radius:12px;box-shadow:0 25px 50px rgba(0,0,0,.15);z-index:300;font-weight:600;animation:slideUp .3s cubic-bezier(.4,0,.2,1)';toast.textContent=message;document.body.appendChild(toast);setTimeout(()=>toast.remove(),3000)}
+document.addEventListener('DOMContentLoaded',init);
+</script>
 </body>
 </html>
