@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="description" content="Recibo digital — AutoWash Pro" />
+<title>Recibo — AutoWash Pro</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{--accent:#2563eb;--bg:linear-gradient(180deg,#071028,#061022);--card:rgba(255,255,255,0.03);--text:#e8f0ff;--muted:rgba(255,255,255,0.6);--radius:12px}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:var(--text)}
+.container{max-width:780px;margin:28px auto;padding:18px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 30px 90px rgba(2,6,23,0.8)}
+.row{display:flex;justify-content:space-between;align-items:center;padding:8px 0}
+.head{display:flex;justify-content:space-between;align-items:center}
+.logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#1b4fcf);display:flex;align-items:center;justify-content:center;color:white;font-weight:800}
+.muted{color:var(--muted)}
+.qr{width:160px;height:160px;border-radius:12px;background:linear-gradient(180deg,#081028,#071022);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03)}
+.actions{display:flex;gap:10px;margin-top:12px}
+.btn{padding:10px 14px;border-radius:10px;border:none;background:linear-gradient(180deg,var(--accent),#1b4fcf);color:white;cursor:pointer;font-weight:800}
+.btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)}
+@media(max-width:520px){ .qr{width:120px;height:120px} }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="card" id="receipt">
+      <div class="head">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="logo">AW</div>
+          <div><div style="font-weight:800">AutoWash Pro</div><div class="muted" id="receiptId">Recibo # —</div></div>
+        </div>
+        <div style="text-align:right"><div id="rDate" class="muted">—</div><div id="rTime" class="muted">—</div></div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="row"><div class="muted">Cliente</div><div id="rName">—</div></div>
+        <div class="row"><div class="muted">Teléfono</div><div id="rPhone">—</div></div>
+        <div class="row"><div class="muted">Dirección</div><div id="rAddress">—</div></div>
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
+        <div class="row"><div class="muted">Servicio</div><div id="rService">—</div></div>
+        <div class="row"><div class="muted">Duración</div><div id="rDuration">—</div></div>
+        <div class="row"><div class="muted">Precio</div><div id="rPrice" style="font-weight:900">$0</div></div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+          <div><div class="muted">Código</div><div id="rCode" style="font-weight:900"></div></div>
+          <div class="qr" id="qrWrap"><img id="qrImg" alt="QR" style="width:100%;height:100%;object-fit:cover;border-radius:10px" /></div>
+        </div>
+
+        <div class="actions">
+          <button id="downloadPdf" class="btn">Descargar PDF</button>
+          <button id="copyLink" class="btn secondary">Copiar enlace</button>
+          <button id="addCalendar" class="btn secondary">Agregar a calendario</button>
+        </div>
+
+        <div style="color:var(--muted);margin-top:10px">Gracias por tu preferencia. Conserva este recibo como comprobante.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- libs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+'use strict';
+const firebaseConfig = {
+  apiKey: "AIzaSyClriIvCnIc9ZgJrw08YNsfxtnECrQ6OFE",
+  authDomain: "kl-n-12f7b.firebaseapp.com",
+  databaseURL: "https://kl-n-12f7b-default-rtdb.firebaseio.com",
+  projectId: "kl-n-12f7b",
+  storageBucket: "kl-n-12f7b.firebasestorage.app",
+  messagingSenderId: "941333228893",
+  appId: "1:941333228893:web:3bbdb9ad91475ed3a2ccb4"
+};
+let app, database;
+function $(id){return document.getElementById(id)}
+function getParam(n){ return new URL(location.href).searchParams.get(n); }
+function fmtDate(dStr){ const d=new Date(dStr+'T00:00:00'); return d.toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long',year:'numeric'}); }
+async function init(){
+  try{
+    app = firebase.initializeApp(firebaseConfig);
+    database = firebase.database();
+    const id = getParam('id');
+    if(!id) return notFound();
+    const snap = await database.ref('bookings/' + id).once('value');
+    if(!snap.exists()) return notFound();
+    const b = snap.val();
+    render(b);
+  }catch(e){ console.error(e); notFound(); }
+}
+function notFound(){ $('receipt').innerHTML = '<div style="padding:20px;color:lightgrey">Recibo no encontrado.</div>'; }
+function render(b){
+  $('receiptId').textContent = '# ' + (b.id||'—');
+  $('rDate').textContent = fmtDate(b.date);
+  $('rTime').textContent = b.time || '';
+  $('rName').textContent = b.name || '-'; $('rPhone').textContent = b.phone || '-'; $('rAddress').textContent = b.address || '-';
+  $('rService').textContent = b.service || '-'; $('rDuration').textContent = (b.duration||'') + ' min'; $('rPrice').textContent = '$' + (b.price||0);
+  $('rCode').textContent = 'CWA-' + ((b.id||'').slice(-6).toUpperCase() || Math.random().toString(36).slice(2,8).toUpperCase());
+  const url = location.href;
+  $('qrImg').src = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(url);
+  // actions
+  $('copyLink').addEventListener('click', ()=> navigator.clipboard.writeText(url).then(()=> alert('Enlace copiado')));
+  $('addCalendar').addEventListener('click', ()=> {
+    const start = `${b.date}T${b.time}:00`;
+    const title = `AutoWash — ${b.service}`;
+    const details = `Cliente: ${b.name}\\nDirección: ${b.address}`;
+    const gUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatForGoogle(b.date,b.time)}&details=${encodeURIComponent(details)}`;
+    window.open(gUrl, '_blank');
+  });
+  $('downloadPdf').addEventListener('click', ()=> downloadPdf(b));
+}
+
+function formatForGoogle(date,time){
+  const dt = new Date(date + 'T' + time + ':00');
+  const pad = n => String(n).padStart(2,'0');
+  const YYYY = dt.getFullYear(), MM = pad(dt.getMonth()+1), DD = pad(dt.getDate()), hh = pad(dt.getHours()), mm = pad(dt.getMinutes());
+  return `${YYYY}${MM}${DD}T${hh}${mm}00Z`;
+}
+
+async function downloadPdf(b){
+  try{
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:'pt', format:'a4' }); let y=40; doc.setFontSize(18); doc.text('AutoWash Pro — Recibo',40,y); y+=28;
+    doc.setFontSize(11); doc.text(`Código: CWA-${(b.id||'').slice(-6).toUpperCase()}`,40,y); y+=18; doc.text(`Fecha: ${fmtDate(b.date)} ${b.time||''}`,40,y); y+=18;
+    y+=6; doc.setFont('helvetica','bold'); doc.text('Cliente',40,y); doc.setFont('helvetica','normal'); doc.text(b.name||'-',170,y); y+=18;
+    doc.setFont('helvetica','bold'); doc.text('Teléfono',40,y); doc.setFont('helvetica','normal'); doc.text(b.phone||'-',170,y); y+=18;
+    doc.setFont('helvetica','bold'); doc.text('Dirección',40,y); doc.setFont('helvetica','normal'); doc.text(b.address||'-',170,y); y+=22;
+    doc.setFont('helvetica','bold'); doc.text('Servicio',40,y); doc.setFont('helvetica','normal'); doc.text(b.service||'-',170,y); y+=18;
+    doc.setFont('helvetica','bold'); doc.text('Duración',40,y); doc.setFont('helvetica','normal'); doc.text((b.duration||'')+' min',170,y); y+=18;
+    doc.setFont('helvetica','bold'); doc.text('Total',40,y); doc.setFont('helvetica','normal'); doc.text('$' + (b.price||0),170,y); y+=30;
+    const receiptUrl = location.href;
+    const qrUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(receiptUrl);
+    const imgData = await fetch(qrUrl).then(r=>r.blob()).then(blob=> new Promise(res=>{
+      const reader = new FileReader(); reader.onload=()=>res(reader.result); reader.readAsDataURL(blob);
+    }));
+    doc.addImage(imgData,'PNG',400,40,140,140);
+    doc.save(`recibo-${(b.id||'')}.pdf`);
+  }catch(e){ console.error(e); alert('No se pudo generar PDF'); }
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
