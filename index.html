@@ -47,6 +47,28 @@
             margin-top: 2px;
         }
 
+        .sync-indicator {
+            position: fixed;
+            top: 25px;
+            right: 80px;
+            width: 12px;
+            height: 12px;
+            background: #34c759;
+            border-radius: 50%;
+            z-index: 101;
+            animation: pulse 2s infinite;
+        }
+
+        .sync-indicator.disconnected {
+            background: #ff3b30;
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         .container {
             padding: 100px 16px 20px;
             max-width: 500px;
@@ -208,6 +230,7 @@
             color: #000;
             cursor: pointer;
             transition: all 0.3s;
+            position: relative;
         }
 
         .time-btn:active {
@@ -223,6 +246,10 @@
         .time-btn.disabled {
             opacity: 0.3;
             pointer-events: none;
+        }
+
+        .time-btn.checking {
+            opacity: 0.6;
         }
 
         .input-group {
@@ -466,6 +493,7 @@
             z-index: 999;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
         }
 
         .loading.show {
@@ -485,7 +513,42 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ADMIN PANEL */
+        .loading-text {
+            margin-top: 16px;
+            font-size: 15px;
+            color: #8e8e93;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            color: #fff;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            z-index: 3000;
+            display: none;
+            animation: toastIn 0.3s ease-out;
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        @keyframes toastIn {
+            from {
+                transform: translateX(-50%) translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
         .admin-panel {
             display: none;
             position: fixed;
@@ -580,126 +643,6 @@
             font-weight: 700;
         }
 
-        .service-list {
-            display: grid;
-            gap: 12px;
-        }
-
-        .service-item {
-            background: #f2f2f7;
-            padding: 16px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .service-info {
-            flex: 1;
-        }
-
-        .service-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-edit, .btn-delete {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .btn-edit {
-            background: #007aff;
-            color: #fff;
-        }
-
-        .btn-delete {
-            background: #ff3b30;
-            color: #fff;
-        }
-
-        .schedule-grid {
-            display: grid;
-            gap: 12px;
-        }
-
-        .schedule-item {
-            background: #f2f2f7;
-            padding: 16px;
-            border-radius: 12px;
-            display: grid;
-            grid-template-columns: 100px 1fr auto;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .schedule-day {
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .schedule-times {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .schedule-times input {
-            padding: 8px;
-            border: none;
-            border-radius: 8px;
-            background: #fff;
-            font-size: 14px;
-        }
-
-        .toggle-switch {
-            position: relative;
-            width: 51px;
-            height: 31px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 31px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 23px;
-            width: 23px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .toggle-slider {
-            background-color: #34c759;
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(20px);
-        }
-
         .bookings-table {
             width: 100%;
             border-collapse: collapse;
@@ -742,183 +685,55 @@
             color: #ff3b30;
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #fff;
-            border-radius: 20px;
-            padding: 24px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-header h3 {
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: #8e8e93;
-            padding: 0;
-            width: 32px;
-            height: 32px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .btn-save {
-            background: #34c759;
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            padding: 16px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 16px;
-        }
-
-        .export-buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .btn-export {
-            flex: 1;
-            min-width: 150px;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            background: #007aff;
-            color: #fff;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #000;
-            color: #fff;
-            padding: 16px 24px;
-            border-radius: 12px;
-            font-size: 15px;
-            z-index: 3000;
-            display: none;
-            animation: toastIn 0.3s ease-out;
-        }
-
-        .toast.show {
-            display: block;
-        }
-
-        @keyframes toastIn {
-            from {
-                transform: translateX(-50%) translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(-50%) translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .filter-controls {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
+        .btn-edit, .btn-delete {
             padding: 8px 16px;
-            border: 2px solid #007aff;
-            background: #fff;
-            color: #007aff;
+            border: none;
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
+            margin-right: 4px;
         }
 
-        .filter-btn.active {
+        .btn-edit {
             background: #007aff;
             color: #fff;
         }
 
-        .search-box {
-            flex: 1;
-            min-width: 200px;
-            padding: 10px 16px;
-            border: 2px solid #e5e5ea;
-            border-radius: 8px;
-            font-size: 15px;
+        .btn-delete {
+            background: #ff3b30;
+            color: #fff;
         }
 
-        .booking-edit-form {
-            display: grid;
-            gap: 12px;
+        .firebase-setup {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
         }
 
-        .password-input-group {
-            position: relative;
+        .firebase-setup h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #856404;
         }
 
-        .password-toggle {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            color: #8e8e93;
+        .firebase-setup p {
+            color: #856404;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .firebase-setup code {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
         }
 
         @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
             .bookings-table {
                 font-size: 13px;
             }
@@ -931,33 +746,17 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
-
-            .schedule-item {
-                grid-template-columns: 1fr;
-            }
-
-            .schedule-times {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .filter-controls {
-                flex-direction: column;
-            }
-
-            .search-box {
-                width: 100%;
-            }
         }
     </style>
 </head>
 <body>
     <a href="#" class="admin-link" id="adminLink" onclick="showAdminLogin(event)">Admin</a>
+    <div class="sync-indicator" id="syncIndicator" title="Conectado"></div>
 
     <!-- Header -->
     <div class="header">
         <div class="header-title">Lavado de Autos</div>
-        <div class="header-subtitle">Rápido y fácil</div>
+        <div class="header-subtitle">Sincronización en tiempo real</div>
     </div>
 
     <!-- Contenido Principal -->
@@ -1044,6 +843,7 @@
     <!-- Loading -->
     <div class="loading" id="loading">
         <div class="spinner"></div>
+        <div class="loading-text">Conectando con Firebase...</div>
     </div>
 
     <!-- Toast -->
@@ -1057,9 +857,17 @@
         </div>
         
         <div class="admin-content">
+            <!-- Firebase Status -->
+            <div class="firebase-setup" style="background: #d1f4e0; border-color: #34c759;">
+                <h3 style="color: #1e7e34;">✅ Firebase Conectado</h3>
+                <p style="color: #1e7e34;"><strong>Proyecto:</strong> kl-n-12f7b</p>
+                <p style="color: #1e7e34;"><strong>Estado:</strong> <span id="connectionStatus">Conectando...</span></p>
+                <p style="margin-top: 12px; font-size: 14px; color: #1e7e34;">Todas las reservaciones se sincronizan en tiempo real entre todos los dispositivos.</p>
+            </div>
+
             <!-- Estadísticas -->
             <div class="admin-section">
-                <h2>📈 Estadísticas</h2>
+                <h2>📈 Estadísticas en Tiempo Real</h2>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-label">Reservaciones Totales</div>
@@ -1080,30 +888,9 @@
                 </div>
             </div>
 
-            <!-- Servicios -->
-            <div class="admin-section">
-                <h2>🚗 Servicios</h2>
-                <button class="primary-btn" onclick="showServiceModal()">+ Agregar Servicio</button>
-                <div class="service-list" id="serviceList"></div>
-            </div>
-
-            <!-- Horarios -->
-            <div class="admin-section">
-                <h2>⏰ Horarios de Operación</h2>
-                <div class="schedule-grid" id="scheduleGrid"></div>
-                <button class="btn-save" onclick="saveSchedules()">Guardar Horarios</button>
-            </div>
-
             <!-- Reservaciones -->
             <div class="admin-section">
-                <h2>📋 Reservaciones</h2>
-                <div class="filter-controls">
-                    <input type="text" class="search-box" id="searchBookings" placeholder="Buscar por nombre, teléfono o auto..." oninput="filterBookings()">
-                    <button class="filter-btn active" data-filter="all" onclick="setBookingFilter('all')">Todas</button>
-                    <button class="filter-btn" data-filter="confirmed" onclick="setBookingFilter('confirmed')">Confirmadas</button>
-                    <button class="filter-btn" data-filter="cancelled" onclick="setBookingFilter('cancelled')">Canceladas</button>
-                    <button class="filter-btn" data-filter="today" onclick="setBookingFilter('today')">Hoy</button>
-                </div>
+                <h2>📋 Reservaciones en Tiempo Real</h2>
                 <div style="overflow-x: auto;">
                     <table class="bookings-table" id="bookingsTable">
                         <thead>
@@ -1122,121 +909,66 @@
                     </table>
                 </div>
             </div>
-
-            <!-- Configuración -->
-            <div class="admin-section">
-                <h2>⚙️ Configuración</h2>
-                <div class="input-group">
-                    <label class="input-label">Contraseña de Administrador</label>
-                    <div class="password-input-group">
-                        <input type="password" class="input-field" id="adminPassword" placeholder="Nueva contraseña">
-                        <button class="password-toggle" onclick="togglePasswordVisibility()">👁️</button>
-                    </div>
-                </div>
-                <button class="btn-save" onclick="changeAdminPassword()">Cambiar Contraseña</button>
-                
-                <div style="margin-top: 20px;">
-                    <button class="btn-export" onclick="cleanOldBookings()">🧹 Limpiar Reservaciones Antiguas</button>
-                </div>
-            </div>
-
-            <!-- Exportar Datos -->
-            <div class="admin-section">
-                <h2>💾 Exportar / Importar</h2>
-                <div class="export-buttons">
-                    <button class="btn-export" onclick="exportData()">📥 Descargar Backup</button>
-                    <button class="btn-export" onclick="document.getElementById('importFile').click()">📤 Importar Backup</button>
-                    <button class="btn-export" onclick="exportCSV()">📊 Exportar CSV</button>
-                    <button class="btn-export" onclick="clearAllData()" style="background: #ff3b30;">🗑️ Borrar Todo</button>
-                </div>
-                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
-            </div>
         </div>
     </div>
 
-    <!-- Modal de Servicio -->
-    <div class="modal" id="serviceModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="serviceModalTitle">Nuevo Servicio</h3>
-                <button class="modal-close" onclick="closeServiceModal()">&times;</button>
-            </div>
-            <div class="input-group">
-                <label class="input-label">Nombre del Servicio</label>
-                <input type="text" class="input-field" id="serviceName" placeholder="Ej: Básico">
-            </div>
-            <div class="form-row">
-                <div class="input-group">
-                    <label class="input-label">Precio ($)</label>
-                    <input type="number" class="input-field" id="servicePrice" placeholder="80" min="0">
-                </div>
-                <div class="input-group">
-                    <label class="input-label">Duración (min)</label>
-                    <input type="number" class="input-field" id="serviceTime" placeholder="30" step="15" min="15">
-                </div>
-            </div>
-            <div class="input-group">
-                <label class="input-label">Icono (emoji)</label>
-                <input type="text" class="input-field" id="serviceIcon" placeholder="⚡" maxlength="2">
-            </div>
-            <button class="btn-save" onclick="saveService()">Guardar Servicio</button>
-        </div>
-    </div>
-
-    <!-- Modal de Edición de Reservación -->
-    <div class="modal" id="bookingModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Editar Reservación</h3>
-                <button class="modal-close" onclick="closeBookingModal()">&times;</button>
-            </div>
-            <div class="booking-edit-form">
-                <div class="input-group">
-                    <label class="input-label">Cliente</label>
-                    <input type="text" class="input-field" id="editBookingName">
-                </div>
-                <div class="input-group">
-                    <label class="input-label">Teléfono</label>
-                    <input type="tel" class="input-field" id="editBookingPhone" maxlength="10">
-                </div>
-                <div class="input-group">
-                    <label class="input-label">Dirección</label>
-                    <input type="text" class="input-field" id="editBookingAddress">
-                </div>
-                <div class="input-group">
-                    <label class="input-label">Auto</label>
-                    <input type="text" class="input-field" id="editBookingCar">
-                </div>
-                <div class="input-group">
-                    <label class="input-label">Fecha</label>
-                    <input type="date" class="input-field" id="editBookingDate">
-                </div>
-                <div class="input-group">
-                    <label class="input-label">Hora</label>
-                    <input type="time" class="input-field" id="editBookingTime">
-                </div>
-            </div>
-            <button class="btn-save" onclick="saveBookingEdit()">Guardar Cambios</button>
-        </div>
-    </div>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <script>
-        // Estado Global
+        // ===== CONFIGURACIÓN DE FIREBASE =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyClriIvCnIc9ZgJrw08YNsfxtnECrQ6OFE",
+            authDomain: "kl-n-12f7b.firebaseapp.com",
+            databaseURL: "https://kl-n-12f7b-default-rtdb.firebaseio.com",
+            projectId: "kl-n-12f7b",
+            storageBucket: "kl-n-12f7b.firebasestorage.app",
+            messagingSenderId: "941333228893",
+            appId: "1:941333228893:web:3bbdb9ad91475ed3a2ccb4",
+            measurementId: "G-032VZE4S8W"
+        };
+
+        // Inicializar Firebase
+        let app, database;
+        let isFirebaseConnected = false;
+
+        try {
+            app = firebase.initializeApp(firebaseConfig);
+            database = firebase.database();
+            
+            // Monitorear conexión
+            const connectedRef = database.ref('.info/connected');
+            connectedRef.on('value', (snapshot) => {
+                isFirebaseConnected = snapshot.val() === true;
+                updateSyncIndicator();
+                
+                // Actualizar estado en admin
+                const statusEl = document.getElementById('connectionStatus');
+                if (statusEl) {
+                    statusEl.textContent = isFirebaseConnected ? '🟢 Conectado' : '🔴 Desconectado';
+                    statusEl.style.fontWeight = 'bold';
+                }
+            });
+            
+            console.log('✅ Firebase inicializado correctamente');
+        } catch (error) {
+            console.error('❌ Error al inicializar Firebase:', error);
+            showToast('Error: Configura Firebase para usar sincronización en tiempo real');
+        }
+
+        // ===== ESTADO GLOBAL =====
         const state = {
             selectedService: null,
             selectedDate: null,
             selectedTime: null,
-            bookings: [],
             services: [],
             schedules: {},
-            editingServiceId: null,
-            editingBookingId: null,
-            adminPassword: '2024',
-            bookingFilter: 'all',
-            searchQuery: ''
+            bookings: [],
+            adminPassword: '2024'
         };
 
-        // Configuración por defecto
+        // Servicios por defecto
         const defaultServices = [
             { id: 1, name: 'Básico', price: 80, time: 30, icon: '⚡', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
             { id: 2, name: 'Completo', price: 150, time: 45, icon: '✨', gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' },
@@ -1256,60 +988,137 @@
 
         const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
-        // Funciones de Storage con manejo de errores mejorado
-        function loadData() {
-            try {
-                const savedBookings = localStorage.getItem('carwash_bookings');
-                const savedServices = localStorage.getItem('carwash_services');
-                const savedSchedules = localStorage.getItem('carwash_schedules');
-                const savedPassword = localStorage.getItem('carwash_admin_password');
+        // ===== FUNCIONES DE FIREBASE =====
+        function initializeFirebaseData() {
+            if (!database) return;
+
+            // Inicializar servicios si no existen
+            database.ref('services').once('value', (snapshot) => {
+                if (!snapshot.exists()) {
+                    database.ref('services').set(defaultServices);
+                }
+            });
+
+            // Inicializar horarios si no existen
+            database.ref('schedules').once('value', (snapshot) => {
+                if (!snapshot.exists()) {
+                    database.ref('schedules').set(defaultSchedules);
+                }
+            });
+
+            // Inicializar contraseña admin si no existe
+            database.ref('config/adminPassword').once('value', (snapshot) => {
+                if (!snapshot.exists()) {
+                    database.ref('config/adminPassword').set('2024');
+                }
+            });
+        }
+
+        function setupFirebaseListeners() {
+            if (!database) return;
+
+            // Escuchar cambios en servicios
+            database.ref('services').on('value', (snapshot) => {
+                const data = snapshot.val();
+                state.services = data ? Object.values(data) : [...defaultServices];
+                renderServices();
+                if (document.getElementById('adminPanel').classList.contains('show')) {
+                    renderAdminStats();
+                }
+            });
+
+            // Escuchar cambios en horarios
+            database.ref('schedules').on('value', (snapshot) => {
+                const data = snapshot.val();
+                state.schedules = data || {...defaultSchedules};
+                if (state.selectedDate) {
+                    renderDays();
+                }
+            });
+
+            // Escuchar cambios en reservaciones (TIEMPO REAL)
+            database.ref('bookings').on('value', (snapshot) => {
+                const data = snapshot.val();
+                state.bookings = data ? Object.values(data) : [];
                 
-                state.bookings = savedBookings ? JSON.parse(savedBookings) : [];
-                state.services = savedServices ? JSON.parse(savedServices) : [...defaultServices];
-                state.schedules = savedSchedules ? JSON.parse(savedSchedules) : {...defaultSchedules};
-                state.adminPassword = savedPassword || '2024';
-                
-                // Validar integridad
-                if (!Array.isArray(state.bookings)) state.bookings = [];
-                if (!Array.isArray(state.services) || state.services.length === 0) {
-                    state.services = [...defaultServices];
+                // Actualizar vista de horarios si está visible
+                if (state.selectedDate && !document.getElementById('timeCard').classList.contains('hidden')) {
+                    renderTimes();
                 }
                 
-                return true;
+                // Actualizar admin si está abierto
+                if (document.getElementById('adminPanel').classList.contains('show')) {
+                    renderAdminStats();
+                    renderAdminBookings();
+                }
+            });
+
+            // Escuchar cambios en contraseña admin
+            database.ref('config/adminPassword').on('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    state.adminPassword = snapshot.val();
+                }
+            });
+        }
+
+        async function addBookingToFirebase(booking) {
+            if (!database) {
+                throw new Error('Firebase no está conectado');
+            }
+
+            try {
+                const bookingRef = database.ref('bookings').push();
+                booking.id = bookingRef.key;
+                await bookingRef.set(booking);
+                return booking;
             } catch (error) {
-                console.error('Error loading data:', error);
-                showToast('Error al cargar datos. Usando valores por defecto.');
-                state.services = [...defaultServices];
-                state.schedules = {...defaultSchedules};
-                state.bookings = [];
-                state.adminPassword = '2024';
-                return false;
+                console.error('Error adding booking:', error);
+                throw error;
             }
         }
 
-        function saveData() {
+        async function updateBookingInFirebase(bookingId, updates) {
+            if (!database) {
+                throw new Error('Firebase no está conectado');
+            }
+
             try {
-                localStorage.setItem('carwash_bookings', JSON.stringify(state.bookings));
-                localStorage.setItem('carwash_services', JSON.stringify(state.services));
-                localStorage.setItem('carwash_schedules', JSON.stringify(state.schedules));
-                localStorage.setItem('carwash_admin_password', state.adminPassword);
-                return true;
+                await database.ref(`bookings/${bookingId}`).update(updates);
             } catch (error) {
-                console.error('Error saving data:', error);
-                if (error.name === 'QuotaExceededError') {
-                    showToast('Espacio de almacenamiento lleno. Limpia datos antiguos.');
-                } else {
-                    showToast('Error al guardar datos.');
-                }
-                return false;
+                console.error('Error updating booking:', error);
+                throw error;
             }
         }
 
-        // Funciones de UI Principal
+        async function deleteBookingFromFirebase(bookingId) {
+            if (!database) {
+                throw new Error('Firebase no está conectado');
+            }
+
+            try {
+                await database.ref(`bookings/${bookingId}`).remove();
+            } catch (error) {
+                console.error('Error deleting booking:', error);
+                throw error;
+            }
+        }
+
+        function updateSyncIndicator() {
+            const indicator = document.getElementById('syncIndicator');
+            if (isFirebaseConnected) {
+                indicator.classList.remove('disconnected');
+                indicator.title = 'Conectado - Sincronización activa';
+            } else {
+                indicator.classList.add('disconnected');
+                indicator.title = 'Desconectado';
+            }
+        }
+
+        // ===== FUNCIONES DE UI PRINCIPAL =====
         function renderServices() {
             const grid = document.getElementById('servicesGrid');
             if (!state.services || state.services.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #8e8e93;">No hay servicios disponibles</p>';
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #8e8e93;">Cargando servicios...</p>';
                 return;
             }
             
@@ -1451,7 +1260,6 @@
             const address = document.getElementById('inputAddress');
             const car = document.getElementById('inputCar');
             
-            // Validar nombre (al menos 2 caracteres)
             if (!name.value.trim() || name.value.trim().length < 2) {
                 showError(name, 'errorName');
                 isValid = false;
@@ -1459,7 +1267,6 @@
                 hideError(name, 'errorName');
             }
             
-            // Validar teléfono (exactamente 10 dígitos)
             const phoneRegex = /^[0-9]{10}$/;
             if (!phoneRegex.test(phone.value.trim())) {
                 showError(phone, 'errorPhone');
@@ -1468,7 +1275,6 @@
                 hideError(phone, 'errorPhone');
             }
             
-            // Validar dirección
             if (!address.value.trim() || address.value.trim().length < 5) {
                 showError(address, 'errorAddress');
                 isValid = false;
@@ -1476,7 +1282,6 @@
                 hideError(address, 'errorAddress');
             }
             
-            // Validar auto
             if (!car.value.trim() || car.value.trim().length < 3) {
                 showError(car, 'errorCar');
                 isValid = false;
@@ -1497,13 +1302,18 @@
             document.getElementById(errorId).classList.remove('show');
         }
 
-        function confirmBooking() {
+        async function confirmBooking() {
             if (!state.selectedService || !state.selectedDate || !state.selectedTime) {
                 showToast('Por favor completa todos los pasos');
                 return;
             }
 
             if (!validateForm()) return;
+
+            if (!isFirebaseConnected) {
+                showToast('Error: No hay conexión con Firebase');
+                return;
+            }
             
             const name = document.getElementById('inputName').value.trim();
             const phone = document.getElementById('inputPhone').value.trim();
@@ -1512,13 +1322,14 @@
 
             // Verificar disponibilidad nuevamente
             if (!isTimeAvailable(state.selectedDate, state.selectedTime)) {
-                showToast('Este horario ya no está disponible');
+                showToast('⚠️ Este horario ya fue reservado por otro cliente');
                 renderTimes();
                 return;
             }
 
+            showLoading('Guardando reservación...');
+
             const booking = {
-                id: Date.now(),
                 service: state.selectedService.name,
                 price: state.selectedService.price,
                 duration: state.selectedService.time,
@@ -1532,15 +1343,16 @@
                 createdAt: new Date().toISOString()
             };
 
-            state.bookings.push(booking);
-            if (!saveData()) {
-                state.bookings.pop();
-                showToast('Error al guardar la reservación');
-                return;
+            try {
+                const savedBooking = await addBookingToFirebase(booking);
+                hideLoading();
+                sendWhatsApp(savedBooking);
+                showSuccess();
+            } catch (error) {
+                hideLoading();
+                console.error('Error:', error);
+                showToast('Error al guardar la reservación. Intenta de nuevo.');
             }
-
-            sendWhatsApp(booking);
-            showSuccess();
         }
 
         function sendWhatsApp(booking) {
@@ -1638,7 +1450,7 @@
             }
         }
 
-        // Funciones de Admin
+        // ===== FUNCIONES DE ADMIN =====
         function showAdminLogin(e) {
             if (e) e.preventDefault();
             const pass = prompt('Contraseña de administrador:');
@@ -1657,8 +1469,6 @@
             document.getElementById('floatingSummary').classList.remove('show');
             
             renderAdminStats();
-            renderAdminServices();
-            renderAdminSchedules();
             renderAdminBookings();
         }
 
@@ -1695,121 +1505,9 @@
             document.getElementById('statRevenue').textContent = `${revenue.toLocaleString()}`;
         }
 
-        function renderAdminServices() {
-            const list = document.getElementById('serviceList');
-            if (!state.services || state.services.length === 0) {
-                list.innerHTML = '<p style="text-align: center; color: #8e8e93;">No hay servicios configurados</p>';
-                return;
-            }
-
-            list.innerHTML = state.services.map(s => `
-                <div class="service-item">
-                    <div class="service-info">
-                        <div style="font-size: 20px; margin-bottom: 4px;">${s.icon} ${escapeHtml(s.name)}</div>
-                        <div style="color: #8e8e93; font-size: 14px;">${s.price} • ${s.time} min</div>
-                    </div>
-                    <div class="service-actions">
-                        <button class="btn-edit" onclick="editService(${s.id})">Editar</button>
-                        <button class="btn-delete" onclick="deleteService(${s.id})">Eliminar</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderAdminSchedules() {
-            const grid = document.getElementById('scheduleGrid');
-            grid.innerHTML = Object.keys(state.schedules).map(day => {
-                const schedule = state.schedules[day];
-                return `
-                    <div class="schedule-item">
-                        <div class="schedule-day">${dayNames[day]}</div>
-                        <div class="schedule-times">
-                            <input type="time" value="${schedule.start}" 
-                                   onchange="updateSchedule(${day}, 'start', this.value)"
-                                   ${!schedule.active ? 'disabled' : ''}>
-                            <span>a</span>
-                            <input type="time" value="${schedule.end}" 
-                                   onchange="updateSchedule(${day}, 'end', this.value)"
-                                   ${!schedule.active ? 'disabled' : ''}>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" ${schedule.active ? 'checked' : ''}
-                                   onchange="updateSchedule(${day}, 'active', this.checked)">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function updateSchedule(day, field, value) {
-            if (!state.schedules[day]) {
-                state.schedules[day] = { active: false, start: '09:00', end: '18:00' };
-            }
-            state.schedules[day][field] = value;
-        }
-
-        function saveSchedules() {
-            // Validar horarios
-            let valid = true;
-            for (let day in state.schedules) {
-                const sch = state.schedules[day];
-                if (sch.active && sch.start >= sch.end) {
-                    valid = false;
-                    showToast('Los horarios deben ser válidos (inicio < fin)');
-                    break;
-                }
-            }
-            
-            if (valid && saveData()) {
-                showToast('Horarios guardados correctamente');
-                renderDays(); // Actualizar días disponibles
-            }
-        }
-
-        function setBookingFilter(filter) {
-            state.bookingFilter = filter;
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.filter === filter);
-            });
-            renderAdminBookings();
-        }
-
-        function filterBookings() {
-            state.searchQuery = document.getElementById('searchBookings').value.toLowerCase();
-            renderAdminBookings();
-        }
-
-        function getFilteredBookings() {
-            let filtered = [...state.bookings];
-            
-            // Filtrar por estado
-            if (state.bookingFilter === 'confirmed') {
-                filtered = filtered.filter(b => b.status === 'confirmed');
-            } else if (state.bookingFilter === 'cancelled') {
-                filtered = filtered.filter(b => b.status === 'cancelled');
-            } else if (state.bookingFilter === 'today') {
-                const today = new Date().toISOString().split('T')[0];
-                filtered = filtered.filter(b => b.date === today);
-            }
-            
-            // Filtrar por búsqueda
-            if (state.searchQuery) {
-                filtered = filtered.filter(b => 
-                    b.name.toLowerCase().includes(state.searchQuery) ||
-                    b.phone.includes(state.searchQuery) ||
-                    b.car.toLowerCase().includes(state.searchQuery) ||
-                    b.service.toLowerCase().includes(state.searchQuery)
-                );
-            }
-            
-            return filtered;
-        }
-
         function renderAdminBookings() {
             const tbody = document.getElementById('bookingsTableBody');
-            const filtered = getFilteredBookings();
-            const sorted = filtered.sort((a, b) => {
+            const sorted = [...state.bookings].sort((a, b) => {
                 const dateA = new Date(`${a.date}T${a.time}`);
                 const dateB = new Date(`${b.date}T${b.time}`);
                 return dateB - dateA;
@@ -1838,9 +1536,8 @@
                         <td><span class="booking-status status-${b.status}">${b.status === 'confirmed' ? 'Confirmada' : 'Cancelada'}</span></td>
                         <td>
                             ${b.status === 'confirmed' ? 
-                                `<button class="btn-edit" onclick="editBooking(${b.id})" style="margin-right: 4px;">Editar</button>
-                                 <button class="btn-delete" onclick="cancelBooking(${b.id})">Cancelar</button>` :
-                                `<button class="btn-delete" onclick="deleteBookingPermanent(${b.id})">Eliminar</button>`
+                                `<button class="btn-delete" onclick="cancelBooking('${b.id}')">Cancelar</button>` :
+                                `<button class="btn-delete" onclick="deleteBooking('${b.id}')">Eliminar</button>`
                             }
                         </td>
                     </tr>
@@ -1848,410 +1545,35 @@
             }).join('');
         }
 
-        function editBooking(id) {
-            const booking = state.bookings.find(b => b.id === id);
-            if (!booking) return;
-            
-            state.editingBookingId = id;
-            
-            document.getElementById('editBookingName').value = booking.name;
-            document.getElementById('editBookingPhone').value = booking.phone;
-            document.getElementById('editBookingAddress').value = booking.address;
-            document.getElementById('editBookingCar').value = booking.car;
-            document.getElementById('editBookingDate').value = booking.date;
-            document.getElementById('editBookingTime').value = booking.time;
-            
-            document.getElementById('bookingModal').classList.add('show');
-        }
+        async function cancelBooking(id) {
+            if (!confirm('¿Cancelar esta reservación?')) return;
 
-        function closeBookingModal() {
-            document.getElementById('bookingModal').classList.remove('show');
-            state.editingBookingId = null;
-        }
-
-        function saveBookingEdit() {
-            const booking = state.bookings.find(b => b.id === state.editingBookingId);
-            if (!booking) return;
-            
-            const name = document.getElementById('editBookingName').value.trim();
-            const phone = document.getElementById('editBookingPhone').value.trim();
-            const address = document.getElementById('editBookingAddress').value.trim();
-            const car = document.getElementById('editBookingCar').value.trim();
-            const date = document.getElementById('editBookingDate').value;
-            const time = document.getElementById('editBookingTime').value;
-            
-            // Validaciones básicas
-            if (!name || name.length < 2) {
-                showToast('Nombre inválido');
-                return;
-            }
-            if (!/^[0-9]{10}$/.test(phone)) {
-                showToast('Teléfono debe tener 10 dígitos');
-                return;
-            }
-            if (!address || address.length < 5) {
-                showToast('Dirección inválida');
-                return;
-            }
-            if (!car || car.length < 3) {
-                showToast('Datos del auto inválidos');
-                return;
-            }
-            if (!date || !time) {
-                showToast('Fecha y hora requeridas');
-                return;
-            }
-            
-            // Actualizar booking
-            booking.name = name;
-            booking.phone = phone;
-            booking.address = address;
-            booking.car = car;
-            booking.date = date;
-            booking.time = time;
-            
-            if (saveData()) {
-                closeBookingModal();
-                renderAdminBookings();
-                showToast('Reservación actualizada');
-            }
-        }
-
-        function cancelBooking(id) {
-            if (confirm('¿Cancelar esta reservación?')) {
-                const booking = state.bookings.find(b => b.id === id);
-                if (booking) {
-                    booking.status = 'cancelled';
-                    if (saveData()) {
-                        renderAdminBookings();
-                        renderAdminStats();
-                        showToast('Reservación cancelada');
-                    }
-                }
-            }
-        }
-
-        function deleteBookingPermanent(id) {
-            if (confirm('¿Eliminar permanentemente esta reservación?')) {
-                state.bookings = state.bookings.filter(b => b.id !== id);
-                if (saveData()) {
-                    renderAdminBookings();
-                    renderAdminStats();
-                    showToast('Reservación eliminada');
-                }
-            }
-        }
-
-        // Modal de Servicios
-        function showServiceModal(id = null) {
-            state.editingServiceId = id;
-            const modal = document.getElementById('serviceModal');
-            
-            if (id) {
-                const service = state.services.find(s => s.id === id);
-                if (service) {
-                    document.getElementById('serviceModalTitle').textContent = 'Editar Servicio';
-                    document.getElementById('serviceName').value = service.name;
-                    document.getElementById('servicePrice').value = service.price;
-                    document.getElementById('serviceTime').value = service.time;
-                    document.getElementById('serviceIcon').value = service.icon;
-                }
-            } else {
-                document.getElementById('serviceModalTitle').textContent = 'Nuevo Servicio';
-                document.getElementById('serviceName').value = '';
-                document.getElementById('servicePrice').value = '';
-                document.getElementById('serviceTime').value = '30';
-                document.getElementById('serviceIcon').value = '🚗';
-            }
-            
-            modal.classList.add('show');
-        }
-
-        function closeServiceModal() {
-            document.getElementById('serviceModal').classList.remove('show');
-            state.editingServiceId = null;
-        }
-
-        function saveService() {
-            const name = document.getElementById('serviceName').value.trim();
-            const price = parseInt(document.getElementById('servicePrice').value);
-            const time = parseInt(document.getElementById('serviceTime').value);
-            const icon = document.getElementById('serviceIcon').value.trim() || '🚗';
-            
-            if (!name || name.length < 2) {
-                showToast('El nombre debe tener al menos 2 caracteres');
-                return;
-            }
-            if (!price || price < 0) {
-                showToast('El precio debe ser mayor a 0');
-                return;
-            }
-            if (!time || time < 15) {
-                showToast('La duración debe ser al menos 15 minutos');
-                return;
-            }
-            
-            const gradients = [
-                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-                'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
-                'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-                'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)'
-            ];
-            
-            if (state.editingServiceId) {
-                const service = state.services.find(s => s.id === state.editingServiceId);
-                if (service) {
-                    service.name = name;
-                    service.price = price;
-                    service.time = time;
-                    service.icon = icon;
-                }
-            } else {
-                const newService = {
-                    id: Date.now(),
-                    name,
-                    price,
-                    time,
-                    icon,
-                    gradient: gradients[state.services.length % gradients.length]
-                };
-                state.services.push(newService);
-            }
-            
-            if (saveData()) {
-                closeServiceModal();
-                renderAdminServices();
-                renderServices();
-                showToast('Servicio guardado');
-            }
-        }
-
-        function editService(id) {
-            showServiceModal(id);
-        }
-
-        function deleteService(id) {
-            if (state.services.length === 1) {
-                showToast('Debe haber al menos un servicio');
-                return;
-            }
-            
-            if (confirm('¿Eliminar este servicio? Esta acción no se puede deshacer.')) {
-                state.services = state.services.filter(s => s.id !== id);
-                if (saveData()) {
-                    renderAdminServices();
-                    renderServices();
-                    showToast('Servicio eliminado');
-                }
-            }
-        }
-
-        // Cambiar contraseña
-        function togglePasswordVisibility() {
-            const input = document.getElementById('adminPassword');
-            input.type = input.type === 'password' ? 'text' : 'password';
-        }
-
-        function changeAdminPassword() {
-            const newPassword = document.getElementById('adminPassword').value.trim();
-            
-            if (!newPassword || newPassword.length < 4) {
-                showToast('La contraseña debe tener al menos 4 caracteres');
-                return;
-            }
-            
-            if (confirm('¿Cambiar la contraseña de administrador?')) {
-                state.adminPassword = newPassword;
-                if (saveData()) {
-                    document.getElementById('adminPassword').value = '';
-                    showToast('Contraseña actualizada correctamente');
-                }
-            }
-        }
-
-        // Limpiar reservaciones antiguas
-        function cleanOldBookings() {
-            const sixMonthsAgo = new Date();
-            sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-            
-            const before = state.bookings.length;
-            state.bookings = state.bookings.filter(b => {
-                const bookingDate = new Date(b.date);
-                return bookingDate >= sixMonthsAgo || b.status === 'confirmed';
-            });
-            
-            const deleted = before - state.bookings.length;
-            
-            if (deleted > 0) {
-                if (saveData()) {
-                    showToast(`${deleted} reservación${deleted > 1 ? 'es' : ''} antigua${deleted > 1 ? 's' : ''} eliminada${deleted > 1 ? 's' : ''}`);
-                    renderAdminBookings();
-                    renderAdminStats();
-                }
-            } else {
-                showToast('No hay reservaciones antiguas para limpiar');
-            }
-        }
-
-        // Exportar / Importar
-        function exportData() {
+            showLoading('Cancelando...');
             try {
-                const data = {
-                    version: '1.1',
-                    exportDate: new Date().toISOString(),
-                    bookings: state.bookings,
-                    services: state.services,
-                    schedules: state.schedules,
-                    stats: {
-                        totalBookings: state.bookings.length,
-                        confirmedBookings: state.bookings.filter(b => b.status === 'confirmed').length
-                    }
-                };
-                
-                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `carwash-backup-${new Date().toISOString().split('T')[0]}.json`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                showToast('Backup descargado correctamente');
+                await updateBookingInFirebase(id, { status: 'cancelled' });
+                hideLoading();
+                showToast('Reservación cancelada');
             } catch (error) {
-                console.error('Export error:', error);
-                showToast('Error al exportar datos');
+                hideLoading();
+                showToast('Error al cancelar');
             }
         }
 
-        function importData(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    
-                    if (!data.version || !data.bookings || !data.services || !data.schedules) {
-                        throw new Error('Formato de archivo inválido');
-                    }
-                    
-                    // Validar estructura de datos
-                    if (!Array.isArray(data.bookings) || !Array.isArray(data.services)) {
-                        throw new Error('Datos corruptos en el archivo');
-                    }
-                    
-                    if (confirm(`¿Importar estos datos?\n\nReservaciones: ${data.bookings.length}\nServicios: ${data.services.length}\n\nEsto reemplazará todos los datos actuales.`)) {
-                        state.bookings = data.bookings;
-                        state.services = data.services.length > 0 ? data.services : [...defaultServices];
-                        state.schedules = data.schedules;
-                        
-                        if (saveData()) {
-                            showToast('Datos importados correctamente');
-                            renderAdminStats();
-                            renderAdminServices();
-                            renderAdminSchedules();
-                            renderAdminBookings();
-                            renderServices();
-                        }
-                    }
-                } catch (error) {
-                    console.error('Import error:', error);
-                    showToast('Error: archivo inválido o corrupto');
-                }
-            };
-            reader.onerror = () => {
-                showToast('Error al leer el archivo');
-            };
-            reader.readAsText(file);
-            event.target.value = '';
-        }
+        async function deleteBooking(id) {
+            if (!confirm('¿Eliminar permanentemente esta reservación?')) return;
 
-        function exportCSV() {
-            if (state.bookings.length === 0) {
-                showToast('No hay reservaciones para exportar');
-                return;
-            }
-            
+            showLoading('Eliminando...');
             try {
-                const headers = ['Fecha', 'Hora', 'Cliente', 'Teléfono', 'Servicio', 'Auto', 'Dirección', 'Precio', 'Duración', 'Estado'];
-                const rows = state.bookings.map(b => [
-                    b.date,
-                    b.time,
-                    b.name,
-                    b.phone,
-                    b.service,
-                    b.car,
-                    b.address,
-                    b.price,
-                    b.duration,
-                    b.status === 'confirmed' ? 'Confirmada' : 'Cancelada'
-                ]);
-                
-                const csv = [headers, ...rows].map(row => 
-                    row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')
-                ).join('\n');
-                
-                const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `reservaciones-${new Date().toISOString().split('T')[0]}.csv`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                showToast('CSV exportado correctamente');
+                await deleteBookingFromFirebase(id);
+                hideLoading();
+                showToast('Reservación eliminada');
             } catch (error) {
-                console.error('CSV export error:', error);
-                showToast('Error al exportar CSV');
+                hideLoading();
+                showToast('Error al eliminar');
             }
         }
 
-        function clearAllData() {
-            const confirm1 = prompt('⚠️ ADVERTENCIA: Esta acción eliminará TODOS los datos.\n\nEscribe "ELIMINAR" para confirmar:');
-            if (confirm1 !== 'ELIMINAR') {
-                showToast('Operación cancelada');
-                return;
-            }
-            
-            const confirm2 = confirm('¿Estás completamente seguro? Esta acción NO se puede deshacer.');
-            if (!confirm2) {
-                showToast('Operación cancelada');
-                return;
-            }
-            
-            try {
-                localStorage.removeItem('carwash_bookings');
-                localStorage.removeItem('carwash_services');
-                localStorage.removeItem('carwash_schedules');
-                localStorage.removeItem('carwash_admin_password');
-                
-                state.bookings = [];
-                state.services = [...defaultServices];
-                state.schedules = {...defaultSchedules};
-                state.adminPassword = '2024';
-                
-                saveData();
-                
-                showToast('Todos los datos han sido eliminados');
-                renderAdminStats();
-                renderAdminServices();
-                renderAdminSchedules();
-                renderAdminBookings();
-                renderServices();
-            } catch (error) {
-                console.error('Clear data error:', error);
-                showToast('Error al eliminar datos');
-            }
-        }
-
-        // Utilidades
+        // ===== UTILIDADES =====
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
@@ -2267,150 +1589,51 @@
             }, 3000);
         }
 
-        // Validación de integridad de datos
-        function validateDataIntegrity() {
-            let fixed = false;
-            
-            // Eliminar reservaciones duplicadas
-            const seen = new Set();
-            const uniqueBookings = [];
-            state.bookings.forEach(b => {
-                const key = `${b.date}-${b.time}-${b.phone}`;
-                if (!seen.has(key)) {
-                    seen.add(key);
-                    uniqueBookings.push(b);
-                } else {
-                    fixed = true;
-                }
-            });
-            state.bookings = uniqueBookings;
-            
-            // Verificar que todos los servicios tengan los campos necesarios
-            state.services = state.services.filter(s => {
-                return s.id && s.name && s.price >= 0 && s.time > 0;
-            });
-            
-            // Asegurar que haya al menos un servicio
-            if (state.services.length === 0) {
-                state.services = [...defaultServices];
-                fixed = true;
-            }
-            
-            // Verificar que todos los horarios existan
-            for (let i = 0; i < 7; i++) {
-                if (!state.schedules[i]) {
-                    state.schedules[i] = {...defaultSchedules[i]};
-                    fixed = true;
-                }
-            }
-            
-            // Limpiar reservaciones con datos incompletos
-            state.bookings = state.bookings.filter(b => {
-                return b.id && b.name && b.phone && b.date && b.time && b.service;
-            });
-            
-            if (fixed) {
-                saveData();
-                console.log('Data integrity check: fixed issues');
-            }
+        function showLoading(text = 'Cargando...') {
+            const loading = document.getElementById('loading');
+            loading.querySelector('.loading-text').textContent = text;
+            loading.classList.add('show');
         }
 
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            loadData();
-            validateDataIntegrity();
+        function hideLoading() {
+            document.getElementById('loading').classList.remove('show');
+        }
+
+        // ===== INICIALIZACIÓN =====
+        document.addEventListener('DOMContentLoaded', async function() {
+            showLoading('Conectando con Firebase...');
+            
+            if (database) {
+                initializeFirebaseData();
+                setupFirebaseListeners();
+                
+                // Esperar a que se carguen los datos iniciales
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            } else {
+                showToast('⚠️ Firebase no configurado. Configura tu proyecto.');
+            }
+            
+            hideLoading();
             renderServices();
         });
 
-        // Cerrar modales al hacer clic fuera
-        document.getElementById('serviceModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeServiceModal();
-            }
-        });
-
-        document.getElementById('bookingModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeBookingModal();
-            }
-        });
-
-        // Formatear teléfono automáticamente
+        // Formatear teléfono
         document.getElementById('inputPhone').addEventListener('input', function(e) {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
 
-        document.getElementById('editBookingPhone').addEventListener('input', function(e) {
-            this.value = this.value.replace(/[^0-9]/g, '');
-        });
-
         // Validación en tiempo real
-        document.getElementById('inputName').addEventListener('blur', function() {
-            if (this.value.trim().length >= 2) {
-                hideError(this, 'errorName');
-            }
-        });
-
-        document.getElementById('inputPhone').addEventListener('blur', function() {
-            if (/^[0-9]{10}$/.test(this.value.trim())) {
-                hideError(this, 'errorPhone');
-            }
-        });
-
-        document.getElementById('inputAddress').addEventListener('blur', function() {
-            if (this.value.trim().length >= 5) {
-                hideError(this, 'errorAddress');
-            }
-        });
-
-        document.getElementById('inputCar').addEventListener('blur', function() {
-            if (this.value.trim().length >= 3) {
-                hideError(this, 'errorCar');
-            }
-        });
-
-        // Prevenir pérdida de datos al cerrar
-        window.addEventListener('beforeunload', function(e) {
-            if (state.selectedService || state.selectedDate || state.selectedTime) {
-                const inputs = ['inputName', 'inputPhone', 'inputAddress', 'inputCar'];
-                const hasData = inputs.some(id => {
-                    const el = document.getElementById(id);
-                    return el && el.value.trim();
+        ['inputName', 'inputPhone', 'inputAddress', 'inputCar'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('blur', function() {
+                    const errorId = 'error' + id.replace('input', '');
+                    if (this.value.trim()) {
+                        hideError(this, errorId);
+                    }
                 });
-                
-                if (hasData) {
-                    e.preventDefault();
-                    e.returnValue = '¿Seguro que quieres salir? Perderás los datos del formulario.';
-                }
             }
         });
-
-        // Manejo de errores globales
-        window.addEventListener('error', function(e) {
-            console.error('Global error:', e.error);
-            showToast('Ocurrió un error inesperado');
-        });
-
-        // Auto-guardar periódicamente
-        setInterval(() => {
-            if (state.bookings.length > 0) {
-                try {
-                    const backup = {
-                        timestamp: new Date().toISOString(),
-                        bookings: state.bookings.length,
-                        lastBooking: state.bookings[state.bookings.length - 1]
-                    };
-                    sessionStorage.setItem('carwash_session_backup', JSON.stringify(backup));
-                } catch (e) {
-                    // Silent fail
-                }
-            }
-        }, 60000);
-
-        // Inicializar
-        loadData();
-        validateDataIntegrity();
-        renderServices();
     </script>
 </body>
 </html>
