@@ -1,429 +1,1584 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="description" content="AutoWash Pro — Reservas. Experiencia futurista, fluida y premium." />
-<title>AutoWash Pro — Reservas</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AutoWash Pro - Sistema de reservas premium para servicios de lavado automotriz. Reserva en línea con confirmación instantánea.">
+<meta name="keywords" content="lavado de autos, car wash, reservas online, lavado premium, detallado automotriz">
+<meta name="author" content="AutoWash Pro">
+<meta name="theme-color" content="#1e40af">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="AutoWash Pro - Reservas Premium">
+<meta property="og:description" content="Sistema de reservas inteligente para servicios de lavado automotriz premium">
+<meta property="og:image" content="https://via.placeholder.com/1200x630/1e40af/ffffff?text=AutoWash+Pro">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AutoWash Pro - Reservas Premium">
+
+<title>AutoWash Pro | Reserva tu Servicio Premium</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --accent:#2563eb;
-  --glass-bg: rgba(255,255,255,0.06);
-  --card: rgba(255,255,255,0.03);
-  --bg: linear-gradient(180deg,#0b1220 0%, #071128 100%);
-  --muted: rgba(255,255,255,0.66);
-  --text: #e6eefc;
-  --success:#10b981;
-  --danger:#ef4444;
-  --radius:14px;
-  --glass-blur: 10px;
-  --neon: 0 8px 40px rgba(37,99,235,0.14);
-  --smooth: 240ms cubic-bezier(.2,.9,.3,1);
-}
-*{box-sizing:border-box}
-html,body{height:100%; margin:0; font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial; -webkit-font-smoothing:antialiased;}
-body{
-  background: var(--bg);
-  color:var(--text);
-  -webkit-font-smoothing:antialiased;
-  line-height:1.45;
-  font-size:16px;
-  padding-bottom:120px;
-}
-
-/* Layout */
-.container{max-width:980px;margin:20px auto;padding:20px}
-.header{
-  display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  box-shadow:var(--neon);
-  border:1px solid rgba(255,255,255,0.03);
-}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{
-  width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#1b4fcf);
-  display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:18px;box-shadow:0 6px 30px rgba(37,99,235,0.18);
-}
-.brand h1{font-size:1rem;margin:0;font-weight:700}
-.header-right{display:flex;gap:12px;align-items:center}
-
-/* Card / glass */
-.card{
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius:16px;padding:18px;border:1px solid rgba(255,255,255,0.04);
-  backdrop-filter: blur(var(--glass-blur)); box-shadow: 0 10px 40px rgba(2,6,23,0.6);
+:root {
+  --primary: #1e40af;
+  --primary-dark: #1e3a8a;
+  --primary-light: #3b82f6;
+  --primary-lighter: #dbeafe;
+  --success: #059669;
+  --success-light: #d1fae5;
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+  --warning: #d97706;
+  --warning-light: #fef3c7;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --white: #ffffff;
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+  --transition: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Flow */
-.flow{display:grid;gap:14px}
-.step-title{display:flex;align-items:center;gap:12px}
-.step-num{width:36px;height:36px;border-radius:10px;background:linear-gradient(180deg,#0f1724,#1b2434);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);box-shadow:0 6px 18px rgba(37,99,235,0.06)}
-.lead{color:var(--muted);margin:6px 0 0}
-
-/* Services grid */
-.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.svc{
-  display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);
-  cursor:pointer;transition: transform var(--smooth), box-shadow var(--smooth), border-color var(--smooth);
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-.svc:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(3,7,20,0.6);}
-.svc.selected{border-color:rgba(37,99,235,0.6); box-shadow:0 30px 90px rgba(37,99,235,0.12); transform:translateY(-6px)}
-.icon{width:54px;height:54px;border-radius:10px;background:linear-gradient(180deg,#081020,#0b1320);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--accent);box-shadow:inset 0 -8px 20px rgba(0,0,0,0.4)}
 
-/* Dates horizontal */
-.dates{display:flex;gap:8px;overflow:auto;padding:8px 2px}
-.date{
-  min-width:84px;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);text-align:center;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);cursor:pointer;
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-.date.selected{background:linear-gradient(135deg,#15305a,#0f1a33); border:1px solid rgba(37,99,235,0.6); color:var(--text); box-shadow:0 12px 40px rgba(19,53,110,0.28)}
-.date:disabled{opacity:0.28;cursor:not-allowed}
 
-/* Times */
-.times{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-top:8px}
-.time{padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);text-align:center;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);cursor:pointer}
-.time.selected{background:linear-gradient(135deg,#0e2a5a,#07203a); border:1px solid rgba(37,99,235,0.6); color:var(--text)}
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 50%, var(--primary-lighter) 100%);
+  color: var(--gray-900);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(30, 64, 175, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(16px, 4vw, 32px);
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.header {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: clamp(16px, 2vw, 24px);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  animation: slideDown 0.6s var(--transition);
+  margin-bottom: 24px;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+  transition: transform 0.3s var(--transition);
+}
+
+.logo:hover {
+  transform: scale(1.05) rotate(-3deg);
+}
+
+.brand-text h1 {
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-weight: 800;
+  color: var(--gray-900);
+  line-height: 1.2;
+}
+
+.brand-text .subtitle {
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--danger);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.status-dot.connected {
+  background: var(--success);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Buttons */
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s var(--transition);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: var(--white);
+  box-shadow: 0 4px 6px rgba(30, 64, 175, 0.2);
+  position: relative;
+  overflow: hidden;
+  font-family: inherit;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.2) 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(30, 64, 175, 0.3);
+}
+
+.btn:hover::before {
+  opacity: 1;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn.btn-secondary {
+  background: var(--white);
+  border: 2px solid var(--gray-300);
+  color: var(--gray-700);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn.btn-secondary:hover:not(:disabled) {
+  background: var(--gray-50);
+  border-color: var(--gray-400);
+  box-shadow: var(--shadow);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Cards */
+.card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: clamp(20px, 3vw, 28px);
+  box-shadow: var(--shadow-sm);
+  animation: fadeInUp 0.6s var(--transition) backwards;
+}
+
+@keyframes fadeInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.2s; }
+.card:nth-child(4) { animation-delay: 0.3s; }
+
+/* Step Header */
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--white);
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(30, 64, 175, 0.2);
+}
+
+.step-content h2 {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 700;
+  margin-bottom: 4px;
+  line-height: 1.3;
+  color: var(--gray-900);
+}
+
+.step-content .lead {
+  color: var(--gray-500);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Services Grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.service-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--white);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.3s var(--transition);
+  position: relative;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-lg);
+}
+
+.service-card.selected {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, var(--primary-lighter) 0%, var(--white) 100%);
+  box-shadow: 0 8px 16px rgba(30, 64, 175, 0.15);
+  transform: translateY(-2px);
+}
+
+.service-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-50) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+  border: 1px solid var(--gray-200);
+}
+
+.service-card.selected .service-icon {
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+  border-color: var(--primary);
+}
+
+.service-info {
+  flex: 1;
+}
+
+.service-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+  color: var(--gray-900);
+}
+
+.service-desc {
+  font-size: 0.9rem;
+  color: var(--gray-600);
+  line-height: 1.4;
+}
+
+.service-details {
+  text-align: right;
+}
+
+.service-price {
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin-bottom: 2px;
+}
+
+.service-time {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+/* Date Selector */
+.dates-container {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 8px 4px;
+  margin-top: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--gray-200);
+}
+
+.dates-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.dates-container::-webkit-scrollbar-track {
+  background: var(--gray-100);
+  border-radius: 3px;
+}
+
+.dates-container::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
+}
+
+.date-btn {
+  min-width: 90px;
+  padding: 16px 12px;
+  background: var(--white);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s var(--transition);
+  flex-shrink: 0;
+  font-family: inherit;
+}
+
+.date-label {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  margin-bottom: 6px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.date-day {
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--gray-900);
+}
+
+.date-btn:hover:not(:disabled) {
+  transform: translateY(-4px);
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-md);
+}
+
+.date-btn.selected {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-color: var(--primary);
+  box-shadow: 0 8px 16px rgba(30, 64, 175, 0.25);
+}
+
+.date-btn.selected .date-label,
+.date-btn.selected .date-day {
+  color: var(--white);
+}
+
+.date-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: var(--gray-50);
+}
+
+/* Time Slots */
+.times-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.time-btn {
+  padding: 16px 10px;
+  background: var(--white);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius);
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s var(--transition);
+  font-size: 1rem;
+  color: var(--gray-900);
+  font-family: inherit;
+}
+
+.time-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow);
+  background: var(--primary-lighter);
+}
+
+.time-btn.selected {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-color: var(--primary);
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+}
+
+.time-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: var(--gray-50);
+}
 
 /* Form */
-.form{display:grid;gap:10px}
-label{font-weight:600;color:var(--text);margin-bottom:6px;display:block}
-input, textarea{padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)}
-input::placeholder{color:rgba(255,255,255,0.5)}
-.btn{
-  background:linear-gradient(180deg,var(--accent),#1b4fcf);color:white;padding:12px 16px;border:none;border-radius:12px;font-weight:800;cursor:pointer;
-  box-shadow:0 14px 40px rgba(37,99,235,0.12);transition:transform var(--smooth)
-}
-.btn:active{transform:translateY(1px)}
-
-/* Bottom summary (mobile) */
-.bottom-summary{
-  position:fixed;left:18px;right:18px;bottom:24px;padding:12px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
-  border:1px solid rgba(255,255,255,0.03);box-shadow:0 30px 80px rgba(2,6,23,0.8);display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:60;
+.booking-form {
+  display: grid;
+  gap: 20px;
+  margin-top: 20px;
 }
 
-/* Confirm overlay */
-.overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(1,3,8,0.6),rgba(0,0,0,0.6));z-index:140}
-.overlay.show{display:flex}
-.confirm-modal{width:100%;max-width:520px;padding:18px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);box-shadow:0 40px 140px rgba(2,6,23,0.9);text-align:center}
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--gray-900);
+  font-size: 0.95rem;
+}
 
-/* QR square */
-.qr{width:150px;height:150px;border-radius:12px;background:linear-gradient(180deg,#0b1326,#071028);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.04)}
+.form-control {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--white);
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius);
+  color: var(--gray-900);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s var(--transition);
+  font-weight: 500;
+}
 
-/* responsive */
-@media(min-width:900px){
-  .layout{display:grid;grid-template-columns: 1fr 340px;gap:20px}
-  .bottom-summary{display:none}
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
+  background: var(--white);
+}
+
+.form-control::placeholder {
+  color: var(--gray-400);
+  font-weight: 400;
+}
+
+.form-control.error {
+  border-color: var(--danger);
+  background: var(--danger-light);
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.loading-text {
+  color: var(--gray-500);
+  font-size: 0.9rem;
+  display: none;
+  font-weight: 500;
+}
+
+.loading-text.active {
+  display: block;
+}
+
+/* Layout Grid */
+.layout-grid {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+@media (min-width: 1024px) {
+  .layout-grid {
+    grid-template-columns: 1fr 380px;
+  }
+}
+
+.summary-card {
+  position: sticky;
+  top: 20px;
+  background: linear-gradient(135deg, var(--primary-lighter) 0%, var(--white) 100%);
+  border: 2px solid var(--primary-light);
+}
+
+.summary-header {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--gray-900);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  gap: 16px;
+}
+
+.summary-label {
+  color: var(--gray-600);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.summary-value {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--gray-900);
+  text-align: right;
+}
+
+.summary-divider {
+  height: 1px;
+  background: var(--gray-300);
+  margin: 12px 0;
+}
+
+.summary-total {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+/* Mobile Bottom Bar */
+.mobile-summary {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-top: 2px solid var(--gray-200);
+  padding: 16px 20px;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  z-index: 100;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-summary.active {
+  display: flex;
+}
+
+@media (min-width: 1024px) {
+  .mobile-summary {
+    display: none !important;
+  }
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+  animation: fadeIn 0.3s var(--transition);
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-xl);
+  animation: scaleIn 0.4s var(--transition);
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--success) 0%, #047857 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: var(--white);
+  box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3);
+  animation: bounce 0.6s var(--transition);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.modal-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--gray-900);
+}
+
+.modal-text {
+  color: var(--gray-600);
+  margin-bottom: 28px;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.qr-container {
+  width: 200px;
+  height: 200px;
+  margin: 24px auto;
+  border-radius: var(--radius);
+  background: var(--white);
+  padding: 12px;
+  box-shadow: var(--shadow);
+  border: 2px solid var(--gray-200);
+}
+
+.qr-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+*:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gray-900);
+  color: var(--white);
+  padding: 16px 28px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xl);
+  z-index: 300;
+  animation: slideUp 0.3s var(--transition);
+  font-weight: 600;
+  max-width: 90%;
+}
+
+@keyframes slideUp {
+  from { transform: translate(-50%, 100px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 100px;
+  }
+  
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .service-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .service-details {
+    text-align: center;
+    width: 100%;
+  }
+  
+  .modal-content {
+    padding: 28px 20px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+  }
+  
+  .header-right,
+  .mobile-summary,
+  .btn {
+    display: none !important;
+  }
 }
 </style>
 </head>
+
 <body>
   <div class="container">
-    <header class="header card">
+    <!-- Header -->
+    <header class="header" role="banner">
       <div class="brand">
-        <div class="logo">AW</div>
-        <div>
+        <div class="logo" aria-label="AutoWash Pro Logo">AW</div>
+        <div class="brand-text">
           <h1>AutoWash Pro</h1>
-          <div style="color:var(--muted);font-size:0.92rem">Reservas — futurista & premium</div>
+          <p class="subtitle">Sistema de Reservas Premium</p>
         </div>
       </div>
       <div class="header-right">
-        <div style="text-align:right;color:var(--muted)"><div id="statusText">Conectando...</div></div>
-        <button id="adminOpen" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)">Admin</button>
+        <div class="status-indicator" aria-live="polite">
+          <span class="status-dot" id="statusDot" aria-hidden="true"></span>
+          <span id="statusText">Conectando...</span>
+        </div>
+        <button class="btn btn-secondary" id="adminBtn" aria-label="Acceder al panel de administración">
+          Admin
+        </button>
       </div>
     </header>
 
-    <main class="layout" style="margin-top:18px">
-      <div class="flow">
-        <!-- Step 1 -->
-        <section class="card">
-          <div class="step-title"><div class="step-num">1</div><div><h2>Selecciona tu servicio</h2><div class="lead">Simple, rápido y premium.</div></div></div>
-          <div id="services" class="services" aria-live="polite" style="margin-top:12px"></div>
+    <!-- Main Layout -->
+    <div class="layout-grid">
+      <main>
+        <!-- Step 1: Service Selection -->
+        <section class="card" aria-labelledby="step1-title">
+          <div class="step-header">
+            <div class="step-number" aria-hidden="true">1</div>
+            <div class="step-content">
+              <h2 id="step1-title">Selecciona tu Servicio</h2>
+              <p class="lead">Elige el paquete perfecto para tu vehículo</p>
+            </div>
+          </div>
+          <div class="services-grid" id="servicesGrid" role="radiogroup" aria-label="Servicios disponibles"></div>
         </section>
 
-        <!-- Step 2 -->
-        <section class="card" id="cardDate" style="display:none">
-          <div class="step-title"><div class="step-num">2</div><div><h2>Selecciona la fecha</h2><div class="lead">Disponibilidad próximos 7 días.</div></div></div>
-          <div id="dates" class="dates" style="margin-top:12px"></div>
+        <!-- Step 2: Date Selection -->
+        <section class="card" id="cardDate" style="display: none;" aria-labelledby="step2-title">
+          <div class="step-header">
+            <div class="step-number" aria-hidden="true">2</div>
+            <div class="step-content">
+              <h2 id="step2-title">Selecciona la Fecha</h2>
+              <p class="lead">Disponibilidad próximos 7 días</p>
+            </div>
+          </div>
+          <div class="dates-container" id="datesContainer" role="radiogroup" aria-label="Fechas disponibles"></div>
         </section>
 
-        <!-- Step 3 -->
-        <section class="card" id="cardTime" style="display:none">
-          <div class="step-title"><div class="step-num">3</div><div><h2>Elige el horario</h2><div class="lead">Los horarios ocupados se atenuan.</div></div></div>
-          <div id="times" class="times" style="margin-top:12px"></div>
+        <!-- Step 3: Time Selection -->
+        <section class="card" id="cardTime" style="display: none;" aria-labelledby="step3-title">
+          <div class="step-header">
+            <div class="step-number" aria-hidden="true">3</div>
+            <div class="step-content">
+              <h2 id="step3-title">Elige el Horario</h2>
+              <p class="lead">Selecciona la hora más conveniente</p>
+            </div>
+          </div>
+          <div class="times-grid" id="timesGrid" role="radiogroup" aria-label="Horarios disponibles"></div>
         </section>
 
-        <!-- Step 4 -->
-        <section class="card" id="cardForm" style="display:none">
-          <div class="step-title"><div class="step-num">4</div><div><h2>Información de contacto</h2><div class="lead">Guardamos solo lo necesario.</div></div></div>
-          <form id="bookingForm" class="form" novalidate>
-            <div><label>Nombre completo</label><input id="name" type="text" placeholder="Juan Pérez" required></div>
-            <div><label>Teléfono</label><input id="phone" type="tel" inputmode="numeric" placeholder="4611234567" required></div>
-            <div><label>Dirección</label><input id="address" type="text" placeholder="Av. Juárez #123" required></div>
-            <div><label>Vehículo</label><input id="car" type="text" placeholder="Toyota Corolla 2020 - Blanco" required></div>
-            <div style="display:flex;gap:10px;margin-top:8px"><button id="confirmBtn" class="btn" type="submit">Confirmar reservación</button><div id="inlineLoading" style="display:none;color:var(--muted)">Procesando...</div></div>
+        <!-- Step 4: Contact Form -->
+        <section class="card" id="cardForm" style="display: none;" aria-labelledby="step4-title">
+          <div class="step-header">
+            <div class="step-number" aria-hidden="true">4</div>
+            <div class="step-content">
+              <h2 id="step4-title">Información de Contacto</h2>
+              <p class="lead">Solo lo esencial para confirmar tu cita</p>
+            </div>
+          </div>
+          <form class="booking-form" id="bookingForm" novalidate>
+            <div class="form-group">
+              <label for="customerName">Nombre Completo</label>
+              <input 
+                type="text" 
+                id="customerName" 
+                class="form-control" 
+                placeholder="Juan Pérez García"
+                required
+                autocomplete="name"
+                aria-required="true"
+              >
+            </div>
+            <div class="form-group">
+              <label for="customerPhone">Teléfono</label>
+              <input 
+                type="tel" 
+                id="customerPhone" 
+                class="form-control" 
+                placeholder="4611234567"
+                required
+                inputmode="numeric"
+                autocomplete="tel"
+                aria-required="true"
+              >
+            </div>
+            <div class="form-group">
+              <label for="customerAddress">Dirección</label>
+              <input 
+                type="text" 
+                id="customerAddress" 
+                class="form-control" 
+                placeholder="Av. Juárez #123, Col. Centro"
+                required
+                autocomplete="street-address"
+                aria-required="true"
+              >
+            </div>
+            <div class="form-group">
+              <label for="customerCar">Vehículo</label>
+              <input 
+                type="text" 
+                id="customerCar" 
+                class="form-control" 
+                placeholder="Toyota Corolla 2020 - Blanco"
+                required
+                aria-required="true"
+              >
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn" id="submitBtn">
+                Confirmar Reservación
+              </button>
+              <span class="loading-text" id="loadingText">Procesando...</span>
+            </div>
           </form>
         </section>
-      </div>
+      </main>
 
-      <!-- Summary column -->
+      <!-- Summary Sidebar -->
       <aside>
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center"><div><div style="color:var(--muted)">Resumen</div><div style="font-weight:800;font-size:1.1rem" id="summaryService">—</div></div><div style="text-align:right"><div style="color:var(--muted)">Duración</div><div id="summaryDuration">0 min</div></div></div>
-          <div style="height:1px;background:rgba(255,255,255,0.03);margin:12px 0;border-radius:2px"></div>
-          <div style="display:flex;justify-content:space-between"><div style="color:var(--muted)">Fecha / Hora</div><div id="summaryDateTime">—</div></div>
-          <div style="height:1px;background:rgba(255,255,255,0.03);margin:12px 0;border-radius:2px"></div>
-          <div style="display:flex;justify-content:space-between;align-items:center"><div style="color:var(--muted)">Total</div><div style="font-weight:900;font-size:1.4rem" id="summaryTotal">$0</div></div>
+        <div class="card summary-card">
+          <h3 class="summary-header">Resumen de Reserva</h3>
+          <div class="summary-row">
+            <div>
+              <div class="summary-label">Servicio</div>
+              <div class="summary-value" id="summaryService">—</div>
+            </div>
+            <div style="text-align: right;">
+              <div class="summary-label">Duración</div>
+              <div class="summary-value" id="summaryDuration">— min</div>
+            </div>
+          </div>
+          <div class="summary-divider"></div>
+          <div class="summary-row">
+            <div class="summary-label">Fecha y Hora</div>
+            <div class="summary-value" id="summaryDateTime">—</div>
+          </div>
+          <div class="summary-divider"></div>
+          <div class="summary-row">
+            <div class="summary-label">Total a Pagar</div>
+            <div class="summary-total" id="summaryTotal">$0</div>
+          </div>
         </div>
       </aside>
-    </main>
+    </div>
   </div>
 
-  <!-- Bottom summary (mobile) -->
-  <div class="bottom-summary card" id="bottomSummary" style="display:none">
+  <!-- Mobile Bottom Summary -->
+  <div class="mobile-summary" id="mobileSummary">
     <div>
-      <div id="sService" style="font-weight:800">—</div>
-      <div style="color:var(--muted);font-size:0.9rem" id="sDateTime">—</div>
+      <div style="font-weight: 700; margin-bottom: 4px;" id="mobileService">—</div>
+      <div style="font-size: 0.9rem; color: var(--gray-500);" id="mobileDateTime">—</div>
     </div>
-    <div style="text-align:right">
-      <div id="sPrice" style="font-weight:900">$0</div>
-      <div style="color:var(--muted);font-size:0.9rem" id="sDuration">0 min</div>
+    <div style="text-align: right;">
+      <div style="font-weight: 800; font-size: 1.3rem; color: var(--primary);" id="mobilePrice">$0</div>
+      <div style="font-size: 0.85rem; color: var(--gray-500);" id="mobileDuration">— min</div>
     </div>
   </div>
 
-  <!-- Confirmation overlay (Option 2) -->
-  <div id="confirmOverlay" class="overlay" aria-hidden="true">
-    <div class="confirm-modal card" role="dialog">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
-        <div style="width:84px;height:84px;border-radius:16px;background:linear-gradient(135deg,var(--success),#059669);display:flex;align-items:center;justify-content:center;font-size:36px;color:white;font-weight:900">✓</div>
-        <h3 id="confirmTitle" style="margin:0">Reservación confirmada</h3>
-        <p id="confirmText" style="color:var(--muted);margin:0">Tu reservación se guardó con éxito.</p>
-
-        <div class="qr" id="qrWrap"><img id="qrImage" alt="QR" style="width:100%;height:100%;object-fit:cover;border-radius:8px" /></div>
-
-        <div style="display:flex;gap:12px;margin-top:8px">
-          <button id="viewReceipt" class="btn">Ver recibo</button>
-          <button id="newBooking" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)">Nueva reservación</button>
-        </div>
+  <!-- Confirmation Modal -->
+  <div class="modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <div class="success-icon" aria-hidden="true">✓</div>
+      <h3 class="modal-title" id="modalTitle">¡Reservación Confirmada!</h3>
+      <p class="modal-text" id="modalText">Tu cita ha sido registrada exitosamente</p>
+      
+      <div class="qr-container">
+        <img id="qrImage" src="" alt="Código QR con información de la reserva">
+      </div>
+      
+      <div class="modal-actions">
+        <button class="btn" id="viewReceiptBtn">Ver Recibo</button>
+        <button class="btn btn-secondary" id="newBookingBtn">Nueva Reserva</button>
       </div>
     </div>
   </div>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
-<script>
-'use strict';
+  <script>
+    'use strict';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyClriIvCnIc9ZgJrw08YNsfxtnECrQ6OFE",
-  authDomain: "kl-n-12f7b.firebaseapp.com",
-  databaseURL: "https://kl-n-12f7b-default-rtdb.firebaseio.com",
-  projectId: "kl-n-12f7b",
-  storageBucket: "kl-n-12f7b.firebasestorage.app",
-  messagingSenderId: "941333228893",
-  appId: "1:941333228893:web:3bbdb9ad91475ed3a2ccb4"
-};
+    const firebaseConfig = {
+      apiKey: "AIzaSyClriIvCnIc9ZgJrw08YNsfxtnECrQ6OFE",
+      authDomain: "kl-n-12f7b.firebaseapp.com",
+      databaseURL: "https://kl-n-12f7b-default-rtdb.firebaseio.com",
+      projectId: "kl-n-12f7b",
+      storageBucket: "kl-n-12f7b.firebasestorage.app",
+      messagingSenderId: "941333228893",
+      appId: "1:941333228893:web:3bbdb9ad91475ed3a2ccb4"
+    };
 
-let app, database;
-const state = { services: [], schedules: {}, bookings: [], selectedService: null, selectedDate: null, selectedTime: null, isConnected:false };
-const DEFAULT_SERVICES = [
-  { id:1, name:'Básico', description:'Lavado exterior + secado', price:80, time:30, icon:'🚗' },
-  { id:2, name:'Completo', description:'Exterior + interior + aspirado', price:150, time:45, icon:'✨' },
-  { id:3, name:'Premium', description:'Completo + encerado', price:250, time:60, icon:'💎' },
-  { id:4, name:'Deluxe', description:'Detalle completo + pulido', price:350, time:90, icon:'👑' }
-];
+    const DEFAULT_SERVICES = [
+      { id: 1, name: 'Básico', description: 'Lavado exterior + secado', price: 80, time: 30, icon: '🚗' },
+      { id: 2, name: 'Completo', description: 'Exterior + interior + aspirado', price: 150, time: 45, icon: '✨' },
+      { id: 3, name: 'Premium', description: 'Completo + encerado + pulido', price: 250, time: 60, icon: '💎' },
+      { id: 4, name: 'Deluxe', description: 'Detalle completo + protección cerámica', price: 350, time: 90, icon: '👑' }
+    ];
 
-const DEFAULT_SCHEDULES = {
-  0:{active:false,start:'09:00',end:'15:00'},1:{active:true,start:'08:00',end:'18:00'},2:{active:true,start:'08:00',end:'18:00'},
-  3:{active:true,start:'08:00',end:'18:00'},4:{active:true,start:'08:00',end:'18:00'},5:{active:true,start:'08:00',end:'18:00'},6:{active:true,start:'09:00',end:'15:00'}
-};
+    const DEFAULT_SCHEDULES = {
+      0: { active: false, start: '09:00', end: '15:00' },
+      1: { active: true, start: '08:00', end: '18:00' },
+      2: { active: true, start: '08:00', end: '18:00' },
+      3: { active: true, start: '08:00', end: '18:00' },
+      4: { active: true, start: '08:00', end: '18:00' },
+      5: { active: true, start: '08:00', end: '18:00' },
+      6: { active: true, start: '09:00', end: '15:00' }
+    };
 
-function $(id){return document.getElementById(id)}
-function escapeHtml(s){const d=document.createElement('div'); d.textContent=s; return d.innerHTML;}
+    const state = {
+      services: [],
+      schedules: {},
+      bookings: [],
+      selectedService: null,
+      selectedDate: null,
+      selectedTime: null,
+      isConnected: false,
+      lastBookingId: null
+    };
 
-function initFirebase(){
-  try{
-    app = firebase.initializeApp(firebaseConfig);
-    database = firebase.database();
-    database.ref('.info/connected').on('value', snap => {
-      state.isConnected = !!snap.val();
-      $('statusText').textContent = state.isConnected ? 'Conectado' : 'Desconectado';
+    let app, database;
+
+    const $ = id => document.getElementById(id);
+    const escapeHtml = str => {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    };
+
+    function initFirebase() {
+      try {
+        app = firebase.initializeApp(firebaseConfig);
+        database = firebase.database();
+
+        database.ref('.info/connected').on('value', snap => {
+          state.isConnected = !!snap.val();
+          updateConnectionStatus();
+        });
+
+        database.ref('services').on('value', snap => {
+          state.services = snap.val() ? Object.values(snap.val()) : DEFAULT_SERVICES;
+          renderServices();
+        });
+
+        database.ref('schedules').on('value', snap => {
+          state.schedules = snap.val() || DEFAULT_SCHEDULES;
+        });
+
+        database.ref('bookings').on('value', snap => {
+          state.bookings = snap.val() ? Object.values(snap.val()) : [];
+        });
+
+        database.ref('services').once('value', snap => {
+          if (!snap.exists()) database.ref('services').set(DEFAULT_SERVICES);
+        });
+
+        database.ref('schedules').once('value', snap => {
+          if (!snap.exists()) database.ref('schedules').set(DEFAULT_SCHEDULES);
+        });
+
+      } catch (error) {
+        console.warn('Firebase initialization error:', error);
+        state.services = DEFAULT_SERVICES;
+        state.schedules = DEFAULT_SCHEDULES;
+        renderServices();
+      }
+    }
+
+    function updateConnectionStatus() {
+      const statusDot = $('statusDot');
+      const statusText = $('statusText');
+      
+      if (state.isConnected) {
+        statusDot.classList.add('connected');
+        statusText.textContent = 'Conectado';
+      } else {
+        statusDot.classList.remove('connected');
+        statusText.textContent = 'Sin conexión';
+      }
+    }
+
+    function renderServices() {
+      const grid = $('servicesGrid');
+      const services = state.services.length ? state.services : DEFAULT_SERVICES;
+      
+      grid.innerHTML = services.map(service => `
+        <button
+          class="service-card"
+          data-id="${service.id}"
+          role="radio"
+          aria-checked="false"
+          aria-label="${escapeHtml(service.name)}, ${escapeHtml(service.description)}, ${service.price} pesos, ${service.time} minutos"
+        >
+          <div class="service-icon" aria-hidden="true">${service.icon}</div>
+          <div class="service-info">
+            <div class="service-name">${escapeHtml(service.name)}</div>
+            <div class="service-desc">${escapeHtml(service.description)}</div>
+          </div>
+          <div class="service-details">
+            <div class="service-price">${service.price}</div>
+            <div class="service-time">${service.time} min</div>
+          </div>
+        </button>
+      `).join('');
+
+      grid.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('click', () => selectService(Number(card.dataset.id), card));
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            selectService(Number(card.dataset.id), card);
+          }
+        });
+      });
+    }
+
+    function selectService(id, element) {
+      const services = state.services.length ? state.services : DEFAULT_SERVICES;
+      const service = services.find(s => s.id === id);
+      if (!service) return;
+
+      state.selectedService = service;
+
+      document.querySelectorAll('.service-card').forEach(card => {
+        card.classList.remove('selected');
+        card.setAttribute('aria-checked', 'false');
+      });
+      element.classList.add('selected');
+      element.setAttribute('aria-checked', 'true');
+
+      $('cardDate').style.display = '';
+      renderDates();
+      updateSummary();
+
+      setTimeout(() => {
+        $('cardDate').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+
+    function renderDates() {
+      const container = $('datesContainer');
+      const dayLabels = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+      
+      container.innerHTML = '';
+
+      for (let i = 0; i < 7; i++) {
+        const date = new Date();
+        date.setDate(date.getDate() + i);
+        const dayOfWeek = date.getDay();
+        const dateStr = date.toISOString().split('T')[0];
+        
+        const schedule = state.schedules[dayOfWeek] || DEFAULT_SCHEDULES[dayOfWeek];
+        const isDisabled = !schedule || !schedule.active;
+
+        const button = document.createElement('button');
+        button.className = 'date-btn';
+        button.dataset.date = dateStr;
+        button.disabled = isDisabled;
+        button.setAttribute('role', 'radio');
+        button.setAttribute('aria-checked', 'false');
+        button.setAttribute('aria-label', `${dayLabels[dayOfWeek]} ${date.getDate()}`);
+        
+        button.innerHTML = `
+          <div class="date-label">${dayLabels[dayOfWeek]}</div>
+          <div class="date-day">${date.getDate()}</div>
+        `;
+
+        if (!isDisabled) {
+          button.addEventListener('click', () => selectDate(dateStr, button));
+          button.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              selectDate(dateStr, button);
+            }
+          });
+        }
+
+        container.appendChild(button);
+      }
+    }
+
+    function selectDate(dateStr, element) {
+      state.selectedDate = dateStr;
+
+      document.querySelectorAll('.date-btn').forEach(btn => {
+        btn.classList.remove('selected');
+        btn.setAttribute('aria-checked', 'false');
+      });
+      element.classList.add('selected');
+      element.setAttribute('aria-checked', 'true');
+
+      $('cardTime').style.display = '';
+      renderTimes();
+      updateSummary();
+
+      setTimeout(() => {
+        $('cardTime').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+
+    function renderTimes() {
+      const grid = $('timesGrid');
+      
+      if (!state.selectedDate || !state.selectedService) {
+        grid.innerHTML = '<p style="color: var(--gray-500);">Selecciona una fecha primero</p>';
+        return;
+      }
+
+      const date = new Date(state.selectedDate + 'T00:00:00');
+      const dayOfWeek = date.getDay();
+      const schedule = state.schedules[dayOfWeek] || DEFAULT_SCHEDULES[dayOfWeek];
+
+      if (!schedule || !schedule.active) {
+        grid.innerHTML = '<p style="color: var(--gray-500);">No hay horarios disponibles</p>';
+        return;
+      }
+
+      const times = generateTimeSlots(schedule.start, schedule.end);
+      
+      grid.innerHTML = times.map(time => {
+        const isAvailable = isTimeAvailable(state.selectedDate, time);
+        return `
+          <button
+            class="time-btn"
+            data-time="${time}"
+            ${!isAvailable ? 'disabled' : ''}
+            role="radio"
+            aria-checked="false"
+            aria-label="Horario ${time}"
+          >
+            ${time}
+          </button>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('.time-btn:not([disabled])').forEach(btn => {
+        btn.addEventListener('click', () => selectTime(btn.dataset.time, btn));
+        btn.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            selectTime(btn.dataset.time, btn);
+          }
+        });
+      });
+    }
+
+    function generateTimeSlots(start, end, step = 30) {
+      const slots = [];
+      const [startHour, startMin] = start.split(':').map(Number);
+      const [endHour, endMin] = end.split(':').map(Number);
+      
+      let currentMin = startHour * 60 + startMin;
+      const endMinutes = endHour * 60 + endMin;
+
+      while (currentMin + 1 <= endMinutes) {
+        const hour = Math.floor(currentMin / 60);
+        const min = currentMin % 60;
+        slots.push(`${String(hour).padStart(2, '0')}:${String(min).padStart(2, '0')}`);
+        currentMin += step;
+      }
+
+      return slots;
+    }
+
+    function isTimeAvailable(date, time) {
+      if (!state.selectedService) return false;
+
+      const requestStart = new Date(`${date}T${time}`);
+      const requestEnd = new Date(requestStart.getTime() + state.selectedService.time * 60000);
+
+      if (requestStart < new Date()) return false;
+
+      return !state.bookings.some(booking => {
+        if (booking.status === 'cancelled') return false;
+        if (booking.date !== date) return false;
+
+        const bookingStart = new Date(`${booking.date}T${booking.time}`);
+        const bookingEnd = new Date(bookingStart.getTime() + (booking.duration || state.selectedService.time) * 60000);
+
+        return (requestStart < bookingEnd && requestEnd > bookingStart);
+      });
+    }
+
+    function selectTime(time, element) {
+      state.selectedTime = time;
+
+      document.querySelectorAll('.time-btn').forEach(btn => {
+        btn.classList.remove('selected');
+        btn.setAttribute('aria-checked', 'false');
+      });
+      element.classList.add('selected');
+      element.setAttribute('aria-checked', 'true');
+
+      $('cardForm').style.display = '';
+      updateSummary();
+
+      setTimeout(() => {
+        $('cardForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+
+    function updateSummary() {
+      const service = state.selectedService;
+      const date = state.selectedDate;
+      const time = state.selectedTime;
+
+      $('summaryService').textContent = service ? service.name : '—';
+      $('summaryDuration').textContent = service ? `${service.time} min` : '— min';
+      $('summaryDateTime').textContent = (date && time) ? formatDate(date) + ' • ' + time : '—';
+      $('summaryTotal').textContent = service ? `${service.price}` : '$0';
+
+      const mobileSummary = $('mobileSummary');
+      if (service) {
+        mobileSummary.classList.add('active');
+        $('mobileService').textContent = service.name;
+        $('mobileDateTime').textContent = (date && time) ? formatDate(date) + ' • ' + time : '—';
+        $('mobilePrice').textContent = `${service.price}`;
+        $('mobileDuration').textContent = `${service.time} min`;
+      } else {
+        mobileSummary.classList.remove('active');
+      }
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr + 'T00:00:00');
+      return date.toLocaleDateString('es-MX', {
+        weekday: 'short',
+        day: '2-digit',
+        month: 'short'
+      });
+    }
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+
+      const nameInput = $('customerName');
+      const phoneInput = $('customerPhone');
+      const addressInput = $('customerAddress');
+      const carInput = $('customerCar');
+
+      let isValid = true;
+
+      if (!nameInput.value.trim() || nameInput.value.trim().length < 2) {
+        nameInput.classList.add('error');
+        isValid = false;
+      } else {
+        nameInput.classList.remove('error');
+      }
+
+      const phoneClean = phoneInput.value.replace(/\D/g, '');
+      if (!/^[0-9]{10,15}$/.test(phoneClean)) {
+        phoneInput.classList.add('error');
+        isValid = false;
+      } else {
+        phoneInput.classList.remove('error');
+      }
+
+      if (!addressInput.value.trim() || addressInput.value.trim().length < 5) {
+        addressInput.classList.add('error');
+        isValid = false;
+      } else {
+        addressInput.classList.remove('error');
+      }
+
+      if (!carInput.value.trim() || carInput.value.trim().length < 3) {
+        carInput.classList.add('error');
+        isValid = false;
+      } else {
+        carInput.classList.remove('error');
+      }
+
+      if (!state.selectedService || !state.selectedDate || !state.selectedTime) {
+        showToast('Por favor completa todos los pasos');
+        return;
+      }
+
+      if (!isValid) {
+        showToast('Por favor completa todos los campos correctamente');
+        return;
+      }
+
+      if (!state.isConnected) {
+        showToast('Sin conexión a la base de datos. Intenta más tarde');
+        return;
+      }
+
+      if (!isTimeAvailable(state.selectedDate, state.selectedTime)) {
+        showToast('Este horario ya no está disponible');
+        renderTimes();
+        return;
+      }
+
+      $('loadingText').classList.add('active');
+      $('submitBtn').disabled = true;
+
+      const booking = {
+        service: state.selectedService.name,
+        price: state.selectedService.price,
+        duration: state.selectedService.time,
+        date: state.selectedDate,
+        time: state.selectedTime,
+        name: nameInput.value.trim(),
+        phone: phoneClean,
+        address: addressInput.value.trim(),
+        car: carInput.value.trim(),
+        status: 'confirmed',
+        createdAt: new Date().toISOString()
+      };
+
+      try {
+        const ref = database.ref('bookings').push();
+        booking.id = ref.key;
+        await ref.set(booking);
+
+        state.lastBookingId = booking.id;
+
+        const receiptUrl = `${location.origin}${location.pathname.replace(/[^\/]*$/, '')}recibo.html?id=${encodeURIComponent(booking.id)}`;
+        const qrUrl = `https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl=${encodeURIComponent(receiptUrl)}`;
+        $('qrImage').src = qrUrl;
+
+        $('modalText').textContent = `${booking.name} • ${formatDate(booking.date)} • ${booking.time} • ${booking.price}`;
+
+        $('loadingText').classList.remove('active');
+        $('submitBtn').disabled = false;
+
+        showModal();
+
+      } catch (error) {
+        console.error('Booking error:', error);
+        $('loadingText').classList.remove('active');
+        $('submitBtn').disabled = false;
+        showToast('Error al procesar la reserva. Intenta nuevamente');
+      }
+    }
+
+    function showModal() {
+      $('confirmModal').classList.add('active');
+      $('confirmModal').setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideModal() {
+      $('confirmModal').classList.remove('active');
+      $('confirmModal').setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function resetFlow() {
+      state.selectedService = null;
+      state.selectedDate = null;
+      state.selectedTime = null;
+
+      $('bookingForm').reset();
+      document.querySelectorAll('.service-card, .date-btn, .time-btn').forEach(el => {
+        el.classList.remove('selected');
+        el.setAttribute('aria-checked', 'false');
+      });
+
+      $('cardDate').style.display = 'none';
+      $('cardTime').style.display = 'none';
+      $('cardForm').style.display = 'none';
+
+      updateSummary();
+      hideModal();
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      toast.setAttribute('role', 'alert');
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initFirebase();
+
+      $('bookingForm').addEventListener('submit', handleSubmit);
+      
+      $('customerPhone').addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g, '');
+      });
+
+      $('viewReceiptBtn').addEventListener('click', () => {
+        if (state.lastBookingId) {
+          window.location.href = `recibo.html?id=${encodeURIComponent(state.lastBookingId)}`;
+        }
+      });
+
+      $('newBookingBtn').addEventListener('click', resetFlow);
+
+      $('adminBtn').addEventListener('click', () => {
+        window.location.href = 'admin.html';
+      });
+
+      $('confirmModal').addEventListener('click', (e) => {
+        if (e.target === $('confirmModal')) {
+          hideModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && $('confirmModal').classList.contains('active')) {
+          hideModal();
+        }
+      });
     });
-    database.ref('services').on('value', snap => { state.services = snap.val() ? Object.values(snap.val()) : DEFAULT_SERVICES; renderServices(); });
-    database.ref('schedules').on('value', snap => state.schedules = snap.val() || DEFAULT_SCHEDULES );
-    database.ref('bookings').on('value', snap => state.bookings = snap.val() ? Object.values(snap.val()) : []);
-    // ensure defaults
-    database.ref('services').once('value', snap => { if(!snap.exists()) database.ref('services').set(DEFAULT_SERVICES); });
-    database.ref('schedules').once('value', snap => { if(!snap.exists()) database.ref('schedules').set(DEFAULT_SCHEDULES); });
-    // fallback render
-    if(!state.services.length) { state.services = DEFAULT_SERVICES; renderServices(); }
-  }catch(e){
-    console.warn('Firebase fallback', e);
-    state.services = DEFAULT_SERVICES; state.schedules = DEFAULT_SCHEDULES; renderServices();
-  }
-}
-
-/* Renderers */
-function renderServices(){
-  const wrap = $('services');
-  const services = state.services.length ? state.services : DEFAULT_SERVICES;
-  wrap.innerHTML = services.map(s => `
-    <div class="svc" data-id="${s.id}" role="button" tabindex="0">
-      <div class="icon">${s.icon}</div>
-      <div style="flex:1"><div style="font-weight:800">${escapeHtml(s.name)}</div><div style="color:var(--muted);font-size:0.9rem">${escapeHtml(s.description)}</div></div>
-      <div style="text-align:right"><div style="font-weight:900">$${s.price}</div><div style="color:var(--muted);font-size:0.9rem">${s.time} min</div></div>
-    </div>
-  `).join('');
-  document.querySelectorAll('.svc').forEach(el=>{
-    el.addEventListener('click', ()=> selectService(Number(el.dataset.id), el));
-    el.addEventListener('keydown', (e)=> { if(e.key==='Enter') selectService(Number(el.dataset.id), el); });
-  });
-}
-function selectService(id, el){
-  const services = state.services.length ? state.services : DEFAULT_SERVICES;
-  const svc = services.find(s=>s.id===id);
-  if(!svc) return;
-  state.selectedService = svc;
-  document.querySelectorAll('.svc').forEach(n=>n.classList.remove('selected'));
-  el.classList.add('selected');
-  $('cardDate').style.display = '';
-  renderDates();
-  updateSummary();
-  el.scrollIntoView({behavior:'smooth',block:'center'});
-}
-
-function renderDates(){
-  const wrap = $('dates'); wrap.innerHTML = '';
-  const labels = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  for(let i=0;i<7;i++){
-    const d = new Date(); d.setDate(d.getDate()+i); const dow = d.getDay();
-    const schedule = state.schedules && state.schedules[dow] ? state.schedules[dow] : DEFAULT_SCHEDULES[dow];
-    const disabled = !schedule || !schedule.active;
-    const dateStr = d.toISOString().split('T')[0];
-    const btn = document.createElement('button'); btn.className='date'; btn.dataset.date=dateStr;
-    btn.innerHTML = `<div style="font-size:0.85rem;color:var(--muted)">${labels[dow]}</div><div style="font-weight:900;margin-top:6px">${d.getDate()}</div>`;
-    if(disabled) btn.disabled=true;
-    btn.addEventListener('click',()=> selectDate(dateStr, btn));
-    wrap.appendChild(btn);
-  }
-}
-
-function selectDate(dateStr, el){ state.selectedDate = dateStr; document.querySelectorAll('.date').forEach(d=>d.classList.remove('selected')); el.classList.add('selected'); $('cardTime').style.display=''; renderTimes(); updateSummary(); el.scrollIntoView({behavior:'smooth',block:'center'}); }
-
-function renderTimes(){
-  const wrap = $('times'); wrap.innerHTML=''; if(!state.selectedDate||!state.selectedService) return;
-  const d = new Date(state.selectedDate + 'T00:00:00'); const dow = d.getDay();
-  const schedule = state.schedules && state.schedules[dow] ? state.schedules[dow] : DEFAULT_SCHEDULES[dow];
-  if(!schedule || !schedule.active){ wrap.innerHTML = `<div style="color:var(--muted)">No hay horarios disponibles</div>`; return; }
-  const times = generateTimes(schedule.start,schedule.end);
-  times.forEach(t=>{
-    const btn=document.createElement('button'); btn.className='time'; btn.textContent=t; btn.dataset.time=t;
-    btn.disabled = !isTimeAvailable(state.selectedDate,t);
-    if(btn.disabled) btn.style.opacity=0.4;
-    btn.addEventListener('click', ()=> selectTime(t, btn));
-    wrap.appendChild(btn);
-  });
-}
-
-function generateTimes(start,end,step=30){
-  const out=[]; let [h,m]=start.split(':').map(Number); const [eh,em]=end.split(':').map(Number);
-  let t = h*60 + m, endMin = eh*60 + em; while(t + 1 <= endMin){ const hh=Math.floor(t/60), mm=t%60; out.push(String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')); t+=step; } return out;
-}
-
-function isTimeAvailable(date,time){
-  if(!state.selectedService) return false;
-  const start = new Date(date + 'T' + time);
-  const end = new Date(start.getTime() + state.selectedService.time * 60000);
-  if(start < new Date()) return false;
-  return !state.bookings.some(b => { if(b.status==='cancelled') return false; if(b.date !== date) return false; const bStart = new Date(b.date + 'T' + b.time); const bEnd = new Date(bStart.getTime() + ((b.duration||state.selectedService.time)*60000)); return (start < bEnd && end > bStart); });
-}
-
-function selectTime(t, el){ state.selectedTime=t; document.querySelectorAll('.time').forEach(x=>x.classList.remove('selected')); el.classList.add('selected'); $('cardForm').style.display=''; updateSummary(); el.scrollIntoView({behavior:'smooth',block:'center'}); }
-
-function updateSummary(){
-  $('summaryService').textContent = state.selectedService ? state.selectedService.name : '—';
-  $('summaryDuration').textContent = state.selectedService ? (state.selectedService.time + ' min') : '0 min';
-  $('summaryDateTime').textContent = (state.selectedDate && state.selectedTime) ? (formatDate(state.selectedDate) + ' · ' + state.selectedTime) : '—';
-  $('summaryTotal').textContent = state.selectedService ? ('$' + state.selectedService.price) : '$0';
-  const showBottom = !!state.selectedService; $('bottomSummary').style.display = showBottom ? '' : 'none';
-  $('sService').textContent = state.selectedService ? state.selectedService.name : '—';
-  $('sDateTime').textContent = (state.selectedDate && state.selectedTime) ? (formatDate(state.selectedDate) + ' · ' + state.selectedTime) : '—';
-  $('sPrice').textContent = state.selectedService ? ('$' + state.selectedService.price) : '$0';
-  $('sDuration').textContent = state.selectedService ? (state.selectedService.time + ' min') : '0 min';
-}
-
-function formatDate(dStr){ const d=new Date(dStr + 'T00:00:00'); return d.toLocaleDateString('es-MX',{weekday:'short',day:'2-digit',month:'short'}); }
-
-/* Booking submit */
-let lastBookingId = null;
-document.addEventListener('DOMContentLoaded', ()=>{
-  initFirebase();
-  $('bookingForm').addEventListener('submit', submitBooking);
-  $('phone').addEventListener('input', ()=> $('phone').value = $('phone').value.replace(/\D/g,''));
-  $('viewReceipt').addEventListener('click', ()=> { if(lastBookingId) window.location.href = 'recibo.html?id=' + encodeURIComponent(lastBookingId); });
-  $('newBooking').addEventListener('click', ()=> { closeConfirm(); resetFlow(); });
-  document.querySelector('#adminOpen').addEventListener('click', ()=> window.open('admin.html','_self'));
-});
-
-async function submitBooking(e){
-  e.preventDefault();
-  const name = $('name'), phone = $('phone'), address = $('address'), car = $('car');
-  let ok = true;
-  if(!name.value.trim() || name.value.trim().length < 2){ ok=false; name.style.borderColor='rgba(255,80,80,0.6)'; } else name.style.borderColor='';
-  if(!/^[0-9]{10,15}$/.test(phone.value.replace(/\D/g,''))){ ok=false; phone.style.borderColor='rgba(255,80,80,0.6)'; } else phone.style.borderColor='';
-  if(!address.value.trim() || address.value.trim().length<5){ ok=false; address.style.borderColor='rgba(255,80,80,0.6)'; } else address.style.borderColor='';
-  if(!car.value.trim() || car.value.trim().length<3){ ok=false; car.style.borderColor='rgba(255,80,80,0.6)'; } else car.style.borderColor='';
-
-  if(!state.selectedService || !state.selectedDate || !state.selectedTime){ showToast('Completa servicio, fecha y horario'); return; }
-  if(!ok) return;
-  if(!state.isConnected){ showToast('Sin conexión a la base de datos'); return; }
-
-  if(!isTimeAvailable(state.selectedDate, state.selectedTime)){ showToast('Horario ya no disponible'); renderTimes(); return; }
-
-  $('inlineLoading').style.display='inline-block'; $('confirmBtn').disabled=true;
-
-  const booking = {
-    service: state.selectedService.name,
-    price: state.selectedService.price,
-    duration: state.selectedService.time,
-    date: state.selectedDate,
-    time: state.selectedTime,
-    name: name.value.trim(),
-    phone: phone.value.replace(/\D/g,'').trim(),
-    address: address.value.trim(),
-    car: car.value.trim(),
-    status: 'confirmed',
-    createdAt: new Date().toISOString()
-  };
-
-  try{
-    const ref = database.ref('bookings').push();
-    booking.id = ref.key;
-    await ref.set(booking);
-    lastBookingId = booking.id;
-    $('inlineLoading').style.display='none'; $('confirmBtn').disabled=false;
-
-    const receiptUrl = location.origin + location.pathname.replace(/[^\/]*$/, '') + 'recibo.html?id=' + encodeURIComponent(booking.id);
-    const qrUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(receiptUrl);
-    $('qrImage').src = qrUrl;
-
-    $('confirmText').textContent = `Reservación para ${booking.name} · ${formatDate(booking.date)} · ${booking.time} · $${booking.price}`;
-    openConfirm();
-  }catch(err){
-    console.error(err);
-    $('inlineLoading').style.display='none'; $('confirmBtn').disabled=false; showToast('Error procesando reserva');
-  }
-}
-
-/* UI helpers */
-function openConfirm(){ $('confirmOverlay').classList.add('show'); $('confirmOverlay').style.display='flex'; $('confirmOverlay').setAttribute('aria-hidden','false'); }
-function closeConfirm(){ $('confirmOverlay').classList.remove('show'); $('confirmOverlay').style.display='none'; $('confirmOverlay').setAttribute('aria-hidden','true'); }
-function resetFlow(){ state.selectedService=null; state.selectedDate=null; state.selectedTime=null; document.getElementById('bookingForm').reset(); document.querySelectorAll('.svc,.date,.time').forEach(n=>n.classList.remove('selected')); $('cardDate').style.display='none'; $('cardTime').style.display='none'; $('cardForm').style.display='none'; updateSummary(); window.scrollTo({top:0,behavior:'smooth'}); }
-function showToast(msg){ const t=document.createElement('div'); t.textContent=msg; t.style.position='fixed'; t.style.bottom='28px'; t.style.left='50%'; t.style.transform='translateX(-50%)'; t.style.background='linear-gradient(180deg,var(--accent),#1b4fcf)'; t.style.color='white'; t.style.padding='10px 14px'; t.style.borderRadius='10px'; t.style.zIndex=9999; document.body.appendChild(t); setTimeout(()=> t.remove(),2500); }
-</script>
+  </script>
 </body>
 </html>
