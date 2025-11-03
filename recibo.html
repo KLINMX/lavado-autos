@@ -511,7 +511,11 @@ async function init() {
     database = firebase.database();
 
     const bookingId = getParam('id');
+    
+    console.log('🔍 Buscando recibo con ID:', bookingId);
+    
     if (!bookingId) {
+      console.error('❌ No se proporcionó ID en la URL');
       showError();
       return;
     }
@@ -520,20 +524,27 @@ async function init() {
     const settingsSnap = await database.ref('settings').once('value');
     state.settings = settingsSnap.val() || {};
     applySettings();
+    
+    console.log('⚙️ Configuración cargada:', state.settings);
 
     // Load booking
     const bookingSnap = await database.ref('bookings/' + bookingId).once('value');
     
+    console.log('📦 Snapshot exists:', bookingSnap.exists());
+    
     if (!bookingSnap.exists()) {
+      console.error('❌ No se encontró la reserva con ID:', bookingId);
       showError();
       return;
     }
 
     state.booking = bookingSnap.val();
+    console.log('✅ Reserva encontrada:', state.booking);
+    
     renderReceipt();
 
   } catch (error) {
-    console.error('Error:', error);
+    console.error('❌ Error al cargar recibo:', error);
     showError();
   }
 }
