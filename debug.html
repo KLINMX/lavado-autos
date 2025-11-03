@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debug - AutoWash Pro</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Courier New', monospace;
+  background: #1a1a1a;
+  color: #00ff00;
+  padding: 20px;
+  line-height: 1.6;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+h1 {
+  color: #00ffff;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+h2 {
+  color: #ffff00;
+  margin: 30px 0 15px 0;
+  font-size: 1.3rem;
+}
+.section {
+  background: #2a2a2a;
+  border: 2px solid #00ff00;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.log {
+  background: #000;
+  border: 1px solid #333;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.log-item {
+  margin: 5px 0;
+  padding: 5px;
+}
+.success { color: #00ff00; }
+.error { color: #ff0000; }
+.warning { color: #ffaa00; }
+.info { color: #00aaff; }
+button {
+  background: #00ff00;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: inherit;
+}
+button:hover {
+  background: #00cc00;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+th, td {
+  border: 1px solid #00ff00;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background: #003300;
+}
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.badge-ok { background: #00ff00; color: #000; }
+.badge-error { background: #ff0000; color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🔧 AutoWash Pro - Panel de Diagnóstico</h1>
+  
+  <div class="section">
+    <h2>📊 Estado de la Conexión</h2>
+    <div class="log" id="connectionLog">
+      <div class="log-item info">Esperando conexión a Firebase...</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📅 Prueba de Bloqueo de Horarios</h2>
+    <p style="margin-bottom: 15px;">Verifica si los horarios se están bloqueando correctamente:</p>
+    
+    <div style="margin: 15px 0;">
+      <label>Fecha a probar: <input type="date" id="testDate"></label>
+      <button onclick="testDateAvailability()">Probar Disponibilidad</button>
+    </div>
+    
+    <div class="log" id="availabilityLog">
+      <div class="log-item info">Selecciona una fecha para probar...</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📋 Reservas en la Base de Datos</h2>
+    <button onclick="loadBookings()">Recargar Reservas</button>
+    <div id="bookingsTable" style="margin-top: 15px;"></div>
+  </div>
+
+  <div class="section">
+    <h2>⚙️ Servicios Configurados</h2>
+    <button onclick="loadServices()">Recargar Servicios</button>
+    <div id="servicesTable" style="margin-top: 15px;"></div>
+  </div>
+
+  <div class="section">
+    <h2>🕐 Horarios Configurados</h2>
+    <button onclick="loadSchedules()">Recargar Horarios</button>
+    <div id="schedulesTable" style="margin-top: 15px;"></div>
+  </div>
+
+  <div class="section">
+    <h2>🧪 Crear Reserva de Prueba</h2>
+    <p style="margin-bottom: 15px;">Crea una reserva para probar el sistema:</p>
+    
+    <div style="margin: 15px 0;">
+      <label>Fecha: <input type="date" id="newBookingDate"></label><br><br>
+      <label>Hora: <input type="time" id="newBookingTime"></label><br><br>
+      <label>Servicio (duración min): <input type="number" id="newBookingDuration" value="30"></label><br><br>
+      <button onclick="createTestBooking()">Crear Reserva de Prueba</button>
+    </div>
+    
+    <div class="log" id="createLog"></div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyClriIvCnIc9ZgJrw08YNsfxtnECrQ6OFE",
+  authDomain: "kl-n-12f7b.firebaseapp.com",
+  databaseURL: "https://kl-n-12f7b-default-rtdb.firebaseio.com",
+  projectId: "kl-n-12f7b",
+  storageBucket: "kl-n-12f7b.firebasestorage.app",
+  messagingSenderId: "941333228893",
+  appId: "1:941333228893:web:3bbdb9ad91475ed3a2ccb4"
+};
+
+let app, database;
+const state = { bookings: [], services: [], schedules: {} };
+
+function log(elementId, message, type = 'info') {
+  const el = document.getElementById(elementId);
+  const time = new Date().toLocaleTimeString();
+  el.innerHTML += `<div class="log-item ${type}">[${time}] ${message}</div>`;
+  el.scrollTop = el.scrollHeight;
+}
+
+function init() {
+  try {
+    app = firebase.initializeApp(firebaseConfig);
+    database = firebase.database();
+    
+    log('connectionLog', '✓ Firebase inicializado correctamente', 'success');
+    
+    database.ref('.info/connected').on('value', snap => {
+      if (snap.val()) {
+        log('connectionLog', '✓ Conectado a Firebase Realtime Database', 'success');
+      } else {
+        log('connectionLog', '✗ Desconectado de Firebase', 'error');
+      }
+    });
+    
+    // Load data
+    database.ref('bookings').on('value', snap => {
+      state.bookings = snap.val() ? Object.values(snap.val()) : [];
+      log('connectionLog', `📦 ${state.bookings.length} reservas cargadas`, 'info');
+    });
+    
+    database.ref('services').on('value', snap => {
+      state.services = snap.val() ? Object.values(snap.val()) : [];
+      log('connectionLog', `✨ ${state.services.length} servicios cargados`, 'info');
+    });
+    
+    database.ref('schedules').on('value', snap => {
+      state.schedules = snap.val() || {};
+      log('connectionLog', `🕐 Horarios cargados`, 'info');
+    });
+    
+    // Set today as default
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('testDate').value = today;
+    document.getElementById('newBookingDate').value = today;
+    document.getElementById('newBookingTime').value = '10:00';
+    
+  } catch (error) {
+    log('connectionLog', `✗ Error: ${error.message}`, 'error');
+  }
+}
+
+function isTimeAvailable(date, time, duration) {
+  const requestStart = new Date(`${date}T${time}:00`);
+  const requestEnd = new Date(requestStart.getTime() + duration * 60000);
+  
+  for (let booking of state.bookings) {
+    if (booking.status === 'cancelled' || booking.date !== date) continue;
+    
+    const bookingStart = new Date(`${booking.date}T${booking.time}:00`);
+    const bookingEnd = new Date(bookingStart.getTime() + (booking.duration || 30) * 60000);
+    
+    if (requestStart < bookingEnd && requestEnd > bookingStart) {
+      return { available: false, conflict: booking };
+    }
+  }
+  
+  return { available: true };
+}
+
+function testDateAvailability() {
+  const date = document.getElementById('testDate').value;
+  const logEl = document.getElementById('availabilityLog');
+  logEl.innerHTML = '';
+  
+  if (!date) {
+    log('availabilityLog', '✗ Selecciona una fecha', 'error');
+    return;
+  }
+  
+  log('availabilityLog', `=== Probando disponibilidad para ${date} ===`, 'info');
+  
+  const bookingsToday = state.bookings.filter(b => b.date === date && b.status === 'confirmed');
+  log('availabilityLog', `📦 Reservas confirmadas este día: ${bookingsToday.length}`, 'info');
+  
+  bookingsToday.forEach(b => {
+    log('availabilityLog', `  • ${b.time} - ${b.service} (${b.duration} min)`, 'warning');
+  });
+  
+  // Test all time slots
+  const times = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', 
+                 '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30',
+                 '16:00', '16:30', '17:00', '17:30'];
+  
+  log('availabilityLog', '\n=== Disponibilidad por horario (servicio 30 min) ===', 'info');
+  
+  times.forEach(time => {
+    const result = isTimeAvailable(date, time, 30);
+    if (result.available) {
+      log('availabilityLog', `✓ ${time} - DISPONIBLE`, 'success');
+    } else {
+      log('availabilityLog', `✗ ${time} - OCUPADO (conflicto con ${result.conflict.time})`, 'error');
+    }
+  });
+}
+
+function loadBookings() {
+  const container = document.getElementById('bookingsTable');
+  
+  if (state.bookings.length === 0) {
+    container.innerHTML = '<p class="warning">No hay reservas en la base de datos</p>';
+    return;
+  }
+  
+  let html = '<table><thead><tr><th>ID</th><th>Fecha</th><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Duración</th><th>Estado</th></tr></thead><tbody>';
+  
+  state.bookings.forEach(b => {
+    const statusClass = b.status === 'confirmed' ? 'badge-ok' : 'badge-error';
+    html += `<tr>
+      <td>${(b.id || '').slice(-6)}</td>
+      <td>${b.date}</td>
+      <td>${b.time}</td>
+      <td>${b.name}</td>
+      <td>${b.service}</td>
+      <td>${b.duration} min</td>
+      <td><span class="badge ${statusClass}">${b.status}</span></td>
+    </tr>`;
+  });
+  
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function loadServices() {
+  const container = document.getElementById('servicesTable');
+  
+  if (state.services.length === 0) {
+    container.innerHTML = '<p class="warning">No hay servicios configurados</p>';
+    return;
+  }
+  
+  let html = '<table><thead><tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Duración</th><th>Icono</th></tr></thead><tbody>';
+  
+  state.services.forEach(s => {
+    html += `<tr>
+      <td>${s.id}</td>
+      <td>${s.name}</td>
+      <td>$${s.price}</td>
+      <td>${s.time} min</td>
+      <td>${s.icon}</td>
+    </tr>`;
+  });
+  
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function loadSchedules() {
+  const container = document.getElementById('schedulesTable');
+  const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  
+  let html = '<table><thead><tr><th>Día</th><th>Activo</th><th>Inicio</th><th>Fin</th></tr></thead><tbody>';
+  
+  for (let i = 0; i < 7; i++) {
+    const schedule = state.schedules[i] || { active: false, start: '--', end: '--' };
+    const statusClass = schedule.active ? 'badge-ok' : 'badge-error';
+    html += `<tr>
+      <td>${days[i]}</td>
+      <td><span class="badge ${statusClass}">${schedule.active ? 'SÍ' : 'NO'}</span></td>
+      <td>${schedule.start}</td>
+      <td>${schedule.end}</td>
+    </tr>`;
+  }
+  
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+async function createTestBooking() {
+  const date = document.getElementById('newBookingDate').value;
+  const time = document.getElementById('newBookingTime').value;
+  const duration = parseInt(document.getElementById('newBookingDuration').value);
+  
+  const logEl = document.getElementById('createLog');
+  logEl.innerHTML = '';
+  
+  if (!date || !time || !duration) {
+    log('createLog', '✗ Completa todos los campos', 'error');
+    return;
+  }
+  
+  log('createLog', `Verificando disponibilidad para ${date} ${time}...`, 'info');
+  
+  const result = isTimeAvailable(date, time, duration);
+  
+  if (!result.available) {
+    log('createLog', `✗ No disponible - conflicto con reserva a las ${result.conflict.time}`, 'error');
+    return;
+  }
+  
+  log('createLog', '✓ Horario disponible', 'success');
+  
+  const booking = {
+    date,
+    time,
+    duration,
+    service: 'Prueba',
+    price: 100,
+    name: 'Cliente de Prueba',
+    phone: '1234567890',
+    address: 'Dirección de prueba',
+    car: 'Auto de prueba',
+    status: 'confirmed',
+    createdAt: new Date().toISOString()
+  };
+  
+  try {
+    const ref = database.ref('bookings').push();
+    booking.id = ref.key;
+    await ref.set(booking);
+    
+    log('createLog', `✓ Reserva creada con ID: ${booking.id}`, 'success');
+    log('createLog', `📄 Ver recibo: recibo.html?id=${booking.id}`, 'info');
+    
+    setTimeout(() => {
+      loadBookings();
+    }, 1000);
+    
+  } catch (error) {
+    log('createLog', `✗ Error: ${error.message}`, 'error');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
