@@ -683,7 +683,8 @@ const state = {
   settings: {},
   selectedService: null,
   selectedDate: null,
-  selectedTime: null
+  selectedTime: null,
+  lastBookingId: null
 };
 
 const $ = id => document.getElementById(id);
@@ -732,6 +733,8 @@ function setupEventListeners() {
   $('continueToStep3').addEventListener('click', () => goToStep(3));
   $('bookingForm').addEventListener('submit', handleSubmit);
   $('newBookingBtn').addEventListener('click', resetFlow);
+  $('viewReceiptBtn').addEventListener('click', openReceipt);
+  $('shareReceiptBtn').addEventListener('click', shareReceipt);
   $('customerPhone').addEventListener('input', e => {
     e.target.value = e.target.value.replace(/\D/g, '');
   });
