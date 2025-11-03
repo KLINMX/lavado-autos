@@ -2,114 +2,707 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Panel de administración seguro - AutoWash Pro. Gestión de reservaciones y estadísticas en tiempo real.">
-<meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#1e40af">
-<title>Admin Panel - AutoWash Pro</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Admin - AutoWash Pro</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
-:root{--primary:#1e40af;--primary-dark:#1e3a8a;--success:#059669;--success-light:#d1fae5;--danger:#dc2626;--danger-light:#fee2e2;--warning:#d97706;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;--gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;--gray-900:#111827;--white:#fff;--radius:12px;--shadow:0 4px 6px rgba(0,0,0,.07);--shadow-md:0 10px 15px rgba(0,0,0,.1);--transition:cubic-bezier(.4,0,.2,1)}*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:Inter,-apple-system,sans-serif;background:linear-gradient(135deg,var(--gray-50) 0%,var(--white) 50%);color:var(--gray-900);line-height:1.6;min-height:100vh}.container{max-width:1400px;margin:0 auto;padding:clamp(16px,4vw,32px)}.login-wrapper{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}.login-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:40px;max-width:440px;width:100%;box-shadow:var(--shadow-md);animation:fadeIn .5s var(--transition)}@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.login-header{display:flex;align-items:center;gap:14px;margin-bottom:28px}.logo{width:56px;height:56px;border-radius:var(--radius);background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:var(--white);box-shadow:0 4px 12px rgba(30,64,175,.3)}.login-title{font-size:1.3rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}.login-subtitle{font-size:.9rem;color:var(--gray-500)}.form-group{margin-bottom:20px}.form-label{display:block;font-weight:600;margin-bottom:8px;color:var(--gray-700);font-size:.95rem}.form-control{width:100%;padding:12px 16px;background:var(--white);border:2px solid var(--gray-300);border-radius:var(--radius);color:var(--gray-900);font-size:1rem;font-family:inherit;transition:all .3s var(--transition)}.form-control:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 4px rgba(30,64,175,.1)}.form-actions{display:flex;gap:10px;margin-top:24px}.btn{padding:12px 24px;border:none;border-radius:var(--radius);font-weight:600;font-size:.95rem;cursor:pointer;transition:all .3s var(--transition);font-family:inherit;flex:1}.btn-primary{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:var(--white);box-shadow:0 4px 6px rgba(30,64,175,.2)}.btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 12px rgba(30,64,175,.3)}.btn-secondary{background:var(--white);border:2px solid var(--gray-300);color:var(--gray-700)}.btn-secondary:hover{background:var(--gray-50)}.btn-danger{background:var(--danger);color:var(--white);box-shadow:0 4px 6px rgba(220,38,38,.2);padding:8px 16px;font-size:.85rem}.btn-danger:hover:not(:disabled){background:#b91c1c;transform:translateY(-1px)}.btn-link{background:0 0;color:var(--primary);border:none;padding:8px 16px;font-size:.85rem;text-decoration:none;display:inline-block}.btn:disabled{opacity:.5;cursor:not-allowed}.message{margin-top:16px;padding:12px;border-radius:var(--radius);font-size:.9rem;text-align:center;animation:slideIn .3s var(--transition)}@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.message.error{background:var(--danger-light);color:var(--danger);border:1px solid var(--danger)}.message.info{background:var(--gray-100);color:var(--gray-700)}.header{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:16px;flex-wrap:wrap}.header-brand{display:flex;align-items:center;gap:14px}.header-title{font-size:1.2rem;font-weight:700;color:var(--gray-900)}.header-subtitle{font-size:.85rem;color:var(--gray-500)}.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}.stat-card{background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);transition:transform .3s var(--transition)}.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}.stat-label{font-size:.85rem;color:var(--gray-500);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}.stat-value{font-size:2rem;font-weight:800;color:var(--gray-900)}.stat-card.primary .stat-value{color:var(--primary)}.stat-card.success .stat-value{color:var(--success)}.table-card{background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border:1px solid var(--gray-200);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}.table-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:16px;flex-wrap:wrap}.table-title{font-size:1.2rem;font-weight:700;color:var(--gray-900)}.search-input{width:100%;max-width:300px;padding:10px 14px;border:2px solid var(--gray-300);border-radius:var(--radius);font-size:.9rem;font-family:inherit;transition:all .3s var(--transition)}.search-input:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 3px rgba(30,64,175,.1)}.table-wrapper{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--gray-200)}.table{width:100%;border-collapse:collapse;font-size:.9rem}.table thead{background:var(--gray-50)}.table th{padding:14px 12px;text-align:left;font-weight:600;color:var(--gray-700);border-bottom:2px solid var(--gray-200);white-space:nowrap}.table td{padding:14px 12px;border-bottom:1px solid var(--gray-200);color:var(--gray-900)}.table tbody tr{transition:background .2s var(--transition)}.table tbody tr:hover{background:var(--gray-50)}.table tbody tr:last-child td{border-bottom:none}.status-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.8rem;font-weight:600}.status-confirmed{background:var(--success-light);color:var(--success)}.status-cancelled{background:var(--danger-light);color:var(--danger)}.table-actions{display:flex;gap:8px;flex-wrap:wrap}.empty-state{text-align:center;padding:60px 20px;color:var(--gray-500)}.empty-icon{font-size:3rem;margin-bottom:16px;opacity:.5}@media(max-width:768px){.login-card{padding:28px 20px}.header{flex-direction:column;align-items:flex-start}.table-header{flex-direction:column;align-items:stretch}.search-input{max-width:100%}.table{font-size:.85rem}.table th,.table td{padding:10px 8px}.table-actions{flex-direction:column}.btn{font-size:.85rem;padding:8px 14px}}
+:root {
+  --primary: #1e40af;
+  --primary-dark: #1e3a8a;
+  --success: #059669;
+  --danger: #dc2626;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-500: #6b7280;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --white: #ffffff;
+  --radius: 12px;
+  --shadow: 0 4px 6px rgba(0,0,0,0.07);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 50%);
+  color: var(--gray-900);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Login */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 40px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+
+.logo {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+/* Header */
+.header {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 8px;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+
+.tab {
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--gray-700);
+  transition: all 0.3s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.tab:hover {
+  background: var(--gray-100);
+}
+
+.tab.active {
+  background: var(--primary);
+  color: var(--white);
+}
+
+/* Tab Content */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Cards */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--gray-900);
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--gray-700);
+  font-size: 0.95rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(30,64,175,0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+/* Buttons */
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: var(--white);
+  box-shadow: 0 4px 6px rgba(30,64,175,0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(30,64,175,0.3);
+}
+
+.btn-secondary {
+  background: var(--white);
+  border: 2px solid var(--gray-300);
+  color: var(--gray-700);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: var(--white);
+}
+
+.btn-small {
+  padding: 8px 16px;
+  font-size: 0.85rem;
+}
+
+/* Color Picker */
+.color-picker-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.color-preview {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 2px solid var(--gray-300);
+  cursor: pointer;
+}
+
+input[type="color"] {
+  width: 50px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Service List */
+.service-list {
+  display: grid;
+  gap: 16px;
+}
+
+.service-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--gray-50);
+  border-radius: var(--radius);
+  border: 2px solid var(--gray-200);
+}
+
+.service-icon {
+  font-size: 2rem;
+  min-width: 50px;
+  text-align: center;
+}
+
+.service-info {
+  flex: 1;
+}
+
+.service-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.service-desc {
+  font-size: 0.9rem;
+  color: var(--gray-600);
+}
+
+.service-meta {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: var(--gray-600);
+}
+
+.service-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Table */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--gray-200);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table thead {
+  background: var(--gray-50);
+}
+
+.table th {
+  padding: 14px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--gray-700);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.table tbody tr:hover {
+  background: var(--gray-50);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-confirmed { background: #d1fae5; color: var(--success); }
+.status-pending { background: #fef3c7; color: #d97706; }
+.status-cancelled { background: #fee2e2; color: var(--danger); }
+
+/* Stats */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+/* Schedule */
+.schedule-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.schedule-day {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--gray-50);
+  border-radius: var(--radius);
+  border: 2px solid var(--gray-200);
+}
+
+.day-name {
+  min-width: 80px;
+  font-weight: 600;
+}
+
+.day-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.day-times {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gray-300);
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--success);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Messages */
+.message {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.message.success {
+  background: #d1fae5;
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.message.error {
+  background: #fee2e2;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tabs {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .service-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .schedule-day {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .day-times {
+    flex-direction: column;
+  }
+}
 </style>
 </head>
-
 <body>
+
+<!-- Login Screen -->
 <div id="loginScreen" class="login-wrapper">
-<div class="login-card">
-<div class="login-header">
-<div class="logo">AW</div>
-<div>
-<div class="login-title">Panel de Administración</div>
-<div class="login-subtitle">AutoWash Pro</div>
-</div>
-</div>
-
-<form id="loginForm">
-<div class="form-group">
-<label for="email" class="form-label">Correo Electrónico</label>
-<input type="email" id="email" class="form-control" placeholder="admin@autowash.com" autocomplete="email" required>
-</div>
-
-<div class="form-group">
-<label for="password" class="form-label">Contraseña</label>
-<input type="password" id="password" class="form-control" placeholder="••••••••" autocomplete="current-password" required>
-</div>
-
-<div class="form-actions">
-<button type="submit" class="btn btn-primary" id="loginBtn">Iniciar Sesión</button>
-<button type="button" class="btn btn-secondary" id="backBtn">Volver</button>
+  <div class="login-card">
+    <div class="logo">AW</div>
+    <h2 style="margin-bottom: 8px;">Panel de Administración</h2>
+    <p style="color: var(--gray-500); margin-bottom: 24px;">AutoWash Pro</p>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label">Correo Electrónico</label>
+        <input type="email" id="email" class="form-control" placeholder="admin@autowash.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Iniciar Sesión</button>
+      <div id="loginMessage" style="margin-top: 16px; display: none;"></div>
+    </form>
+  </div>
 </div>
 
-<div id="loginMessage" style="display:none"></div>
-</form>
-</div>
-</div>
+<!-- Admin Panel -->
+<div id="adminPanel" style="display: none;">
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div>
+        <h1 style="font-size: 1.3rem; font-weight: 700;">Panel de Administración</h1>
+        <p style="color: var(--gray-500); font-size: 0.9rem;">AutoWash Pro</p>
+      </div>
+      <button class="btn btn-secondary" id="logoutBtn">Cerrar Sesión</button>
+    </div>
 
-<div id="appScreen" style="display:none">
-<div class="container">
-<header class="header">
-<div class="header-brand">
-<div class="logo">AW</div>
-<div>
-<div class="header-title">Panel de Administración</div>
-<div class="header-subtitle">AutoWash Pro</div>
-</div>
-</div>
-<button class="btn btn-secondary" id="logoutBtn">Cerrar Sesión</button>
-</header>
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Reservaciones</div>
+        <div class="stat-value" id="statTotal">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Reservas Hoy</div>
+        <div class="stat-value" id="statToday">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Ingresos Totales</div>
+        <div class="stat-value" id="statRevenue">$0</div>
+      </div>
+    </div>
 
-<div class="stats-grid">
-<div class="stat-card primary">
-<div class="stat-label">Total Reservaciones</div>
-<div class="stat-value" id="statTotal">0</div>
-</div>
-<div class="stat-card success">
-<div class="stat-label">Reservas Hoy</div>
-<div class="stat-value" id="statToday">0</div>
-</div>
-<div class="stat-card">
-<div class="stat-label">Ingresos Totales</div>
-<div class="stat-value" id="statRevenue">$0</div>
-</div>
-</div>
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" data-tab="reservations">📋 Reservaciones</button>
+      <button class="tab" data-tab="services">✨ Servicios</button>
+      <button class="tab" data-tab="schedule">📅 Horarios</button>
+      <button class="tab" data-tab="appearance">🎨 Apariencia</button>
+      <button class="tab" data-tab="texts">📝 Textos</button>
+      <button class="tab" data-tab="settings">⚙️ Configuración</button>
+    </div>
 
-<div class="table-card">
-<div class="table-header">
-<h2 class="table-title">Reservaciones Recientes</h2>
-<input type="search" id="searchInput" class="search-input" placeholder="Buscar por cliente, teléfono o servicio..." aria-label="Buscar reservaciones">
-</div>
+    <!-- Tab: Reservations -->
+    <div id="tab-reservations" class="tab-content active">
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h2 class="card-title" style="margin: 0;">Reservaciones Recientes</h2>
+          <input type="search" id="searchBookings" class="form-control" style="max-width: 300px;" placeholder="Buscar...">
+        </div>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Cliente</th>
+                <th>Servicio</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="bookingsTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-<div class="table-wrapper">
-<table class="table" role="table">
-<thead>
-<tr>
-<th>Fecha</th>
-<th>Hora</th>
-<th>Cliente</th>
-<th>Servicio</th>
-<th>Precio</th>
-<th>Estado</th>
-<th>Acciones</th>
-</tr>
-</thead>
-<tbody id="tableBody">
-<tr>
-<td colspan="7">
-<div class="empty-state">
-<div class="empty-icon">⏳</div>
-<div>Cargando reservaciones...</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
+    <!-- Tab: Services -->
+    <div id="tab-services" class="tab-content">
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h2 class="card-title" style="margin: 0;">Gestión de Servicios</h2>
+          <button class="btn btn-primary" id="addServiceBtn">+ Agregar Servicio</button>
+        </div>
+        <div id="servicesList" class="service-list"></div>
+      </div>
+    </div>
+
+    <!-- Tab: Schedule -->
+    <div id="tab-schedule" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">Configuración de Horarios</h2>
+        <div id="scheduleGrid" class="schedule-grid"></div>
+        <button class="btn btn-primary" id="saveScheduleBtn" style="margin-top: 20px;">Guardar Horarios</button>
+      </div>
+    </div>
+
+    <!-- Tab: Appearance -->
+    <div id="tab-appearance" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">Personalización de Apariencia</h2>
+        
+        <div class="form-group">
+          <label class="form-label">Nombre del Negocio</label>
+          <input type="text" id="businessName" class="form-control" placeholder="AutoWash Pro">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Subtítulo</label>
+          <input type="text" id="businessSubtitle" class="form-control" placeholder="Sistema de Reservas Premium">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Color Primario</label>
+            <div class="color-picker-group">
+              <input type="color" id="colorPrimary" value="#1e40af">
+              <input type="text" class="form-control" id="colorPrimaryText" value="#1e40af" style="flex: 1;">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Color Secundario</label>
+            <div class="color-picker-group">
+              <input type="color" id="colorSecondary" value="#059669">
+              <input type="text" class="form-control" id="colorSecondaryText" value="#059669" style="flex: 1;">
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" id="saveAppearanceBtn">Guardar Cambios</button>
+      </div>
+    </div>
+
+    <!-- Tab: Texts -->
+    <div id="tab-texts" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">Gestión de Textos</h2>
+        
+        <div class="form-group">
+          <label class="form-label">Mensaje de Bienvenida</label>
+          <input type="text" id="textWelcome" class="form-control" placeholder="Bienvenido a AutoWash Pro">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Mensaje de Confirmación</label>
+          <textarea id="textConfirmation" class="form-control" rows="3" placeholder="¡Reservación confirmada! Te esperamos..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Texto del Botón Principal</label>
+          <input type="text" id="textButtonPrimary" class="form-control" placeholder="Confirmar Reservación">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Mensaje de Pie de Recibo</label>
+          <textarea id="textReceiptFooter" class="form-control" rows="2" placeholder="Gracias por tu preferencia..."></textarea>
+        </div>
+
+        <button class="btn btn-primary" id="saveTextsBtn">Guardar Textos</button>
+      </div>
+    </div>
+
+    <!-- Tab: Settings -->
+    <div id="tab-settings" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">Configuración Avanzada</h2>
+        
+        <div class="form-group">
+          <label class="form-label">Teléfono de WhatsApp</label>
+          <input type="tel" id="whatsappPhone" class="form-control" placeholder="5215551234567">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Correo Electrónico</label>
+          <input type="email" id="businessEmail" class="form-control" placeholder="contacto@autowash.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Dirección del Negocio</label>
+          <input type="text" id="businessAddress" class="form-control" placeholder="Av. Principal #123">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <input type="checkbox" id="enableQR"> Mostrar código QR en recibos
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <input type="checkbox" id="enableCalendar"> Permitir agregar al calendario
+          </label>
+        </div>
+
+        <button class="btn btn-primary" id="saveSettingsBtn">Guardar Configuración</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -118,21 +711,390 @@
 
 <script>
 'use strict';
-const firebaseConfig={apiKey:"AIzaSyClriIvCnIc9ZgJrw08YNsfxtnECrQ6OFE",authDomain:"kl-n-12f7b.firebaseapp.com",databaseURL:"https://kl-n-12f7b-default-rtdb.firebaseio.com",projectId:"kl-n-12f7b",storageBucket:"kl-n-12f7b.firebasestorage.app",messagingSenderId:"941333228893",appId:"1:941333228893:web:3bbdb9ad91475ed3a2ccb4"};
-let app,auth,database;
-const state={bookings:[]};
-const $=id=>document.getElementById(id);
-const escapeHtml=str=>{const div=document.createElement('div');div.textContent=str;return div.innerHTML};
-function init(){app=firebase.initializeApp(firebaseConfig);auth=firebase.auth();database=firebase.database();auth.onAuthStateChanged(user=>{if(user){$('loginScreen').style.display='none';$('appScreen').style.display='';loadBookings()}else{$('loginScreen').style.display='';$('appScreen').style.display='none'}});$('loginForm').addEventListener('submit',handleLogin);$('backBtn').addEventListener('click',()=>window.location.href='index.html');$('logoutBtn').addEventListener('click',()=>auth.signOut());$('searchInput').addEventListener('input',renderBookings)}
-async function handleLogin(e){e.preventDefault();const email=$('email').value.trim();const password=$('password').value;const messageEl=$('loginMessage');if(!email||!password){showMessage('Por favor completa todos los campos','error');return}messageEl.textContent='Iniciando sesión...';messageEl.className='message info';messageEl.style.display='block';try{await auth.signInWithEmailAndPassword(email,password);messageEl.style.display='none'}catch(error){console.error(error);showMessage('Error: '+(error.message||'No se pudo iniciar sesión'),'error')}}
-function showMessage(text,type){const messageEl=$('loginMessage');messageEl.textContent=text;messageEl.className=`message ${type}`;messageEl.style.display='block'}
-function loadBookings(){database.ref('bookings').on('value',snap=>{state.bookings=snap.val()?Object.values(snap.val()):[];renderBookings();renderStats()})}
-function renderBookings(){const tbody=$('tableBody');const query=$('searchInput').value.trim().toLowerCase();let filtered=state.bookings;if(query){filtered=state.bookings.filter(b=>(b.name||'').toLowerCase().includes(query)||(b.phone||'').includes(query)||(b.service||'').toLowerCase().includes(query))}if(!filtered.length){tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🔭</div><div>${query?'No se encontraron resultados':'No hay reservaciones'}</div></div></td></tr>`;return}const sorted=filtered.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));tbody.innerHTML=sorted.map(booking=>{const date=new Date(booking.date+'T'+(booking.time||'00:00'));const dateStr=date.toLocaleDateString('es-MX',{day:'2-digit',month:'short'});return`<tr><td>${dateStr}</td><td>${booking.time||'—'}</td><td><div style="font-weight:600">${escapeHtml(booking.name||'—')}</div><div style="font-size:.85rem;color:var(--gray-500)">${escapeHtml(booking.phone||'')}</div></td><td>${escapeHtml(booking.service||'—')}</td><td style="font-weight:600">$${booking.price||0}</td><td><span class="status-badge ${booking.status==='confirmed'?'status-confirmed':'status-cancelled'}">${booking.status==='confirmed'?'Confirmada':'Cancelada'}</span></td><td><div class="table-actions">${booking.status==='confirmed'?`<button class="btn btn-danger" data-id="${booking.id}" data-action="cancel">Cancelar</button>`:`<button class="btn btn-danger" data-id="${booking.id}" data-action="delete">Eliminar</button>`}<a class="btn btn-link" href="recibo.html?id=${encodeURIComponent(booking.id)}" target="_blank">Recibo</a></div></td></tr>`}).join('');tbody.querySelectorAll('[data-action]').forEach(btn=>{btn.addEventListener('click',async()=>{const id=btn.dataset.id;const action=btn.dataset.action;if(action==='cancel'){if(!confirm('¿Cancelar esta reservación?'))return;await updateBooking(id,{status:'cancelled'})}if(action==='delete'){if(!confirm('¿Eliminar permanentemente esta reservación?'))return;await deleteBooking(id)}})})}
-async function updateBooking(id,data){try{await database.ref('bookings/'+id).update(data);showToast('Reservación actualizada')}catch(error){console.error(error);showToast('Error al actualizar')}}
-async function deleteBooking(id){try{await database.ref('bookings/'+id).remove();showToast('Reservación eliminada')}catch(error){console.error(error);showToast('Error al eliminar')}}
-function renderStats(){const confirmed=state.bookings.filter(b=>b.status==='confirmed');const today=new Date().toISOString().split('T')[0];const todayBookings=confirmed.filter(b=>b.date===today);const revenue=confirmed.reduce((sum,b)=>sum+(Number(b.price)||0),0);$('statTotal').textContent=confirmed.length;$('statToday').textContent=todayBookings.length;$('statRevenue').textContent='$'+revenue.toLocaleString()}
-function showToast(message){const toast=document.createElement('div');toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:12px 24px;border-radius:12px;box-shadow:0 25px 50px rgba(0,0,0,.15);z-index:300;font-weight:600;animation:slideUp .3s cubic-bezier(.4,0,.2,1)';toast.textContent=message;document.body.appendChild(toast);setTimeout(()=>toast.remove(),3000)}
-document.addEventListener('DOMContentLoaded',init);
+
+const firebaseConfig = {
+  apiKey: "AIzaSyClriIvCnIc9ZgJrw08YNsfxtnECrQ6OFE",
+  authDomain: "kl-n-12f7b.firebaseapp.com",
+  databaseURL: "https://kl-n-12f7b-default-rtdb.firebaseio.com",
+  projectId: "kl-n-12f7b",
+  storageBucket: "kl-n-12f7b.firebasestorage.app",
+  messagingSenderId: "941333228893",
+  appId: "1:941333228893:web:3bbdb9ad91475ed3a2ccb4"
+};
+
+let app, auth, database;
+const state = { bookings: [], services: [], schedules: {}, settings: {} };
+
+const $ = id => document.getElementById(id);
+
+function init() {
+  app = firebase.initializeApp(firebaseConfig);
+  auth = firebase.auth();
+  database = firebase.database();
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      $('loginScreen').style.display = 'none';
+      $('adminPanel').style.display = '';
+      loadData();
+    } else {
+      $('loginScreen').style.display = '';
+      $('adminPanel').style.display = 'none';
+    }
+  });
+
+  setupEventListeners();
+}
+
+function setupEventListeners() {
+  $('loginForm').addEventListener('submit', handleLogin);
+  $('logoutBtn').addEventListener('click', () => auth.signOut());
+
+  // Tabs
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabName = tab.dataset.tab;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      $(`tab-${tabName}`).classList.add('active');
+    });
+  });
+
+  // Services
+  $('addServiceBtn').addEventListener('click', addService);
+  $('saveScheduleBtn').addEventListener('click', saveSchedules);
+  $('saveAppearanceBtn').addEventListener('click', saveAppearance);
+  $('saveTextsBtn').addEventListener('click', saveTexts);
+  $('saveSettingsBtn').addEventListener('click', saveSettings);
+
+  // Color pickers sync
+  $('colorPrimary').addEventListener('input', e => $('colorPrimaryText').value = e.target.value);
+  $('colorPrimaryText').addEventListener('input', e => $('colorPrimary').value = e.target.value);
+  $('colorSecondary').addEventListener('input', e => $('colorSecondaryText').value = e.target.value);
+  $('colorSecondaryText').addEventListener('input', e => $('colorSecondary').value = e.target.value);
+
+  // Search
+  $('searchBookings').addEventListener('input', renderBookings);
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const email = $('email').value;
+  const password = $('password').value;
+
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+  } catch (error) {
+    showMessage('loginMessage', 'Error: ' + error.message, 'error');
+  }
+}
+
+function loadData() {
+  database.ref('bookings').on('value', snap => {
+    state.bookings = snap.val() ? Object.values(snap.val()) : [];
+    renderBookings();
+    updateStats();
+  });
+
+  database.ref('services').on('value', snap => {
+    state.services = snap.val() ? Object.values(snap.val()) : [];
+    renderServices();
+  });
+
+  database.ref('schedules').on('value', snap => {
+    state.schedules = snap.val() || {};
+    renderSchedule();
+  });
+
+  database.ref('settings').on('value', snap => {
+    state.settings = snap.val() || {};
+    loadSettings();
+  });
+}
+
+function renderBookings() {
+  const tbody = $('bookingsTable');
+  const query = $('searchBookings').value.toLowerCase();
+  
+  let filtered = state.bookings;
+  if (query) {
+    filtered = state.bookings.filter(b =>
+      (b.name || '').toLowerCase().includes(query) ||
+      (b.phone || '').includes(query) ||
+      (b.service || '').toLowerCase().includes(query)
+    );
+  }
+
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: var(--gray-500);">No hay reservaciones</td></tr>';
+    return;
+  }
+
+  const sorted = filtered.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+
+  tbody.innerHTML = sorted.map(b => `
+    <tr>
+      <td>${new Date(b.date + 'T00:00').toLocaleDateString('es-MX', { day: '2-digit', month: 'short' })}</td>
+      <td>${b.time || '—'}</td>
+      <td>
+        <div style="font-weight: 600;">${b.name || '—'}</div>
+        <div style="font-size: 0.85rem; color: var(--gray-500);">${b.phone || ''}</div>
+      </td>
+      <td>${b.service || '—'}</td>
+      <td style="font-weight: 600;">$${b.price || 0}</td>
+      <td><span class="status-badge status-${b.status}">${b.status === 'confirmed' ? 'Confirmada' : 'Cancelada'}</span></td>
+      <td>
+        <div style="display: flex; gap: 8px;">
+          ${b.status === 'confirmed' ? 
+            `<button class="btn btn-danger btn-small" onclick="cancelBooking('${b.id}')">Cancelar</button>` :
+            `<button class="btn btn-danger btn-small" onclick="deleteBooking('${b.id}')">Eliminar</button>`
+          }
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function updateStats() {
+  const confirmed = state.bookings.filter(b => b.status === 'confirmed');
+  const today = new Date().toISOString().split('T')[0];
+  const todayBookings = confirmed.filter(b => b.date === today);
+  const revenue = confirmed.reduce((sum, b) => sum + (Number(b.price) || 0), 0);
+
+  $('statTotal').textContent = confirmed.length;
+  $('statToday').textContent = todayBookings.length;
+  $('statRevenue').textContent = '$' + revenue.toLocaleString();
+}
+
+function renderServices() {
+  const list = $('servicesList');
+  
+  if (!state.services.length) {
+    list.innerHTML = '<p style="text-align: center; color: var(--gray-500); padding: 40px;">No hay servicios configurados</p>';
+    return;
+  }
+
+  list.innerHTML = state.services.map(s => `
+    <div class="service-item">
+      <div class="service-icon">${s.icon || '🚗'}</div>
+      <div class="service-info">
+        <div class="service-name">${s.name}</div>
+        <div class="service-desc">${s.description}</div>
+        <div class="service-meta">
+          <span>💰 ${s.price}</span>
+          <span>⏱️ ${s.time} min</span>
+        </div>
+      </div>
+      <div class="service-actions">
+        <button class="btn btn-secondary btn-small" onclick="editService(${s.id})">✏️ Editar</button>
+        <button class="btn btn-danger btn-small" onclick="deleteService(${s.id})">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderSchedule() {
+  const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  const grid = $('scheduleGrid');
+
+  grid.innerHTML = days.map((day, index) => {
+    const schedule = state.schedules[index] || { active: false, start: '08:00', end: '18:00' };
+    return `
+      <div class="schedule-day">
+        <div class="day-name">${day}</div>
+        <div class="day-toggle">
+          <label class="switch">
+            <input type="checkbox" data-day="${index}" ${schedule.active ? 'checked' : ''}>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="day-times">
+          <div class="form-group" style="margin: 0; flex: 1;">
+            <label class="form-label" style="font-size: 0.8rem;">Inicio</label>
+            <input type="time" class="form-control" data-day="${index}" data-field="start" value="${schedule.start}">
+          </div>
+          <div class="form-group" style="margin: 0; flex: 1;">
+            <label class="form-label" style="font-size: 0.8rem;">Fin</label>
+            <input type="time" class="form-control" data-day="${index}" data-field="end" value="${schedule.end}">
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function loadSettings() {
+  const s = state.settings;
+  if (s.businessName) $('businessName').value = s.businessName;
+  if (s.businessSubtitle) $('businessSubtitle').value = s.businessSubtitle;
+  if (s.colorPrimary) {
+    $('colorPrimary').value = s.colorPrimary;
+    $('colorPrimaryText').value = s.colorPrimary;
+  }
+  if (s.colorSecondary) {
+    $('colorSecondary').value = s.colorSecondary;
+    $('colorSecondaryText').value = s.colorSecondary;
+  }
+  if (s.textWelcome) $('textWelcome').value = s.textWelcome;
+  if (s.textConfirmation) $('textConfirmation').value = s.textConfirmation;
+  if (s.textButtonPrimary) $('textButtonPrimary').value = s.textButtonPrimary;
+  if (s.textReceiptFooter) $('textReceiptFooter').value = s.textReceiptFooter;
+  if (s.whatsappPhone) $('whatsappPhone').value = s.whatsappPhone;
+  if (s.businessEmail) $('businessEmail').value = s.businessEmail;
+  if (s.businessAddress) $('businessAddress').value = s.businessAddress;
+  $('enableQR').checked = s.enableQR !== false;
+  $('enableCalendar').checked = s.enableCalendar !== false;
+}
+
+function addService() {
+  const name = prompt('Nombre del servicio:');
+  if (!name) return;
+
+  const description = prompt('Descripción:');
+  const price = Number(prompt('Precio:') || 0);
+  const time = Number(prompt('Duración en minutos:') || 30);
+  const icon = prompt('Emoji/Icono:', '🚗');
+
+  const newService = {
+    id: Date.now(),
+    name,
+    description,
+    price,
+    time,
+    icon
+  };
+
+  const services = [...state.services, newService];
+  database.ref('services').set(services)
+    .then(() => alert('✅ Servicio agregado'))
+    .catch(err => alert('Error: ' + err.message));
+}
+
+window.editService = function(id) {
+  const service = state.services.find(s => s.id === id);
+  if (!service) return;
+
+  const name = prompt('Nombre:', service.name);
+  if (!name) return;
+
+  const description = prompt('Descripción:', service.description);
+  const price = Number(prompt('Precio:', service.price) || 0);
+  const time = Number(prompt('Duración (min):', service.time) || 30);
+  const icon = prompt('Emoji/Icono:', service.icon);
+
+  const updated = state.services.map(s => 
+    s.id === id ? { ...s, name, description, price, time, icon } : s
+  );
+
+  database.ref('services').set(updated)
+    .then(() => alert('✅ Servicio actualizado'))
+    .catch(err => alert('Error: ' + err.message));
+};
+
+window.deleteService = function(id) {
+  if (!confirm('¿Eliminar este servicio?')) return;
+
+  const updated = state.services.filter(s => s.id !== id);
+  database.ref('services').set(updated)
+    .then(() => alert('✅ Servicio eliminado'))
+    .catch(err => alert('Error: ' + err.message));
+};
+
+function saveSchedules() {
+  const schedules = {};
+  
+  document.querySelectorAll('.schedule-day').forEach((day, index) => {
+    const checkbox = day.querySelector('input[type="checkbox"]');
+    const startInput = day.querySelector('input[data-field="start"]');
+    const endInput = day.querySelector('input[data-field="end"]');
+
+    schedules[index] = {
+      active: checkbox.checked,
+      start: startInput.value,
+      end: endInput.value
+    };
+  });
+
+  database.ref('schedules').set(schedules)
+    .then(() => alert('✅ Horarios guardados'))
+    .catch(err => alert('Error: ' + err.message));
+}
+
+function saveAppearance() {
+  const settings = {
+    businessName: $('businessName').value,
+    businessSubtitle: $('businessSubtitle').value,
+    colorPrimary: $('colorPrimary').value,
+    colorSecondary: $('colorSecondary').value
+  };
+
+  database.ref('settings').update(settings)
+    .then(() => {
+      alert('✅ Apariencia actualizada');
+      // Apply changes immediately
+      document.documentElement.style.setProperty('--primary', settings.colorPrimary);
+    })
+    .catch(err => alert('Error: ' + err.message));
+}
+
+function saveTexts() {
+  const texts = {
+    textWelcome: $('textWelcome').value,
+    textConfirmation: $('textConfirmation').value,
+    textButtonPrimary: $('textButtonPrimary').value,
+    textReceiptFooter: $('textReceiptFooter').value
+  };
+
+  database.ref('settings').update(texts)
+    .then(() => alert('✅ Textos guardados'))
+    .catch(err => alert('Error: ' + err.message));
+}
+
+function saveSettings() {
+  const settings = {
+    whatsappPhone: $('whatsappPhone').value,
+    businessEmail: $('businessEmail').value,
+    businessAddress: $('businessAddress').value,
+    enableQR: $('enableQR').checked,
+    enableCalendar: $('enableCalendar').checked
+  };
+
+  database.ref('settings').update(settings)
+    .then(() => alert('✅ Configuración guardada'))
+    .catch(err => alert('Error: ' + err.message));
+}
+
+window.cancelBooking = async function(id) {
+  if (!confirm('¿Cancelar esta reservación?')) return;
+  
+  try {
+    await database.ref('bookings/' + id).update({ status: 'cancelled' });
+    alert('✅ Reservación cancelada');
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
+};
+
+window.deleteBooking = async function(id) {
+  if (!confirm('¿Eliminar permanentemente esta reservación?')) return;
+  
+  try {
+    await database.ref('bookings/' + id).remove();
+    alert('✅ Reservación eliminada');
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
+};
+
+function showMessage(elementId, text, type) {
+  const el = $(elementId);
+  el.textContent = text;
+  el.className = `message ${type}`;
+  el.style.display = 'block';
+}
+
+document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
