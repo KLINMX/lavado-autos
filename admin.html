@@ -842,10 +842,11 @@ function renderBookings() {
         <div style="font-size: 0.85rem; color: var(--gray-500);">${b.phone || ''}</div>
       </td>
       <td>${b.service || '—'}</td>
-      <td style="font-weight: 600;">$${b.price || 0}</td>
+      <td style="font-weight: 600;">${b.price || 0}</td>
       <td><span class="status-badge status-${b.status}">${b.status === 'confirmed' ? 'Confirmada' : 'Cancelada'}</span></td>
       <td>
-        <div style="display: flex; gap: 8px;">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="btn btn-secondary btn-small" onclick="viewReceipt('${b.id}')">📄 Ver Recibo</button>
           ${b.status === 'confirmed' ? 
             `<button class="btn btn-danger btn-small" onclick="cancelBooking('${b.id}')">Cancelar</button>` :
             `<button class="btn btn-danger btn-small" onclick="deleteBooking('${b.id}')">Eliminar</button>`
