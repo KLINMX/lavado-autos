@@ -643,8 +643,18 @@ body {
     <div class="success-icon">✓</div>
     <h3 class="modal-title">¡Reservación Confirmada!</h3>
     <p class="modal-text" id="modalText">Tu cita ha sido registrada exitosamente</p>
+    
+    <div style="margin: 24px 0; padding: 16px; background: var(--gray-50); border-radius: 8px;">
+      <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 8px;">
+        📄 Guarda tu comprobante:
+      </p>
+      <p style="font-size: 0.85rem; color: var(--gray-500); margin-bottom: 12px;" id="receiptUrl"></p>
+    </div>
+    
     <div class="modal-actions">
-      <button class="btn btn-primary" id="newBookingBtn">Nueva Reserva</button>
+      <button class="btn btn-primary" id="viewReceiptBtn">Ver Recibo</button>
+      <button class="btn btn-secondary" id="shareReceiptBtn">📱 Compartir</button>
+      <button class="btn btn-secondary" id="newBookingBtn">Nueva Reserva</button>
     </div>
   </div>
 </div>
@@ -764,10 +774,11 @@ window.selectService = function(id) {
 function renderDates() {
   const select = $('dateSelect');
   const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+  const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
   
   let html = '<option value="">Selecciona una fecha...</option>';
 
-  for (let i = 0; i < 14; i++) {
+  for (let i = 0; i < 30; i++) {
     const date = new Date();
     date.setDate(date.getDate() + i);
     const dayOfWeek = date.getDay();
@@ -775,7 +786,7 @@ function renderDates() {
     
     const schedule = state.schedules[dayOfWeek];
     if (schedule && schedule.active) {
-      const formatted = `${days[dayOfWeek]} ${date.getDate()}/${date.getMonth() + 1}`;
+      const formatted = `${days[dayOfWeek]} ${date.getDate()}/${months[date.getMonth()]}`;
       html += `<option value="${dateStr}">${formatted}</option>`;
     }
   }
@@ -814,7 +825,11 @@ function renderTimes() {
 
   times.forEach(time => {
     const available = isTimeAvailable(state.selectedDate, time);
-    html += `<option value="${time}" ${!available ? 'disabled' : ''}>${time}${!available ? ' (Ocupado)' : ''}</option>`;
+    if (available) {
+      html += `<option value="${time}">${time}</option>`;
+    } else {
+      html += `<option value="${time}" disabled>${time} (Ocupado)</option>`;
+    }
   });
 
   select.innerHTML = html;
@@ -847,13 +862,20 @@ function isTimeAvailable(date, time) {
   const requestStart = new Date(`${date}T${time}`);
   const requestEnd = new Date(requestStart.getTime() + state.selectedService.time * 60000);
 
+  // No permitir reservas en el pasado
   if (requestStart < new Date()) return false;
 
+  // Verificar si hay conflicto con otras reservas
   return !state.bookings.some(b => {
     if (b.status === 'cancelled' || b.date !== date) return false;
+    
     const bookingStart = new Date(`${b.date}T${b.time}`);
     const bookingEnd = new Date(bookingStart.getTime() + (b.duration || 30) * 60000);
-    return requestStart < bookingEnd && requestEnd > bookingStart;
+    
+    // Hay conflicto si los rangos se superponen
+    // Nueva reserva empieza antes de que termine la existente
+    // Y nueva reserva termina después de que comienza la existente
+    return (requestStart < bookingEnd && requestEnd > bookingStart);
   });
 }
 
@@ -895,11 +917,10 @@ function updateSummary() {
 
 function formatDate(dateStr) {
   const date = new Date(dateStr + 'T00:00');
-  return date.toLocaleDateString('es-MX', {
-    weekday: 'short',
-    day: '2-digit',
-    month: 'short'
-  });
+  const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+  const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+  
+  return `${days[date.getDay()]} ${date.getDate()}/${months[date.getMonth()]}`;
 }
 
 function goToStep(step) {
